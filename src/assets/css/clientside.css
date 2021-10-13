@@ -1,0 +1,5 @@
+
+.app-content.layout-top-nav {
+    margin-top: 80px !important;
+    min-height: calc(100vh - 130px - 55px);
+}

@@ -12,7 +12,7 @@ const backgroundStyle = {
 const LoginOne = props => {
 	const theme = useSelector(state => state.theme.currentTheme)
 	return (
-		<div className="h-100" style={backgroundStyle}>
+		<div className="h-100" >
 			<div className="container d-flex flex-column justify-content-center h-100">
 				<Row justify="center">
 					<Col xs={20} sm={20} md={20} lg={7}>
@@ -37,3 +37,4 @@ const LoginOne = props => {
 }
 
 export default LoginOne
+

@@ -1,19 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SideNav from 'components/layout-components/SideNav';
-import TopNav from 'components/layout-components/TopNav';
 import Loading from 'components/shared-components/Loading';
-import MobileNav from 'components/layout-components/MobileNav'
 import HeaderNav from 'components/layout-components/HeaderNav';
 import PageHeader from 'components/layout-components/PageHeader';
 import Footer from 'components/layout-components/Footer';
 import AppViews from 'views/app-views';
+import "../../assets/css/clientside.css"
 import {
   Layout,
   Grid,
 } from "antd";
 
-import navigationConfig from "configs/NavigationConfig";
 import { 
   SIDE_NAV_WIDTH, 
   SIDE_NAV_COLLAPSED_WIDTH,
@@ -29,7 +26,6 @@ const { Content } = Layout;
 const { useBreakpoint } = Grid;
 
 export const AppLayout = ({ navCollapsed, navType, location, direction }) => {
-  const currentRouteInfo = utils.getRouteInfo(navigationConfig, location.pathname)
   const screens = utils.getBreakPoint(useBreakpoint());
   const isMobile = screens.length === 0 ? false : !screens.includes('lg')
   const isNavSide = navType === NAV_TYPE_SIDE
@@ -59,13 +55,10 @@ export const AppLayout = ({ navCollapsed, navType, location, direction }) => {
 
   return (
     <Layout>
-      <HeaderNav isMobile={isMobile}/>
-      {(isNavTop && !isMobile) ? <TopNav routeInfo={currentRouteInfo}/> : null}
+      <HeaderNav/>
       <Layout className="app-container">
-        {(isNavSide && !isMobile) ? <SideNav routeInfo={currentRouteInfo}/> : null }
         <Layout className="app-layout" style={getLayoutDirectionGutter()}>
           <div className={`app-content ${isNavTop ? 'layout-top-nav' : ''}`}>
-            <PageHeader display={currentRouteInfo?.breadcrumb} title={currentRouteInfo?.title} />
             <Content>
               <AppViews />
             </Content>
@@ -73,7 +66,6 @@ export const AppLayout = ({ navCollapsed, navType, location, direction }) => {
           <Footer />
         </Layout>
       </Layout>
-      {isMobile && <MobileNav />}
     </Layout>
   )
 }
