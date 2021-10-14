@@ -1,18 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col, Button, Card, Avatar, Dropdown, Table, Menu, Tag } from 'antd';
-import StatisticWidget from 'components/shared-components/StatisticWidget';
-import ChartWidget from 'components/shared-components/ChartWidget';
 import AvatarStatus from 'components/shared-components/AvatarStatus';
-import GoalWidget from 'components/shared-components/GoalWidget';
 import { 
-  VisitorChartData, 
-  AnnualStatisticData, 
-  ActiveMembersData, 
-  NewMembersData, 
-  RecentTransactionData 
+  BarangayData
 } from './DefaultDashboardData';
-import ApexChart from "react-apexcharts";
-import { apexLineChartDefaultOption, COLOR_2 } from 'constants/ChartConstant';
 import { 
   UserAddOutlined, 
   FileExcelOutlined, 
@@ -22,46 +13,7 @@ import {
   StopOutlined, 
   ReloadOutlined 
 } from '@ant-design/icons';
-import utils from 'utils';
 import {withRouter} from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-const MembersChart = props => (
-  <ApexChart {...props}/>
-)
-
-const memberChartOption = {
-  ...apexLineChartDefaultOption,
-  ...{
-    chart: {
-      sparkline: {
-        enabled: true,
-      }
-    },
-    colors: [COLOR_2],
-  }
-}
-
-const newJoinMemberOption = (
-  <Menu>
-    <Menu.Item key="0">
-      <span>
-        <div className="d-flex align-items-center">
-          <PlusOutlined />
-          <span className="ml-2">Add all</span>
-        </div>
-      </span>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <span>
-        <div className="d-flex align-items-center">
-          <StopOutlined />
-          <span className="ml-2">Disable all</span>
-        </div>
-      </span>
-    </Menu.Item>
-  </Menu>
-)
 
 const latestTransactionOption = (
   <Menu>
@@ -69,7 +21,7 @@ const latestTransactionOption = (
       <span>
         <div className="d-flex align-items-center">
           <ReloadOutlined />
-          <span className="ml-2">Refresh</span>
+          <span className="ml-2">Not interested in this</span>
         </div>
       </span>
     </Menu.Item>
@@ -77,18 +29,18 @@ const latestTransactionOption = (
       <span>
         <div className="d-flex align-items-center">
           <PrinterOutlined />
-          <span className="ml-2">Print</span>
+          <span className="ml-2">This trend is harmful or spammy</span>
         </div>
       </span>
     </Menu.Item>
-    <Menu.Item key="12">
+    {/* <Menu.Item key="12">
       <span>
         <div className="d-flex align-items-center">
           <FileExcelOutlined />
           <span className="ml-2">Export</span>
         </div>
       </span>
-    </Menu.Item>
+    </Menu.Item> */}
   </Menu>
 );
 
@@ -100,52 +52,169 @@ const cardDropdown = (menu) => (
   </Dropdown>
 )
 
-const tableColumns = [
-  {
-    title: 'Customer',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text, record) => (
-      <div className="d-flex align-items-center">
-        <Avatar size={30} className="font-size-sm" style={{backgroundColor: record.avatarColor}}>
-          {utils.getNameInitial(text)}
-        </Avatar>
-        <span className="ml-2">{text}</span>
-      </div>
-    ),
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
-  },
-  {
-    title: 'Amount',
-    dataIndex: 'amount',
-    key: 'amount',
-  },
-  {
-    title: () => <div className="text-right">Status</div>,
-    key: 'status',
-    render: (_, record) => (
-      <div className="text-right">
-        <Tag className="mr-0" color={record.status === 'Approved' ? 'cyan' : record.status === 'Pending' ? 'blue' : 'volcano'}>{record.status}</Tag>
-      </div>
-    ),
-  },
-];
-
 export const DefaultDashboard = () => {
-  const [visitorChartData] = useState(VisitorChartData);
-  const [annualStatisticData] = useState(AnnualStatisticData);
-  const [activeMembersData] = useState(ActiveMembersData);
-  const [newMembersData] = useState(NewMembersData)
-  const [recentTransactionData] = useState(RecentTransactionData)
-  const { direction } = useSelector(state => state.theme)
+  const [barangayData] = useState(BarangayData)
 
   return (
-    <>  
-      <Row gutter={16}>
+    <>
+    <Row>
+      <Col xs={24} sm={24} md={24} xl={4}> </Col>
+      <Col xs={24} sm={24} md={24} xl={16}>
+
+      <Row gutter={8} >
+        <Col xs={24} sm={24} md={24} xl={9}>
+            <Card title="List of Barangay">
+                    <div className="mt-3">
+                      {
+                        barangayData.map((elm, i) => (
+                          <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
+                            <AvatarStatus id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
+                            {/* <div>
+                              <Button icon={<UserAddOutlined />} type="default" size="small">Visit</Button>
+                            </div> */}
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </Card>
+        </Col>
+
+        <Col xs={24} sm={24} md={24} xl={15}>
+
+          <Card title="Trending News">
+            <div>
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <div className="avatar-status d-flex align-items-center">
+                  <div className="ml-2">
+                  <div className="text-muted avatar-status-subtitle">Global Nation</div>
+                    <div>
+                        <div className="avatar-status-name">Modified Enhanced Community Quaratine</div>
+                    </div>
+                    <div className="text-muted avatar-status-subtitle">109.9k Tweets</div>
+                  </div>
+                </div>
+                <div>
+                <Dropdown overlay={latestTransactionOption} trigger={['click']} placement="bottomRight">
+                  <a href="/#" className="text-gray font-size-lg" onClick={e => e.preventDefault()}>
+                    <EllipsisOutlined />
+                  </a>
+                </Dropdown>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <div className="avatar-status d-flex align-items-center">
+                  <div className="ml-2">
+                  <div className="text-muted avatar-status-subtitle">Sports</div>
+                    <div>
+                        <div className="avatar-status-name">LOL World Championship</div>
+                    </div>
+                    <div className="text-muted avatar-status-subtitle">92.7k Tweets</div>
+                  </div>
+                </div>
+                <div>
+                <Dropdown overlay={latestTransactionOption} trigger={['click']} placement="bottomRight">
+                  <a href="/#" className="text-gray font-size-lg" onClick={e => e.preventDefault()}>
+                    <EllipsisOutlined />
+                  </a>
+                </Dropdown>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <div className="avatar-status d-flex align-items-center">
+                  <div className="ml-2">
+                  <div className="text-muted avatar-status-subtitle">Entertainment</div>
+                    <div>
+                        <div className="avatar-status-name">Adele's new Album out Nov. 19</div>
+                    </div>
+                    <div className="text-muted avatar-status-subtitle">75.1k Tweets</div>
+                  </div>
+                </div>
+                <div>
+                <Dropdown overlay={latestTransactionOption} trigger={['click']} placement="bottomRight">
+                  <a href="/#" className="text-gray font-size-lg" onClick={e => e.preventDefault()}>
+                    <EllipsisOutlined />
+                  </a>
+                </Dropdown>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <div className="avatar-status d-flex align-items-center">
+                  <div className="ml-2">
+                  <div className="text-muted avatar-status-subtitle">Technology</div>
+                    <div>
+                        <div className="avatar-status-name">First Youtube Video</div>
+                    </div>
+                    <div className="text-muted avatar-status-subtitle">56.4k Tweets</div>
+                  </div>
+                </div>
+                <div>
+                <Dropdown overlay={latestTransactionOption} trigger={['click']} placement="bottomRight">
+                  <a href="/#" className="text-gray font-size-lg" onClick={e => e.preventDefault()}>
+                    <EllipsisOutlined />
+                  </a>
+                </Dropdown>
+                </div>
+              </div>
+            </div>
+
+          </Card>
+            
+        </Col>
+
+      </Row>
+
+      <Row gutter={8} >
+        <Col xs={24} sm={24} md={24} xl={12}>
+            <Card title="News Today">
+                    <div className="mt-3">
+                      {
+                        barangayData.map((elm, i) => (
+                          <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
+                            <AvatarStatus id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
+                            <div>
+                              <Button icon={<UserAddOutlined />} type="default" size="small">Visit</Button>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+              </Card>
+        </Col>
+
+        <Col xs={24} sm={24} md={24} xl={12}>
+
+          <Card title="News Today">
+            <div className="mt-3">
+              {
+                barangayData.map((elm, i) => (
+                  <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
+                    <AvatarStatus id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
+                    {/* <div>
+                      <Button icon={<UserAddOutlined />} type="default" size="small">Visit</Button>
+                    </div> */}
+                  </div>
+                ))
+              }
+            </div>
+          </Card>
+            
+        </Col>
+
+      </Row>
+      </Col>
+      <Col xs={24} sm={24} md={24} xl={4}></Col>
+
+    </Row>  
+      {/* <Row gutter={16}>
         <Col xs={24} sm={24} md={24} lg={18}>
           <Row gutter={16}>
             {
@@ -193,17 +262,17 @@ export const DefaultDashboard = () => {
             subtitle="Active members"
           />
         </Col>
-      </Row>
-      <Row gutter={16}>
+      </Row> */}
+      {/* <Row gutter={16}>
         <Col xs={24} sm={24} md={24} lg={7}>
-          <Card title="New Join Member" extra={cardDropdown(newJoinMemberOption)}>
+          <Card title="News of Barangay">
             <div className="mt-3">
               {
                 newMembersData.map((elm, i) => (
                   <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
                     <AvatarStatus id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
                     <div>
-                      <Button icon={<UserAddOutlined />} type="default" size="small">Add</Button>
+                      <Button icon={<UserAddOutlined />} type="default" size="small">Visit</Button>
                     </div>
                   </div>
                 ))
@@ -222,7 +291,7 @@ export const DefaultDashboard = () => {
             />
           </Card>
         </Col>
-      </Row>
+      </Row> */}
     </>
   )
 }

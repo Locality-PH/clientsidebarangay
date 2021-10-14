@@ -1,121 +1,162 @@
-export const VisitorChartData = {
-  	series: [
-		{
-			name: "Session Duration",
-			data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
-		},
-		{
-			name: "Page Views",
-			data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-		}
-	],
-	categories:[
-		'01 Jan', 
-		'02 Jan', 
-		'03 Jan', 
-		'04 Jan', 
-		'05 Jan', 
-		'06 Jan', 
-		'07 Jan', 
-		'08 Jan', 
-		'09 Jan',
-		'10 Jan', 
-		'11 Jan', 
-		'12 Jan'
-	]
-}
+// export const VisitorChartData = {
+//   	series: [
+// 		{
+// 			name: "Session Duration",
+// 			data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+// 		},
+// 		{
+// 			name: "Page Views",
+// 			data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+// 		}
+// 	],
+// 	categories:[
+// 		'01 Jan', 
+// 		'02 Jan', 
+// 		'03 Jan', 
+// 		'04 Jan', 
+// 		'05 Jan', 
+// 		'06 Jan', 
+// 		'07 Jan', 
+// 		'08 Jan', 
+// 		'09 Jan',
+// 		'10 Jan', 
+// 		'11 Jan', 
+// 		'12 Jan'
+// 	]
+// }
 
-export const AnnualStatisticData = [
-	{
-		title: 'Revenue',
-		value:'$2,454', 
-		status: -11.4,
-		subtitle: `Compare to last year (2019)`
-	},
-	{
-		title: 'Sales',
-		value:'$6,982', 
-		status: 8.2,
-		subtitle: `Compare to last year (2019)`
-	},
-	{
-		title: 'Costs',
-		value:'$8,310', 
-		status: 0.7,
-		subtitle: `Compare to last year (2019)`
-	}
-]
+// export const AnnualStatisticData = [
+// 	{
+// 		title: 'Revenue',
+// 		value:'$2,454', 
+// 		status: -11.4,
+// 		subtitle: `Compare to last year (2019)`
+// 	},
+// 	{
+// 		title: 'Sales',
+// 		value:'$6,982', 
+// 		status: 8.2,
+// 		subtitle: `Compare to last year (2019)`
+// 	},
+// 	{
+// 		title: 'Costs',
+// 		value:'$8,310', 
+// 		status: 0.7,
+// 		subtitle: `Compare to last year (2019)`
+// 	}
+// ]
 
-export const ActiveMembersData = [{
-	name: 'Members',
-	data: [25, 15, 41, 25, 44, 12, 36, 19, 54]
-}]
+// export const ActiveMembersData = [{
+// 	name: 'Members',
+// 	data: [25, 15, 41, 25, 44, 12, 36, 19, 54]
+// }]
 
-export const NewMembersData = [{
+export const BarangayData = [{
 	img: "/img/avatars/thumb-2.jpg",
-	title: "Software Engineer",
-	name: "Terrance Moreno",
+	title: "Sumulong St, Morong, Rizal",
+	name: "Caniogan",
 },
 {
 	img: "/img/avatars/thumb-3.jpg",
-	title: "UI/UX Designer",
-	name: "Ron Vargas",
+	title: "Sumulong St, Morong, Rizal",
+	name: "Baras",
 },
 {
 	img: "/img/avatars/thumb-4.jpg",
-	title: "HR Executive",
-	name: "Luke Cook",
-},
+	title: "Sumulong St, Morong, Rizal",
+	name: "Maybangcal",
+}
+,
 {
 	img: "/img/avatars/thumb-5.jpg",
-	title: "Frontend Developer",
-	name: "Joyce Freeman",
-},
+	title: "Sumulong St, Morong, Rizal",
+	name: "Taghangen",
+}
+,
 {
 	img: "/img/avatars/thumb-6.jpg",
-	title: "Compliance Manager",
-	name: "Samantha Phillips",
-}]
+	title: "Sumulong St, Morong, Rizal",
+	name: "San Guilliermo",
+}
+]
 
-export const RecentTransactionData = [
-	{
-		id: '#5331',
-		name: 'Clayton Bates',
-		date: '8 May 2020',
-		amount: '$137.00',
-		status: 'Approved',
-		avatarColor: '#04d182'
-	},
-	{
-		id: '#5332',
-		name: 'Gabriel Frazier',
-		date: '6 May 2020',
-		amount: '$322.00',
-		status: 'Approved',
-		avatarColor: '#fa8c16'
-	},
-	{
-		id: '#5333',
-		name: 'Debra Hamilton',
-		date: '1 May 2020',
-		amount: '$543.00',
-		status: 'Pending',
-		avatarColor: '#1890ff'
-	},
-	{
-		id: '#5334',
-		name: 'Stacey Ward',
-		date: '28 April 2020',
-		amount: '$876.00',
-		status: 'Rejected',
-		avatarColor: '#ffc542'
-	},
-	{
-		id: '#5335',
-		name: 'Troy Alexander',
-		date: '28 April 2020',
-		amount: '$241.00',
-		status: 'Approved',
-		avatarColor: '#ff6b72'
-	},
-];
+export const NewsReportData = [{
+	img: "/img/avatars/thumb-2.jpg",
+	title: "Modified Enhanced Community Quaratine",
+	author: "Mike Enriquez",
+	type: "Global Nation",
+	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+},
+{
+	img: "/img/avatars/thumb-2.jpg",
+	title: "Modified Enhanced Community Quaratine",
+	author: "Coby",
+	type: "Sport",
+	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+},
+{
+	img: "/img/avatars/thumb-2.jpg",
+	title: "Modified Enhanced Community Quaratine",
+	author: "Mike Enriquez",
+	type: "Global Nation",
+	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+},
+{
+	img: "/img/avatars/thumb-2.jpg",
+	title: "Modified Enhanced Community Quaratine",
+	author: "Mike Enriquez",
+	type: "Global Nation",
+	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+},
+{
+	img: "/img/avatars/thumb-2.jpg",
+	title: "Modified Enhanced Community Quaratine",
+	author: "Mike Enriquez",
+	type: "Global Nation",
+	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+}
+
+]
+
+// export const RecentTransactionData = [
+// 	{
+// 		id: '#5331',
+// 		name: 'Clayton Bates',
+// 		date: '8 May 2020',
+// 		amount: '$137.00',
+// 		status: 'Approved',
+// 		avatarColor: '#04d182'
+// 	},
+// 	{
+// 		id: '#5332',
+// 		name: 'Gabriel Frazier',
+// 		date: '6 May 2020',
+// 		amount: '$322.00',
+// 		status: 'Approved',
+// 		avatarColor: '#fa8c16'
+// 	},
+// 	{
+// 		id: '#5333',
+// 		name: 'Debra Hamilton',
+// 		date: '1 May 2020',
+// 		amount: '$543.00',
+// 		status: 'Pending',
+// 		avatarColor: '#1890ff'
+// 	},
+// 	{
+// 		id: '#5334',
+// 		name: 'Stacey Ward',
+// 		date: '28 April 2020',
+// 		amount: '$876.00',
+// 		status: 'Rejected',
+// 		avatarColor: '#ffc542'
+// 	},
+// 	{
+// 		id: '#5335',
+// 		name: 'Troy Alexander',
+// 		date: '28 April 2020',
+// 		amount: '$241.00',
+// 		status: 'Approved',
+// 		avatarColor: '#ff6b72'
+// 	},
+// ];
