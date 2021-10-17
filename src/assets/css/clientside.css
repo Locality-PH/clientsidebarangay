@@ -3,3 +3,7 @@
     margin-top: 80px !important;
     min-height: calc(100vh - 130px - 55px);
 }
+
+.barangay-links{
+    background: red;
+}
