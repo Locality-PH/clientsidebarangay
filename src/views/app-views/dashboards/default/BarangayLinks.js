@@ -11,18 +11,18 @@ export const BarangayLinks = props => {
 	const { name, suffix, subTitle, id, type, src, icon, size, shape, gap, text} = props
 	return (
 		<>
-			<Link to="/test">
-				<div className="avatar-status d-flex align-items-center">
-					{renderAvatar({icon, src, type, size, shape, gap, text })}
-					<div className="ml-2">
-						<div>
+			<div className="avatar-status d-flex align-items-center">
+				{renderAvatar({icon, src, type, size, shape, gap, text })}
+				<div className="ml-2">
+					<div>
+						<Link to="/test">
 							<div className="avatar-status-name">{name}</div>
 							<span>{suffix}</span>
-						</div>
-						<div className="text-muted avatar-status-subtitle">{subTitle}</div>
+							</Link>
 					</div>
+					<div className="text-muted avatar-status-subtitle">{subTitle}</div>
 				</div>
-			</Link>
+			</div>
 		</>
 	)
 }

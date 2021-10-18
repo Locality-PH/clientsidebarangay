@@ -5,12 +5,13 @@ import BarangayLinks from "./BarangayLinks";
 import TrendingNews from "./TrendingNews";
 import News from "./News";
 import { 
-  BarangayData
+  BarangayData, NewsReportData
 } from './DefaultDashboardData';
 import {withRouter} from 'react-router-dom';
 
 export const DefaultDashboard = () => {
-  const [barangayData] = useState(BarangayData)
+  const [barangayData] = useState(BarangayData);
+  const [newsReportData] = useState(NewsReportData);
 
   return (
     <>
@@ -48,12 +49,7 @@ export const DefaultDashboard = () => {
       </Row>
 
       <Row gutter={8} >
-        <Col xs={24} sm={24} md={24} xl={12}>
-          <News></News>
-          <News></News>
-          <News></News>
-        </Col>
-
+        <News newsReportData={newsReportData}></News>
       </Row>
       </Col>
       <Col xs={24} sm={24} md={24} xl={4}></Col>

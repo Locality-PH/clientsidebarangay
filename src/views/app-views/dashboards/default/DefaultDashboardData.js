@@ -78,85 +78,34 @@ export const BarangayData = [{
 	title: "Sumulong St, Morong, Rizal",
 	name: "San Guilliermo",
 }
-]
+];
 
 export const NewsReportData = [{
-	img: "/img/avatars/thumb-2.jpg",
+	img: "/img/avatars/thumb-9.jpg",
+	href: 'https://ant.design',
 	title: "Modified Enhanced Community Quaratine",
-	author: "Mike Enriquez",
 	type: "Global Nation",
-	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+	content: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
 },
 {
 	img: "/img/avatars/thumb-2.jpg",
-	title: "Modified Enhanced Community Quaratine",
-	author: "Coby",
-	type: "Sport",
-	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+	href: 'https://ant.design',
+	title: "LOL World Championships",
+	type: "Sports",
+	content: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
 },
 {
-	img: "/img/avatars/thumb-2.jpg",
-	title: "Modified Enhanced Community Quaratine",
-	author: "Mike Enriquez",
-	type: "Global Nation",
-	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+	img: "/img/avatars/thumb-3.jpg",
+	href: 'https://ant.design',
+	title: "Adele's new Album out Nov. 19",
+	type: "Entertainment",
+	content: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
 },
 {
-	img: "/img/avatars/thumb-2.jpg",
-	title: "Modified Enhanced Community Quaratine",
-	author: "Mike Enriquez",
-	type: "Global Nation",
-	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
-},
-{
-	img: "/img/avatars/thumb-2.jpg",
-	title: "Modified Enhanced Community Quaratine",
-	author: "Mike Enriquez",
-	type: "Global Nation",
-	about: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+	img: "/img/avatars/thumb-4.jpg",
+	href: 'https://ant.design',
+	title: "First Youtube Video",
+	type: "Technology",
+	content: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
 }
-
-]
-
-// export const RecentTransactionData = [
-// 	{
-// 		id: '#5331',
-// 		name: 'Clayton Bates',
-// 		date: '8 May 2020',
-// 		amount: '$137.00',
-// 		status: 'Approved',
-// 		avatarColor: '#04d182'
-// 	},
-// 	{
-// 		id: '#5332',
-// 		name: 'Gabriel Frazier',
-// 		date: '6 May 2020',
-// 		amount: '$322.00',
-// 		status: 'Approved',
-// 		avatarColor: '#fa8c16'
-// 	},
-// 	{
-// 		id: '#5333',
-// 		name: 'Debra Hamilton',
-// 		date: '1 May 2020',
-// 		amount: '$543.00',
-// 		status: 'Pending',
-// 		avatarColor: '#1890ff'
-// 	},
-// 	{
-// 		id: '#5334',
-// 		name: 'Stacey Ward',
-// 		date: '28 April 2020',
-// 		amount: '$876.00',
-// 		status: 'Rejected',
-// 		avatarColor: '#ffc542'
-// 	},
-// 	{
-// 		id: '#5335',
-// 		name: 'Troy Alexander',
-// 		date: '28 April 2020',
-// 		amount: '$241.00',
-// 		status: 'Approved',
-// 		avatarColor: '#ff6b72'
-// 	},
-// ];
+];
