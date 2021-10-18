@@ -29,6 +29,7 @@ const News = ({newsReportData}) => {
                 <List
                     itemLayout="vertical"
                     size="large"
+                    bordered={true}
                     pagination={{
                     onChange: page => {
                         console.log(page);
