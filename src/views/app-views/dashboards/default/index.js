@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Button, Card} from 'antd';
-import AvatarStatus from 'components/shared-components/AvatarStatus';
+import { UserAddOutlined } from '@ant-design/icons';
 import BarangayLinks from "./BarangayLinks";
 import TrendingNews from "./TrendingNews";
 import News from "./News";
@@ -15,21 +15,14 @@ export const DefaultDashboard = () => {
 
   return (
     <>
-    <Row>
-      <Col xs={24} sm={24} md={24} xl={4}> </Col>
-      <Col xs={24} sm={24} md={24} xl={16}>
-
-      <Row gutter={8} >
-        <Col xs={24} sm={24} md={24} xl={9}>
+      <Row gutter={16} >
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
             <Card title="List of Barangay">
                     <div className="mt-3">
                       {
                         barangayData.map((elm, i) => (
                           <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
                             <BarangayLinks id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
-                            {/* <div>
-                              <Button icon={<UserAddOutlined />} type="default" size="small">Visit</Button>
-                            </div> */}
                           </div>
                         ))
                       }
@@ -37,7 +30,7 @@ export const DefaultDashboard = () => {
                   </Card>
         </Col>
 
-        <Col xs={24} sm={24} md={24} xl={15}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
           <Card title="Trending News">
             <TrendingNews title="Modified Enhanced Community Quaratine" newsType="Global Nation" like={109.9}></TrendingNews>
             <TrendingNews title="LOL World Championships" newsType="Sports" like={92.7}></TrendingNews>
@@ -46,15 +39,25 @@ export const DefaultDashboard = () => {
           </Card>
         </Col>
 
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+            <Card title="List of Barangay">
+                    <div className="mt-3">
+                      {
+                        barangayData.map((elm, i) => (
+                          <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
+                            <BarangayLinks id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </Card>
+        </Col>
+
       </Row>
 
-      <Row gutter={8} >
+      <Row gutter={16} >
         <News newsReportData={newsReportData}></News>
       </Row>
-      </Col>
-      <Col xs={24} sm={24} md={24} xl={4}></Col>
-
-    </Row>  
     </>
   )
 }

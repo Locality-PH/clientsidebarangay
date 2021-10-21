@@ -1,12 +1,8 @@
 import React from 'react'
-import { Row, Col, Button, Card, Avatar, Dropdown, Table, Menu, Tag } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import { 
-    UserAddOutlined, 
-    FileExcelOutlined, 
     PrinterOutlined, 
-    PlusOutlined, 
     EllipsisOutlined, 
-    StopOutlined, 
     ReloadOutlined 
 } from '@ant-design/icons';
 
@@ -45,11 +41,11 @@ const TrendingNews = ({title, newsType, like}) => {
             <div className="d-flex align-items-center justify-content-between mb-4">
                 <div className="avatar-status d-flex align-items-center">
                   <div className="ml-2">
-                  <div className="text-muted avatar-status-subtitle">{newsType}</div>
+                  <div className="text-muted avatar-status-subtitle h5">{newsType}</div>
                     <div>
-                        <div className="avatar-status-name">{title}</div>
+                        <div className="avatar-status-name h4">{title}</div>
                     </div>
-                    <div className="text-muted avatar-status-subtitle">{like}k Tweets</div>
+                    <div className="text-muted avatar-status-subtitle h5">{like}k Tweets</div>
                   </div>
                 </div>
                 <div>

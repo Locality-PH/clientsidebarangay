@@ -8,6 +8,7 @@ export const AUTH_PREFIX_PATH = '/auth';
 
 export const THEME_CONFIG = {
 	navType: "TOP",
+	mobileNav: false,
 	sideNavTheme: "SIDE_NAV_LIGHT",
 	navCollapsed: false,
 	topNavColor: "#3e82f7",

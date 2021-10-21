@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar } from 'antd';
+import { Avatar, Button} from 'antd';
 import {Link} from "react-router-dom";
 
 const renderAvatar = props => {
@@ -15,14 +15,17 @@ export const BarangayLinks = props => {
 				{renderAvatar({icon, src, type, size, shape, gap, text })}
 				<div className="ml-2">
 					<div>
-						<Link to={`barangay/${name}`}>
-							<div className="avatar-status-name">{name}</div>
-							<span>{suffix}</span>
-						</Link>
+						<div className="avatar-status-name h4">{name}</div>
+						<span>{suffix}</span>
 					</div>
-					<div className="text-muted avatar-status-subtitle">{subTitle}</div>
+					<div className="text-muted avatar-status-subtitle h5">{subTitle}</div>
 				</div>
 			</div>
+			<div>
+				<Link to={`barangay/${name}`}>
+					<Button type="primary" shape="round">View</Button>
+				</Link>
+    		</div>
 		</>
 	)
 }
