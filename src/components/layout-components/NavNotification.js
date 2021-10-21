@@ -90,7 +90,7 @@ export const NavNotification = () => {
       <Menu mode="horizontal">
         <Menu.Item key="notification">
           <Badge count={data.length}>
-            <BellOutlined className="nav-icon mx-auto" type="bell" />
+            <BellOutlined className="nav-icon mx-auto" type="bell" style={{color: "white"}}/>
           </Badge>
         </Menu.Item>
       </Menu>

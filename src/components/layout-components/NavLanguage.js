@@ -57,7 +57,7 @@ export const NavLanguage = ({ locale, configDisplay, onLocaleChange }) => {
 					<Menu mode="horizontal">
 						<Menu.Item key="language">
 							<a href="#/" onClick={e => e.preventDefault()}>
-								<GlobalOutlined className="nav-icon mr-0" />
+								<GlobalOutlined className="nav-icon mr-0" style={{color: "white"}}/>
 							</a>
 						</Menu.Item>
 					</Menu>

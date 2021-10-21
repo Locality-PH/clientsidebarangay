@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Row, Col, Button, Card} from 'antd';
-import { UserAddOutlined } from '@ant-design/icons';
+import { Row, Col, Card} from 'antd';
+import { Skeleton} from 'antd';
 import BarangayLinks from "./BarangayLinks";
 import TrendingNews from "./TrendingNews";
 import News from "./News";
@@ -17,17 +17,17 @@ export const DefaultDashboard = () => {
     <>
       <Row gutter={16} >
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-            <Card title="List of Barangay">
-                    <div className="mt-3">
-                      {
-                        barangayData.map((elm, i) => (
-                          <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
-                            <BarangayLinks id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
-                          </div>
-                        ))
-                      }
-                    </div>
-                  </Card>
+          <Card title="List of Barangay" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
+                  <div className="mt-3">
+                    {
+                      barangayData.map((elm, i) => (
+                        <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
+                          <BarangayLinks id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
+                        </div>
+                      ))
+                    }
+                  </div>
+          </Card>
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
@@ -40,17 +40,11 @@ export const DefaultDashboard = () => {
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-            <Card title="List of Barangay">
-                    <div className="mt-3">
-                      {
-                        barangayData.map((elm, i) => (
-                          <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
-                            <BarangayLinks id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
-                          </div>
-                        ))
-                      }
-                    </div>
-                  </Card>
+          <Card>
+            <Skeleton loading={true} avatar active>
+              
+            </Skeleton>
+          </Card>
         </Col>
 
       </Row>

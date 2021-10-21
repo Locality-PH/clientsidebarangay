@@ -61,7 +61,7 @@ export const HeaderNav = props => {
   })
   
   return (
-    <Header className={`app-header ${navMode}`} style={{backgroundColor: headerNavColor}}>
+    <Header className={`app-header ${navMode}`} style={{backgroundColor: "#444444", height: "90px"}}>
       <div className={`app-header-wrapper ${isNavTop ? 'layout-top-nav' : ''}`}>
         <Logo logoType={navMode}/>
         <div className="nav" style={{width: `calc(100% - ${getNavWidth()})`}}>
@@ -93,7 +93,7 @@ export const HeaderNav = props => {
             <NavProfile />
             <NavPanel direction={direction} />
           </div>
-          <NavSearch active={searchActive} close={onSearchClose}/>
+          {/* <NavSearch active={searchActive} close={onSearchClose}/> */}
         </div>
       </div>
     </Header>
