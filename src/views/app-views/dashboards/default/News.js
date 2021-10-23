@@ -37,9 +37,9 @@ const News = ({title, type, img, content}) => {
                             <div className="d-flex align-items-center">
                                 <Space>
                                     <HeartOutlined style={{fontSize: "1.8rem", color: "#3e79f7"}}/>
-                                    <p>72</p>
+                                    <p style={{color: "#3e79f7"}}>72</p>
                                     <MessageOutlined style={{fontSize: "1.8rem", color: "#3e79f7"}}/>
-                                    <p>8</p>
+                                    <p style={{color: "#3e79f7"}}>8</p>
                                 </Space>
                             </div>
                             <div>
