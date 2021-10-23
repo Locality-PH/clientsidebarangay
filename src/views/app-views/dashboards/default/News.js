@@ -2,59 +2,14 @@ import React from 'react'
 import { Typography, Col, Avatar, Card, Button, Space} from 'antd';
 import { HeartOutlined, MessageOutlined } from '@ant-design/icons';
 import {Link} from "react-router-dom";
-// import from '@ant-design/icons';
 const { Text } = Typography;
-
-
 
 const News = ({title, type, img, content}) => {
     const color = ["#E1F8DC", "#FEF8DD", "#FFE7C7", "#B7E9F7", "#ADF7B6"]
     const randomColor = Math.floor(Math.random() * color.length);
-    // const IconText = ({ icon, text }) => (
-    //     <Space>
-    //       {React.createElement(icon)}
-    //       {text}
-    //     </Space>
-    //   );
 
     return (
         <>
-            {/* <List
-                itemLayout="vertical"
-                size="large"
-                bordered={true}
-                pagination={{
-                onChange: page => {
-                    console.log(page);
-                },
-                pageSize: 3,
-                }}
-                dataSource={newsReportData}
-                renderItem={item => (
-                <List.Item
-                    key={item.title}
-                    actions={[
-                    <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                    <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                    <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                    ]}
-                    extra={
-                    <img
-                        width={272}
-                        alt="logo"
-                        src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                    />
-                    }
-                >
-                    <List.Item.Meta
-                    avatar={<Avatar src={item.img} />}
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.type}
-                    />
-                    {item.content}
-                </List.Item>
-                )}
-            /> */}
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
                 <Card title={
                     <>
