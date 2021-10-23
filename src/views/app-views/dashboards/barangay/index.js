@@ -17,41 +17,77 @@ const Index = ({match}) => {
         <h1>{match.params.name}</h1>
         <Row gutter={16} >
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-            <Card title="List of Barangay" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
-                    <div className="mt-3">
-                        {
-                        barangayData.map((elm, i) => (
-                            <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
-                            <BarangayLinks id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
-                            </div>
-                        ))
-                        }
-                    </div>
-            </Card>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
             </Col>
-
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-            <Card title="Trending News">
-                <TrendingNews title="Modified Enhanced Community Quaratine" newsType="Global Nation" like={109.9}></TrendingNews>
-                <TrendingNews title="LOL World Championships" newsType="Sports" like={92.7}></TrendingNews>
-                <TrendingNews title="Adele's new Album out Nov. 19" newsType="Entertainment" like={75.1}></TrendingNews>
-                <TrendingNews title="First Youtube Video" newsType="Technology" like={56.4}></TrendingNews>
-            </Card>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
             </Col>
-
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-            <Card>
-                <Skeleton loading={true} avatar active>
-                
-                </Skeleton>
-            </Card>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
             </Col>
-
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card>
+                    <Skeleton loading={true} avatar active>
+                    
+                    </Skeleton>
+                </Card>
+            </Col>
         </Row>
-
-        <Row gutter={16} >
-            <News newsReportData={newsReportData}></News>
-        </Row>
+      
     </>
   )
 }
