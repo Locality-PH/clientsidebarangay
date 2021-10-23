@@ -20,9 +20,9 @@ export const DefaultDashboard = () => {
           <Card title="List of Barangay" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
                   <div className="mt-3">
                     {
-                      barangayData.map((elm, i) => (
+                      barangayData.map((result, i) => (
                         <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
-                          <BarangayLinks id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
+                          <BarangayLinks id={i} src={result.img} name={result.name} subTitle={result.title} />
                         </div>
                       ))
                     }
@@ -50,7 +50,11 @@ export const DefaultDashboard = () => {
       </Row>
 
       <Row gutter={16} >
-        <News newsReportData={newsReportData}></News>
+        {
+          newsReportData.map((result, id) => 
+            <News key={id} title={result.title} type={result.type} img={result.img} content={result.content}></News>
+          )
+        }
       </Row>
     </>
   )
