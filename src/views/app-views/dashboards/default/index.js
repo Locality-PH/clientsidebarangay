@@ -3,14 +3,16 @@ import { Row, Col, Card} from 'antd';
 import { Skeleton} from 'antd';
 import BarangayLinks from "./BarangayLinks";
 import TrendingNews from "./TrendingNews";
+import Causes from "./Causes"
 import News from "./News";
 import { 
-  BarangayData, NewsReportData
+  BarangayData, CausesData, NewsReportData
 } from './DefaultDashboardData';
 import {withRouter} from 'react-router-dom';
 
 export const DefaultDashboard = () => {
   const [barangayData] = useState(BarangayData);
+  const [causesData] = useState(CausesData);
   const [newsReportData] = useState(NewsReportData);
 
   return (
@@ -32,10 +34,15 @@ export const DefaultDashboard = () => {
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
           <Card title="Trending Causes" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
-            <TrendingNews title="Modified Enhanced Community Quaratine" newsType="Global Nation" like={109.9}></TrendingNews>
-            <TrendingNews title="LOL World Championships" newsType="Sports" like={92.7}></TrendingNews>
-            <TrendingNews title="Adele's new Album out Nov. 19" newsType="Entertainment" like={75.1}></TrendingNews>
-            <TrendingNews title="First Youtube Video" newsType="Technology" like={56.4}></TrendingNews>
+            <div className="mt-3">
+              {
+                causesData.map((result, i) => (
+                  <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
+                    <Causes id={i} src={result.img} name={result.title} subTitle={result.supporters} />
+                  </div>
+                ))
+              }
+            </div>
           </Card>
         </Col>
 

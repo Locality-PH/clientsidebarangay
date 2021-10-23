@@ -27,6 +27,35 @@ export const BarangayData = [{
 }
 ];
 
+export const CausesData = [{
+	img: "/img/avatars/thumb-2.jpg",
+	title: "Poverty Alleviation",
+	supporters: 283
+},
+{
+	img: "/img/avatars/thumb-3.jpg",
+	title: "Racial Justice",
+	supporters: 99
+},
+{
+	img: "/img/avatars/thumb-4.jpg",
+	title: "Mental Health",
+	supporters: 767,
+}
+,
+{
+	img: "/img/avatars/thumb-5.jpg",
+	title: "Gender Equality",
+	supporters: 845
+}
+,
+{
+	img: "/img/avatars/thumb-6.jpg",
+	title: "Orphanages",
+	supporters: 177
+}
+];
+
 export const NewsReportData = [{
 	img: "/img/avatars/thumb-9.jpg",
 	href: 'https://ant.design',
