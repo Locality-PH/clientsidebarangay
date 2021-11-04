@@ -14,64 +14,12 @@ const Index = ({match}) => {
 
   return (
     <>
-        <h1>{match.params.name}</h1>
+        <Row>
+            <Card>
+                <h1>{match.params.name}</h1>
+            </Card>
+        </Row>
         <Row gutter={16} >
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
                 <Card>
                     <Skeleton loading={true} avatar active>
