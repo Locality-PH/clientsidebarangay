@@ -83,5 +83,12 @@ export const NewsReportData = [{
 	title: "First Youtube Video",
 	type: "Technology",
 	content: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
+},
+{
+	img: "/img/avatars/thumb-4.jpg",
+	href: 'https://ant.design',
+	title: "First Youtube Video",
+	type: "Technology",
+	content: "The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "
 }
 ];

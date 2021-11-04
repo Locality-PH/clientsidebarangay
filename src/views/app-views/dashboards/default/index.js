@@ -33,7 +33,7 @@ export const DefaultDashboard = () => {
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <Card title="Trending Causes" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
+          <Card title="Causes" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
             <div className="mt-3">
               {
                 causesData.map((result, i) => (
