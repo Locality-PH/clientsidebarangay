@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { Row, Col, Card, Avatar, Typography, Button} from 'antd';
+import { Row, Col, Card, Avatar, Typography, Tag, Button} from 'antd';
+import { CheckCircleFilled } from '@ant-design/icons';
 const { Text, Link } = Typography;
 
 const renderAvatar = props => {
@@ -20,7 +21,7 @@ export const Header = props => {
                                 {renderAvatar({icon, src, type, size, shape, gap, text })}
                                 <div className="ml-4">
                                     <div>
-                                        <div className="avatar-status-name h1">{name}</div>
+                                        <div className="avatar-status-name h1">Barangay of {name} Morong Rizal <CheckCircleFilled style={{color: "#3e79f7"}}/></div>
                                         <span>{suffix}</span>
                                     </div>
                                     <div className="text-muted avatar-status-subtitle h3">{subTitle}</div>
@@ -30,9 +31,9 @@ export const Header = props => {
                             <div>
                             </div>
                         </div>
-                        {/* <Col xs={24} sm={24} md={24} lg={12}>
-                        <Text className="h4">{content}</Text>
-                        </Col> */}
+                        <Col xs={24} sm={24} md={24} lg={12}>
+                            <Tag color="green" style={{fontSize: "1.2rem"}}>"{content}"</Tag>
+                        </Col>
                         
                     </Card>
                 </Col>
