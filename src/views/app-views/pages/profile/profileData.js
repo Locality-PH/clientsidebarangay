@@ -98,27 +98,27 @@ export const interestedList = [
 export const connectionList = [
 	{
 		img: "/img/avatars/thumb-2.jpg",
-		title: "Software Engineer",
+		title: "Barangay Captain",
 		name: "Terrance Moreno",
 	},
 	{
 		img: "/img/avatars/thumb-3.jpg",
-		title: "UI/UX Designer",
+		title: "Barangay Secretary",
 		name: "Ron Vargas",
 	},
 	{
 		img: "/img/avatars/thumb-4.jpg",
-		title: "HR Executive",
+		title: "Barangay Treasurer",
 		name: "Luke Cook",
 	},
 	{
 		img: "/img/avatars/thumb-5.jpg",
-		title: "Frontend Developer",
+		title: "Barangay Councilor",
 		name: "Joyce Freeman",
 	},
 	{
 		img: "/img/avatars/thumb-6.jpg",
-		title: "Compliance Manager",
+		title: "Barangay Chairman",
 		name: "Samantha Phillips",
 	}
 ]
