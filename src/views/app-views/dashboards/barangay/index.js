@@ -1,40 +1,30 @@
 import React, { useState } from "react";
-import { Row, Col, Card} from 'antd';
-import { Skeleton} from 'antd';
+import { Row, Col, Card, Typography, Button} from 'antd';
 import BarangayLinks from "../default/BarangayLinks";
-import TrendingNews from "../default/TrendingNews";
-import News from "../default/News";
+import Header from "./Header";
 import { 
   BarangayData, NewsReportData
 } from '../default/DefaultDashboardData';
 
+const { Text, Link } = Typography;
+
 const Index = ({match}) => {
     const [barangayData] = useState(BarangayData);
-    const [newsReportData] = useState(NewsReportData);
 
   return (
-    <>
-        <Row>
-            <Card>
-                <h1>{match.params.name}</h1>
-            </Card>
-        </Row>
-        <Row gutter={16} >
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-                <Card>
-                    <Skeleton loading={true} avatar active>
-                    
-                    </Skeleton>
-                </Card>
-            </Col>
-        </Row>
+    <> 
+        <Header name={match.params.name} src="/img/avatars/thumb-2.jpg" size={100} subTitle="Morong, Rizal" content="The Department of Health (DOH) reported 12,159 new coronavirus cases on Sunday, October 10. This brings the total confirmed cases in the Philippines to 2,666,562. "></Header>
+        <Row gutter={16}>
+				<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={7} >
+                    <Card title="About">
+                        <Text className="h4">The Philippines is one of the world’s largest archipelago nations. It is situated in Southeast Asia in the Western Pacific Ocean. Its islands are classified into three main geographical areas – Luzon, Visayas, and Mindanao. Because of its archipelagic nature, Philippines is a culturally diverse country. With its topography consisting of mountainous terrains, dense forests, plains, and coastal areas.</Text>
+                        
+                            <div className="mt-3">
+                                <Button type="primary" shape="round" style={{width: "100%", height: "3rem"}}>Learn More</Button>
+                            </div>
+                    </Card>
+				</Col>
+		</Row>
       
     </>
   )
