@@ -3,6 +3,7 @@ import { Row, Col, Card, Typography, Button} from 'antd';
 import HeaderCover from "./HeaderCover";
 import Header from "./Header";
 import Officials from "./Officials";
+import Events from "./Events";
 import About from "./About";
 import MissionAndVision from "./MissionAndVision"
 import Projects from "./Projects";
@@ -29,6 +30,7 @@ const Index = ({match}) => {
         <Row gutter="16">
           <Col xs={24} sm={24} md={8}>
             <Officials></Officials>
+            <Events></Events>
             <About></About>
           </Col>
           

@@ -123,20 +123,20 @@ export const barangayOfficialsData = [
 	}
 ]
 
-export const groupList = [
+export const barangayEvents = [
 	{
 		img: "/img/thumbs/thumb-4.jpg",
-		name: "Twitchers",
+		name: "Tapat mo Linis mo",
 		desc: "Twitch Streamers Group",
 	},
 	{
 		img: "/img/thumbs/thumb-5.jpg",
-		name: "Mongo World",
+		name: "Fun Run Saya",
 		desc: "MongoDB Community",
 	},
 	{
 		img: "/img/thumbs/thumb-6.jpg",
-		name: "Dribbble",
+		name: "Paliga",
 		desc: "Group for Designer",
 	}
 ]

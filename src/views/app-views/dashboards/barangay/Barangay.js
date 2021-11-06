@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Card, Avatar, Button, Typography } from 'antd';
 import { Icon } from 'components/util-components/Icon'
-import { barangayProjectsData, interestedList, barangayOfficialsData, groupList } from './BarangayData';
+import { barangayProjectsData, interestedList, barangayOfficialsData, barangayEvents } from './BarangayData';
 import { 
 	GlobalOutlined,
 	MailOutlined,
@@ -151,9 +151,9 @@ const Connection = () => (
 const Group = () => (
 	<Card title="Upcoming Events">
 		{
-			groupList.map((elm, i) => {
+			barangayEvents.map((elm, i) => {
 				return (
-					<div className={`${i === (groupList.length - 1)? '' : 'mb-4'}`} key={`connection-${i}`}>
+					<div className={`${i === (barangayEvents.length - 1)? '' : 'mb-4'}`} key={`connection-${i}`}>
 						<AvatarStatus src={elm.img} name={elm.name} subTitle={elm.desc}/>
 					</div>
 				)
