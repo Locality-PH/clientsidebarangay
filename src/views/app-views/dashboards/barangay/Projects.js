@@ -18,11 +18,11 @@ const Projects = () => {
                 <div className="mb-3">
                     <Row>
                         <Col sm={24} md={22}>
-                            {projects.map((elm, i) => {
+                            {projects.map((result, i) => {
                                 return (
                                     <div className={`${i === (projects.length - 1)? '' : 'mb-4'}`} key={`eduction-${i}`}>
-                                        <AvatarStatus src={elm.img} name={elm.title} subTitle={elm.duration}/>
-                                        <p className="pl-5 mt-2 mb-0">{elm.desc}</p>
+                                        <AvatarStatus src={result.img} name={result.title} subTitle={result.duration}/>
+                                        <p className="pl-5 mt-2 mb-0">{result.desc}</p>
                                     </div>
                                 )
                             })}
