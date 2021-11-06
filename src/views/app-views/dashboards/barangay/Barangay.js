@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Card, Avatar, Button, Typography } from 'antd';
 import { Icon } from 'components/util-components/Icon'
-import { employementList, interestedList, barangayOfficialsData, groupList } from './BarangayData';
+import { barangayProjectsData, interestedList, barangayOfficialsData, groupList } from './BarangayData';
 import { 
 	GlobalOutlined,
 	MailOutlined,
@@ -93,9 +93,9 @@ const Experiences = () => (
 		<div className="mb-3">
 			<Row>
 				<Col sm={24} md={22}>
-					{employementList.map((elm, i) => {
+					{barangayProjectsData.map((elm, i) => {
 						return (
-							<div className={`${i === (employementList.length - 1)? '' : 'mb-4'}`} key={`eduction-${i}`}>
+							<div className={`${i === (barangayProjectsData.length - 1)? '' : 'mb-4'}`} key={`eduction-${i}`}>
 								<AvatarStatus src={elm.img} name={elm.title} subTitle={elm.duration}/>
 								<p className="pl-5 mt-2 mb-0">{elm.desc}</p>
 							</div>

@@ -47,7 +47,7 @@ export const contactList = [
 ]
 
 
-export const employementList = [
+export const barangayProjectsData = [
 	{
 		img: "/img/thumbs/thumb-1.jpg",
 		title: "Software Engineer, Google Inc.",
