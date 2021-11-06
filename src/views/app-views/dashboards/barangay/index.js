@@ -14,7 +14,11 @@ const Index = ({match}) => {
 
   return (
     <> 
-        <Barangay name={match.params.name}></Barangay>
+        <Header name={match.params.name} avatarSize={150}
+        quote="We rise and fall as one people, one nation."
+        email="caniogan@gmail.com" phoneNumber="+12 123 1234" address="Caniogan Morong, Rizal"
+        website="facebook.com"></Header>
+        {/* <Barangay name={match.params.name}></Barangay> */}
     </>
   )
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Card, Avatar, Button, Typography } from 'antd';
 import { Icon } from 'components/util-components/Icon'
-import { employementList, interestedList, connectionList, groupList } from '../../pages/profile/profileData';
+import { employementList, interestedList, connectionList, groupList } from './BarangayData';
 import { 
 	GlobalOutlined,
 	MailOutlined,
