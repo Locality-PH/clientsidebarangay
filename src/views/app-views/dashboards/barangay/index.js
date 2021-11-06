@@ -4,6 +4,7 @@ import HeaderCover from "./HeaderCover";
 import Header from "./Header";
 import Officials from "./Officials";
 import About from "./About";
+import MissionAndVision from "./MissionAndVision"
 import Projects from "./Projects";
 import Barangay from "./Barangay";
 import { 
@@ -32,7 +33,16 @@ const Index = ({match}) => {
           </Col>
           
           <Col xs={24} sm={24} md={16}>
+            <MissionAndVision></MissionAndVision>
             <Projects></Projects>
+            <Card>
+              <img
+                      width="100%"
+                      alt="logo"
+                      src="/img/barangay/caniogan/BarangayCover.jpg"
+                      style={{borderRadius: "1rem 1rem"}}
+              />
+            </Card>
           </Col>
         </Row> 
       </div>
