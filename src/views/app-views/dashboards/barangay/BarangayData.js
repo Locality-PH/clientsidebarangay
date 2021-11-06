@@ -95,7 +95,7 @@ export const interestedList = [
 	}
 ]
 
-export const connectionList = [
+export const barangayOfficialsData = [
 	{
 		img: "/img/avatars/thumb-2.jpg",
 		title: "Barangay Captain",

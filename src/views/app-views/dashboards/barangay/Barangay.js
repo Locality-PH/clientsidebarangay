@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Card, Avatar, Button, Typography } from 'antd';
 import { Icon } from 'components/util-components/Icon'
-import { employementList, interestedList, connectionList, groupList } from './BarangayData';
+import { employementList, interestedList, barangayOfficialsData, groupList } from './BarangayData';
 import { 
 	GlobalOutlined,
 	MailOutlined,
@@ -137,9 +137,9 @@ const Interested = () => (
 const Connection = () => (
 	<Card title="Barangay Officials 2019-2021">
 		{
-			connectionList.map((elm, i) => {
+			barangayOfficialsData.map((elm, i) => {
 				return (
-					<div className={`${i === (connectionList.length - 1)? '' : 'mb-4'}`} key={`connection-${i}`}>
+					<div className={`${i === (barangayOfficialsData.length - 1)? '' : 'mb-4'}`} key={`connection-${i}`}>
 						<AvatarStatus src={elm.img} name={elm.name} subTitle={elm.title}/>
 					</div>
 				)
