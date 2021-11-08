@@ -6,11 +6,11 @@ const Dashboards = ({ match }) => {
   return(
   <Suspense fallback={<Loading cover="content"/>}>
     <Switch>
-      <Route path={`${match.url}/default`} component={lazy(() => import(`./default`))} />
-      <Route path={`${match.url}/barangay/:name`} component={lazy(() => import(`./barangay`))} />
+      <Route path={`${match.url}/barangay`} component={lazy(() => import(`./default`))} exact/>
+      <Route path={`${match.url}/barangay/:name`} component={lazy(() => import(`./barangay`))} exact/>
       <Route path={`${match.url}/analytic`} component={lazy(() => import(`./analytic`))} />
       <Route path={`${match.url}/sales`} component={lazy(() => import(`./sales`))} />
-      <Redirect from={`${match.url}`} to={`${match.url}/default`} />
+      <Redirect from={`${match.url}`} to={`${match.url}/barangay`} />
     </Switch>
   </Suspense>
 )};

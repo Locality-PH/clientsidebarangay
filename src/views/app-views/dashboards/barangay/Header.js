@@ -9,6 +9,8 @@ import {
 } from '@ant-design/icons';
 import Flex from 'components/shared-components/Flex'
 
+import {Link} from "react-router-dom";
+
 const Header = ({name, avatarSize, quote, email, phoneNumber, address, website}) => {
 	return (
 			<>
@@ -26,7 +28,10 @@ const Header = ({name, avatarSize, quote, email, phoneNumber, address, website})
 									<Flex alignItems="center" mobileFlex={false} className="mb-3 text-md-left text-center">
 										<h2 className="mb-0 mt-md-0 mt-2">Barangay {name}</h2>
 										<div className="ml-md-3 mt-3 mt-md-0">
-											<Button size="small" type="primary">Recident</Button>
+											<Link to={`/app/dashboards/barangay/${name}`}>
+												<Button size="small" type="primary">Home</Button>
+											</Link>
+											
 											<Button size="small" type="primary" className="ml-2">Blotter</Button>
 											<Button size="small" className="ml-2">Message</Button>
 										</div>
