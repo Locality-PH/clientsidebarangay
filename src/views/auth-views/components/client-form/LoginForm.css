@@ -1,0 +1,20 @@
+.ant-card-body {
+    padding-bottom: 0px;
+}
+
+.form-label{
+    font-family: 'proxima-nova', sans-serif;
+    font-weight: bolder;
+    color: black;
+}
+
+.form-title {
+    font-weight: bolder;
+}
+
+.login-btn {
+    background-color: #0033cc;
+    color: white;
+    font-weight: bold; 
+    width: 100%;
+}
