@@ -1,17 +1,53 @@
 import React from 'react'
-import { Row, Col, Card, Avatar, Button } from 'antd';
+import { Row, Col, Card, Avatar, Button, Menu, Dropdown, Space} from 'antd';
 import { Icon } from 'components/util-components/Icon'
 import { 
 	GlobalOutlined,
 	MailOutlined,
 	HomeOutlined,
-	PhoneOutlined
+	PhoneOutlined,
+	EllipsisOutlined
 } from '@ant-design/icons';
 import Flex from 'components/shared-components/Flex'
 
 import {Link} from "react-router-dom";
 
 const Header = ({name, avatarSize, quote, email, phoneNumber, address, website}) => {
+	const menu = (
+		<Menu>
+		    <Menu.Item key="1">
+				<Link to="/test">Recident</Link>
+			</Menu.Item>
+			<Menu.Item key="2">
+				<Link to="/test">Certificate</Link>
+			</Menu.Item>
+			<Menu.Item key="3">
+				<Link to="/test">Report Incident</Link>
+			</Menu.Item>
+			<Menu.Item key="4">
+				<Link to={`/app/dashboards/barangay/${name}/about`}>About</Link>
+			</Menu.Item>
+		</Menu>
+	  );
+
+	  const DropdownMenu = () => (
+		<Dropdown key="more" overlay={menu}>
+		  <Button
+			style={{
+			  border: 'none',
+			  padding: 0,
+			}}
+		  >
+			<EllipsisOutlined
+			  style={{
+				fontSize: 20,
+				verticalAlign: 'top',
+			  }}
+			/>
+		  </Button>
+		</Dropdown>
+	  );
+
 	return (
 			<>
 				<Card>
@@ -28,12 +64,14 @@ const Header = ({name, avatarSize, quote, email, phoneNumber, address, website})
 									<Flex alignItems="center" mobileFlex={false} className="mb-3 text-md-left text-center">
 										<h2 className="mb-0 mt-md-0 mt-2">Barangay {name}</h2>
 										<div className="ml-md-3 mt-3 mt-md-0">
-											<Link to={`/app/dashboards/barangay/${name}`}>
-												<Button size="small" type="primary">Home</Button>
-											</Link>
+											<Space>
+												<Link to={`/app/dashboards/barangay/${name}`}>
+													<Button size="small" type="primary">Home</Button>
+												</Link>
+												<Button size="small">Message</Button>
+												<DropdownMenu></DropdownMenu>
+											</Space>
 											
-											<Button size="small" type="primary" className="ml-2">Blotter</Button>
-											<Button size="small" className="ml-2">Message</Button>
 										</div>
 									</Flex>
 									<Row gutter="16"> 
