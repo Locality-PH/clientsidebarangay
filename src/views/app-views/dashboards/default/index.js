@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Row, Col, Card} from 'antd';
-import { Skeleton} from 'antd';
+import React, {useState, useEffect} from 'react'
+import { Row, Col, Card, message, Button} from 'antd';
 import BarangayLinks from "./BarangayLinks";
 import TrendingNews from "./TrendingNews";
 import Causes from "./Causes"
@@ -11,18 +10,30 @@ import {
 import {withRouter} from 'react-router-dom';
 
 export const DefaultDashboard = () => {
-  const [barangayData] = useState(BarangayData);
+  const [barangayList, setBarangayList] = useState([]);
+  
   const [causesData] = useState(CausesData);
   const [newsReportData] = useState(NewsReportData);
 
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    setBarangayList(BarangayData)
+      setIsLoading(false)
+      setError("This is Error Message")
+  }, [barangayList])
+
+
   return (
     <>
+      {error && message.error(error)}
       <Row gutter={16} >
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <Card title="List of Barangay" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
+          <Card title="List of Barangay" loading={isLoading} extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
                   <div className="mt-3">
                     {
-                      barangayData.map((result, i) => (
+                      barangayList.map((result, i) => (
                         <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
                           <BarangayLinks id={i} src={result.img} name={result.name} subTitle={result.title} />
                         </div>
