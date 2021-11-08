@@ -25,6 +25,7 @@ const AdminRegisterForm = (props) => {
                     </div>
                 </QueueAnim>
             )}
+            
             {props.current === 1 && (
                 <div>
                     <QueueAnim delay={300} duration={1000}>

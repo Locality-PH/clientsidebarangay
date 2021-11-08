@@ -3,9 +3,9 @@ import { Row, Col, Card, Form, Input, Button, Checkbox } from "antd";
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 
-import './LoginForm.css';
+import './AdminLogin.css';
 
-function LoginForm() {
+function AdminLogin() {
     return (
         <div>
             <div style={{ alignSelf: 'center' }}>
@@ -53,7 +53,7 @@ function LoginForm() {
                         </Row>
                     </Form.Item>
 
-                    <Row justify="center" style={{marginBottom: "10px"}}>
+                    <Row justify="center">
                         <Col>
                             <a>Don't have an account yet? Sign up now.</a>
                         </Col>
@@ -67,4 +67,4 @@ function LoginForm() {
     )
 }
 
-export default LoginForm
+export default AdminLogin

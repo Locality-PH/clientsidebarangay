@@ -1,10 +1,5 @@
 import React from 'react'
 
-//Icons
-import { FcGoogle } from 'react-icons/fc';
-import { FaFacebook, FaInstagram, FaTwitterSquare, FaFacebookMessenger } from 'react-icons/fa';
-import { IoIosMail } from 'react-icons/io';
-
 //Components
 import LoginFormTest from '../../components/LoginForm.js';
 
@@ -14,6 +9,8 @@ import './index.css';
 //Hooks
 import { Row, Col, Card, Space, Layout, Menu, Breadcrumb, Button, Divider } from "antd";
 import { useSelector } from 'react-redux';
+
+import AdminLogin from 'views/auth-views/components/admin-login/AdminLogin.js';
 
 const { Header, Content, Footer } = Layout;
 
@@ -34,7 +31,7 @@ function admin_login() {
 					}
 
 				>
-					<LoginFormTest />
+					<AdminLogin />
 				</Card>
 			</Row>
 

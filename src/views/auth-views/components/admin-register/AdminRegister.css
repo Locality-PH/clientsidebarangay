@@ -2,6 +2,10 @@
     width: 1100px;
 }
 
+.sign-up-card{
+    
+}
+
 @media (max-width: 1399px) {
     .sign-up-card{
         width: 800px;
