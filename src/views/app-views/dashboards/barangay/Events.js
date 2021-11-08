@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { Card } from 'antd';
+import { Card, Button} from 'antd';
 import { barangayEvents } from './BarangayData';
+import {Link} from "react-router-dom";
 import AvatarStatus from 'components/shared-components/AvatarStatus';
 
 const Events = () => {
@@ -18,8 +19,11 @@ const Events = () => {
                 {
                     events.map((result, i) => {
                         return (
-                            <div className={`${i === (events.length - 1)? '' : 'mb-4'}`} key={`connection-${i}`}>
+                            <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
                                 <AvatarStatus src={result.img} name={result.name} subTitle={result.desc}/>
+                                <Link to="">
+                                    <Button type="primary" shape="round">View</Button>
+                                </Link>
                             </div>
                         )
                     }) 
