@@ -16,13 +16,13 @@ const Header = ({name, avatarSize, quote, email, phoneNumber, address, website})
 	const menu = (
 		<Menu>
 		    <Menu.Item key="1">
-				<Link to="/test">Recident</Link>
+				<Link to={`/app/dashboards/barangay/${name}/resident`}>Recident</Link>
 			</Menu.Item>
 			<Menu.Item key="2">
-				<Link to="/test">Certificate</Link>
+				<Link to={`/app/dashboards/barangay/${name}/certificate-request`}>Certificate</Link>
 			</Menu.Item>
 			<Menu.Item key="3">
-				<Link to="/test">Report Incident</Link>
+				<Link to={`/app/dashboards/barangay/${name}/report-incident`}>Report Incident</Link>
 			</Menu.Item>
 			<Menu.Item key="4">
 				<Link to={`/app/dashboards/barangay/${name}/about`}>About</Link>

@@ -1,20 +1,11 @@
-import React, { useState } from "react";
-import { Row, Col, Card, Typography, Button} from 'antd';
+import { Row, Col, Card} from 'antd';
 import Officials from "./Officials";
 import Events from "./Events";
 import About from "./About";
 import MissionAndVision from "./MissionAndVision"
 import Projects from "./Projects";
-import Barangay from "./Barangay";
-import { 
-  BarangayData, NewsReportData
-} from '../default/DefaultDashboardData';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-const { Text, Link } = Typography;
-
-const Index = ({match}) => {
-    const [barangayData] = useState(BarangayData);
+const Index = () => {
 
   return (
     <> 

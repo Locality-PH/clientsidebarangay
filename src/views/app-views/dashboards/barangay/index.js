@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import { Row, Col, Card, Typography, Button} from 'antd';
 import HeaderCover from "./HeaderCover";
 import Header from "./Header";
-import About from "./About";
 import Barangay from "./Barangay";
-import { 
-  BarangayData, NewsReportData
-} from '../default/DefaultDashboardData';
+import Resident from "./Resident";
+import CertificateRequestForm from "./CertificateRequestForm";
+import ReportIncident from "./ReportIncident";
+import AboutPage from "./AboutPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const Index = ({match}) => {
-    const [barangayData] = useState(BarangayData);
-
   return (
     <>
       <BrowserRouter>
@@ -23,7 +19,10 @@ const Index = ({match}) => {
             website="facebook.com"></Header>
           <Switch>
             <Route path={match.url} component={Barangay} exact></Route>
-            <Route path={`${match.url}/about`} component={About} exact></Route>
+            <Route path={`${match.url}/resident`} component={Resident} exact></Route>
+            <Route path={`${match.url}/certificate-request`} component={CertificateRequestForm} exact></Route>
+            <Route path={`${match.url}/report-incident`} component={ReportIncident} exact></Route>
+            <Route path={`${match.url}/about`} component={AboutPage} exact></Route>
           </Switch>
         </div>
 
