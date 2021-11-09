@@ -22,7 +22,7 @@ export const Causes = props => {
 				</div>
 			</div>
 			<div>
-				<Link to={`barangay/${name}`}>
+				<Link to="/">
 					<Button type="primary" shape="round">View</Button>
 				</Link>
     		</div>

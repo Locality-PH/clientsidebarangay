@@ -43,7 +43,7 @@ const News = ({title, type, img, content}) => {
                                 </Space>
                             </div>
                             <div>
-                                    <Link to="/test">
+                                    <Link to="/">
                                         <Button type="primary" shape="round">Visit</Button>
                                     </Link>
                             </div>
