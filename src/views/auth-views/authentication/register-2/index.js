@@ -1,57 +1,78 @@
-import React from 'react'
-import RegisterForm from '../../components/RegisterForm'
-import { Row, Col } from "antd";
-import { useSelector } from 'react-redux'
+import React from 'react';
 
-const backgroundURL = '/img/others/img-17.jpg'
-const backgroundStyle = {
-	backgroundImage: `url(${backgroundURL})`,
+//Icons
+import { FaFacebook, FaInstagram, FaTwitterSquare, FaFacebookMessenger } from 'react-icons/fa';
+
+//Components
+import RegisterForm from 'views/auth-views/components/client-form/RegisterForm';
+
+//CSS
+import './index.css';
+
+//Hooks
+import { Row, Col, Card, Space, Layout, Divider } from "antd";
+import { useSelector } from 'react-redux';
+
+const { Header, Content, Footer } = Layout;
+
+//Const
+const backgroundURL = '/img/others/office_bg.jpg'
+const navbarBgURL = 'https://png.pngtree.com/thumb_back/fw800/background/20190220/ourmid/pngtree-blue-gradient-summer-creative-image_9270.jpg'
+const loginImgURL = 'https://media.istockphoto.com/vectors/register-account-submit-access-login-password-username-internet-vector-id1281150061?b=1&k=20&m=1281150061&s=612x612&w=0&h=Wlus0AvwwVksa9X5w1RUyp1pu8_vbpVOdw25FLBEG_s='
+
+const navbarStyle = {
+	backgroundImage: `url(${navbarBgURL})`,
 	backgroundRepeat: 'no-repeat',
-	backgroundSize: 'cover'
+	backgroundSize: 'cover',
+	padding: "0px 300px"
 }
 
 const RegisterTwo = props => {
 	const theme = useSelector(state => state.theme.currentTheme)
 
 	return (
-		<div className={`h-100 ${theme === 'light' ? 'bg-white' : ''}`}>
-			<Row justify="center" className="align-items-stretch h-100">
-				<Col xs={20} sm={20} md={24} lg={16}>
-					<div className="container d-flex flex-column justify-content-center h-100">
-						<Row justify="center">
-							<Col xs={24} sm={24} md={20} lg={12} xl={8}>
-								<h1>Sign Up</h1>
-								<p>Already have an account? <a href="/auth/login-2">Sign In</a></p>
-								<div className="mt-4">
-									<RegisterForm {...props} />
-								</div>
-							</Col>
-						</Row>
-					</div>
-				</Col>
-				<Col xs={0} sm={0} md={0} lg={8}>
-					<div className="d-flex flex-column justify-content-between h-100 px-4" style={backgroundStyle}>
-						<div className="text-right">
-							<img src="/img/logo-white.png" alt="logo"/>
-						</div>
-						<Row justify="center">
-							<Col xs={0} sm={0} md={0} lg={20}>
-								<img className="img-fluid mb-5" src="/img/others/img-19.png" alt=""/>
-								<h1 className="text-white">Welcome to emilus</h1>
-								<p className="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper nisl erat, vel convallis elit fermentum pellentesque.</p>
-							</Col>
-						</Row>
-						<div className="d-flex justify-content-end pb-4">
-							<div>
-								<a className="text-white" href="/#" onClick={e => e.preventDefault()}>Term & Conditions</a>
-								<span className="mx-2 text-white"> | </span>
-								<a className="text-white" href="/#" onClick={e => e.preventDefault()}>Privacy & Policy</a>
-							</div>
-						</div>
-					</div>
-				</Col>
+
+		<div style={{ height: "100vh" }}>
+			<Row className="container" justify='center' align="middle" >
+
+				<Card className="login-card">
+					<Row >
+						<Col xl={12} span={0} className="col-login-left" >
+                            <img src={loginImgURL} alt="picture" className="photo" />
+
+						</Col>
+
+						<Col xl={12} span={24} className="login_right">
+							<RegisterForm />
+						</Col>
+					</Row>
+
+				</Card>
+
 			</Row>
+
+			<div className="footer">
+				<Row className="w-100 h-100" justify='center' align="middle" style={{padding: "15px 10px"}}>
+					<Space className="footer-content"direction="vertical" >
+						<Space>
+							<FaFacebook size="2em" color="black" />
+							<FaInstagram size="2em" color="black" />
+							<FaTwitterSquare size="2em" color="black" />
+						</Space>
+						<Space size={[0, 2]} split={<Divider type="vertical" />} wrap="true" style={{justifyContent: "center"}}>
+							<a>About Us</a>
+							<a>Contact Us</a>
+							<a>Terms &#38; Condition</a>
+							<a>Privacy Policy</a>
+							<a>Cookie Policy</a>
+
+						</Space>
+						©2021 Barangay App | All Rights Reserve.
+					</Space>
+				</Row>
+			</div>
 		</div>
+
 	)
 }
 

@@ -1,0 +1,14 @@
+
+.form-label{
+    font-family: 'proxima-nova', sans-serif;
+    font-weight: bolder;
+    color: black;
+}
+
+.form-title {
+    font-weight: bolder;
+}
+
+.container {
+    padding: 20px 20px 0px 20px;
+}
