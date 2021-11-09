@@ -43,6 +43,7 @@ export const LoginForm = props => {
 	}
 
 	const onLogin = values => {
+		console.log(values);
 		showLoading()
 		signIn(values);
 	};
@@ -58,6 +59,7 @@ export const LoginForm = props => {
 	}
 
 	useEffect(() => {
+		console.log(allowRedirect, redirect, token)
 		if (token !== null && allowRedirect) {
 			history.push(redirect)
 		}
@@ -103,6 +105,7 @@ export const LoginForm = props => {
 				}}> 
 				<Alert type="error" showIcon message={message}></Alert>
 			</motion.div>
+
 			<Form 
 				layout="vertical" 
 				name="login-form" 

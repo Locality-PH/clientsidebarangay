@@ -1,8 +1,10 @@
+
 import React, { useEffect } from 'react';
 
 import { Row, Col, Card, Form, Input, Button, Checkbox } from "antd";
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+
 
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
@@ -42,7 +44,7 @@ export const LoginForm = props => {
     } = props
 
     const initialCredential = {
-        email: 'user1@themenate.net',
+        username: 'user1@themenate.net',
         password: '2005ipo'
     }
 
@@ -74,6 +76,7 @@ export const LoginForm = props => {
         }
     });
 
+
     return (
         <div>
             <div style={{ alignSelf: 'center' }}>
@@ -81,11 +84,14 @@ export const LoginForm = props => {
 
                 <Form
                     name="login-form"
-                    initialValues={initialCredential}
+                    initialValues={{
+                        username: 'user1@themenate.net',
+                        password: '2005ipo'
+                    }}
                     onFinish={onLogin}
                 >
                     <Form.Item
-                        name="email"
+                        name="username"
                         label="Username: "
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
