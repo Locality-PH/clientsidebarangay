@@ -3,9 +3,6 @@
     width: 1000px;
     margin: 200px 0px;
 }
-/* for sign up
-margin: 100px 0px; 
-*/
 
 .col-login-left{
 	background-repeat: no-repeat;
@@ -29,10 +26,6 @@ margin: 100px 0px;
 
 .footer-icon {
     
-}
-
-.ant-card-body {
-    padding: 0px;
 }
 
 @media (max-width: 1399px) {
