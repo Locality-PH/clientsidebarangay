@@ -1,9 +1,100 @@
 import React from 'react'
+import { Form, Input, InputNumber, Select, Button, Radio, Card, Row, Col, Upload} from 'antd';
+import CampaignRequested from './CampaignRequested';
+import { UploadOutlined } from '@ant-design/icons';
+const { Option } = Select;
 
 const Campaign = () => {
+    const props = {
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        onChange({ file, fileList }) {
+          if (file.status !== 'uploading') {
+            console.log(file, fileList);
+          }
+        },
+        defaultFileList: [
+          {
+            uid: '1',
+            name: 'xxx.png',
+            status: 'done',
+            response: 'Server Error 500', // custom error message to show
+            url: 'http://www.baidu.com/xxx.png',
+          },
+          {
+            uid: '2',
+            name: 'yyy.png',
+            status: 'done',
+            url: 'http://www.baidu.com/yyy.png',
+          },
+          {
+            uid: '3',
+            name: 'zzz.png',
+            status: 'error',
+            response: 'Server Error 500', // custom error message to show
+            url: 'http://www.baidu.com/zzz.png',
+          },
+        ],
+      };
+
+    const onFinish = values => {
+        console.log('Received values of form: ', values);
+      };
+
     return (
         <>
-            <h1>Campaign</h1>
+             <Row gutter={16}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                    <Card title="Suggestions Form">
+                        <Form name="complex-form" onFinish={onFinish}>
+                            <h4>Campaign Name</h4>
+                            <Form.Item
+                                name="name"
+                                noStyle
+                                rules={[{ required: true, message: 'Name is required' }]}
+                                >
+                                <Input placeholder="Enter Name" />
+                            </Form.Item>
+                            <h4 className="mt-2">Campaign Type</h4>
+                            <Input.Group compact>
+                                <Form.Item
+                                    name="type"
+                                    noStyle
+                                    rules={[{ required: true, message: 'Certificate Type is required' }]}
+                                >
+                                    <Select placeholder="Select Certificate Type" style={{width: "100%"}}>
+                                        <Option value="barangay clearance">Health</Option>
+                                        <Option value="barangay clearance2">Sport</Option>
+                                    </Select>
+                                </Form.Item>
+                            </Input.Group>
+                            <h4 className="mt-2">Description</h4>
+                            <Form.Item
+                               name="description"
+                                noStyle
+                                rules={[{ required: true }]}
+                                >
+                                <Input.TextArea placeholder="Write Description" />
+                            </Form.Item> 
+                            <h4 className="mt-2">Cover</h4>
+                            <Form.Item>
+                            <Upload {...props}>
+                                <Button>
+                                <UploadOutlined /> Upload
+                                </Button>
+                            </Upload>
+                            </Form.Item> 
+                            <Button type="primary" htmlType="submit" className="mt-4">Send</Button>
+                        </Form>
+                    </Card>
+                </Col>
+                {/* <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                    <CampaignRequested></CampaignRequested>
+                    <CampaignRequested></CampaignRequested>
+                </Col> */}
+                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={16}>
+                    <CampaignRequested></CampaignRequested>
+                </Col>
+            </Row>
         </>
     )
 }
