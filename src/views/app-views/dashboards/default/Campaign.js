@@ -7,7 +7,7 @@ const renderAvatar = props => {
 	return <Avatar {...props} className={`ant-avatar-${props.type}`}>{props.text}</Avatar>;
 }
 
-export const Causes = props => {
+export const Campaign = props => {
 	const { name, suffix, subTitle, id, type, src, icon, size, shape, gap, text} = props
 	return (
 		<>
@@ -30,11 +30,11 @@ export const Causes = props => {
 	)
 }
 
-Causes.propTypes = {
+Campaign.propTypes = {
 	name: PropTypes.string,
 	src: PropTypes.string,
 	type: PropTypes.string,
 	onNameClick: PropTypes.func
 }
 
-export default Causes;
+export default Campaign;

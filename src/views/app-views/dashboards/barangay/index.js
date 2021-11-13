@@ -1,8 +1,8 @@
 import HeaderCover from "./HeaderCover";
 import Header from "./Header";
 import Barangay from "./Barangay";
-import Resident from "./Resident";
-import Certificate from "./Certificate";
+import Campaign from "./Campaign"
+import CertificateRequestForm from "./CertificateRequestForm";
 import ReportIncident from "./ReportIncident";
 import AboutPage from "./AboutPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -19,8 +19,8 @@ const Index = ({match}) => {
             website="facebook.com"></Header>
           <Switch>
             <Route path={match.url} component={Barangay} exact></Route>
-            <Route path={`${match.url}/resident`} component={Resident} exact></Route>
-            <Route path={`${match.url}/certificate-request`} component={Certificate} exact></Route>
+            <Route path={`${match.url}/campaign`} component={Campaign} exact></Route>
+            <Route path={`${match.url}/certificate-request`} component={CertificateRequestForm} exact></Route>
             <Route path={`${match.url}/report-incident`} component={ReportIncident} exact></Route>
             <Route path={`${match.url}/about`} component={AboutPage} exact></Route>
           </Switch>

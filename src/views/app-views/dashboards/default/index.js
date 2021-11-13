@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Row, Col, Card, message, Button} from 'antd';
 import BarangayLinks from "./BarangayLinks";
 import TrendingNews from "./TrendingNews";
-import Causes from "./Causes"
+import Campaign from "./Campaign"
 import News from "./News";
 import { 
   BarangayData, CausesData, NewsReportData
@@ -44,12 +44,12 @@ export const DefaultDashboard = () => {
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <Card title="Causes" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
+          <Card title="Trending Campaign" extra={<a href="#" style={{fontSize: "1rem"}}>More</a>}>
             <div className="mt-3">
               {
                 causesData.map((result, i) => (
                   <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
-                    <Causes id={i} src={result.img} name={result.title} subTitle={result.supporters} />
+                    <Campaign id={i} src={result.img} name={result.title} subTitle={result.supporters} />
                   </div>
                 ))
               }

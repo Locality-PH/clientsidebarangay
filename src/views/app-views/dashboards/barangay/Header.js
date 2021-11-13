@@ -16,7 +16,7 @@ const Header = ({name, avatarSize, quote, email, phoneNumber, address, website})
 	const menu = (
 		<Menu>
 		    <Menu.Item key="1">
-				<Link to={`/app/dashboards/barangay/${name}/resident`}>Resident</Link>
+				<Link to={`/app/dashboards/barangay/${name}/campaign`}>Campaign</Link>
 			</Menu.Item>
 			<Menu.Item key="2">
 				<Link to={`/app/dashboards/barangay/${name}/certificate-request`}>Certificate</Link>
