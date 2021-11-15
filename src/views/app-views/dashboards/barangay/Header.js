@@ -5,8 +5,13 @@ import {
 	GlobalOutlined,
 	MailOutlined,
 	HomeOutlined,
+	MessageOutlined,
 	PhoneOutlined,
-	EllipsisOutlined
+	EllipsisOutlined,
+	FormOutlined,
+	FileOutlined,
+	SendOutlined,
+	InfoCircleOutlined
 } from '@ant-design/icons';
 import Flex from 'components/shared-components/Flex'
 
@@ -16,16 +21,16 @@ const Header = ({name, avatarSize, quote, email, phoneNumber, address, website})
 	const menu = (
 		<Menu>
 		    <Menu.Item key="1">
-				<Link to={`/app/dashboards/barangay/${name}/campaign`}>Campaign</Link>
+				<Link to={`/app/dashboards/barangay/${name}/campaign`}><FormOutlined /> <span className="ml-2">Campaign</span></Link>
 			</Menu.Item>
 			<Menu.Item key="2">
-				<Link to={`/app/dashboards/barangay/${name}/certificate-request`}>Certificate</Link>
+				<Link to={`/app/dashboards/barangay/${name}/certificate-request`}><FileOutlined /> <span className="ml-2">Certificate</span></Link>
 			</Menu.Item>
 			<Menu.Item key="3">
-				<Link to={`/app/dashboards/barangay/${name}/report-incident`}>Report Incident</Link>
+				<Link to={`/app/dashboards/barangay/${name}/report-incident`}><SendOutlined /> <span className="ml-2">Report Incident</span></Link>
 			</Menu.Item>
 			<Menu.Item key="4">
-				<Link to={`/app/dashboards/barangay/${name}/about`}>About</Link>
+				<Link to={`/app/dashboards/barangay/${name}/about`}><InfoCircleOutlined /> <span className="ml-2">About</span></Link>
 			</Menu.Item>
 		</Menu>
 	  );
@@ -66,9 +71,9 @@ const Header = ({name, avatarSize, quote, email, phoneNumber, address, website})
 										<div className="ml-md-3 mt-3 mt-md-0">
 											<Space>
 												<Link to={`/app/dashboards/barangay/${name}`}>
-													<Button size="small" type="primary">Home</Button>
+													<Button size="small" type="primary"><HomeOutlined />Home</Button>
 												</Link>
-												<Button size="small">Message</Button>
+												<Button size="small"><MessageOutlined />Message</Button>
 												<DropdownMenu></DropdownMenu>
 											</Space>
 											

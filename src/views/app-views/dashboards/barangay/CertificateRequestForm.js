@@ -11,6 +11,7 @@ const CertificateRequestForm = () => {
         <>
             <Card title="Certificate Request Form">
                 <Form name="complex-form" onFinish={onFinish}>
+                <Form.Item>
                     <h4>Name</h4>
                     <Form.Item
                         name="name"
@@ -18,16 +19,22 @@ const CertificateRequestForm = () => {
                         rules={[{ required: true, message: 'Name is required' }]}
                         >
                         <Input placeholder="Enter Name" />
-                    </Form.Item>
-                    <h4 className="mt-2">Age</h4>
+                    </Form.Item> 
+                </Form.Item>
+
+                <Form.Item>
+                    <h4>Age</h4>
                     <Form.Item
                         name="age"
                         noStyle
-                        rules={[{ type: 'number', min: 0, max: 99 }]}
+                        rules={[{ required: true, message: 'Age is required', type: 'number', min: 0, max: 99}]}
                         >
                         <InputNumber style={{ width: "100%" }} placeholder="Enter Age" />
                     </Form.Item>
-                    <h4 className="mt-2">Gender</h4>
+                </Form.Item>
+
+                <Form.Item>
+                    <h4>Gender</h4>
                     <Form.Item
                         name="gender"
                         noStyle
@@ -38,15 +45,21 @@ const CertificateRequestForm = () => {
                             <Radio value="female">Female</Radio>
                         </Radio.Group>
                     </Form.Item>
-                    <h4 className="mt-2">Description</h4>
+                </Form.Item>
+
+                <Form.Item>
+                    <h4>Description</h4>
                     <Form.Item
                         name="description"
                         noStyle
-                        rules={[{ required: true }]}
+                        rules={[{ required: true , message: 'Description is required' }]}
                         >
                         <Input.TextArea placeholder="Write Description" />
                     </Form.Item>
-                    <h4 className="mt-2">Certificate Type</h4>
+                </Form.Item>
+
+                <Form.Item>
+                    <h4>Certificate Type</h4>
                     <Input.Group compact>
                         <Form.Item
                             name="type"
@@ -59,7 +72,11 @@ const CertificateRequestForm = () => {
                             </Select>
                         </Form.Item>
                     </Input.Group>
-                    <Button type="primary" htmlType="submit" className="mt-4">Send</Button>
+                </Form.Item>
+
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">Send</Button>
+                </Form.Item>
                 </Form>
             </Card>
         </>

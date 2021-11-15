@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
-import PageHeaderAlt from 'components/layout-components/PageHeaderAlt'
 import { Radio, Button, Row, Col, Tooltip, Tag, Progress, Avatar, Menu, Card } from 'antd';
-import { AppstoreOutlined, UnorderedListOutlined, PlusOutlined } from '@ant-design/icons';
-import ProjectListData from '../../apps/project/project-list/ProjectListData';
+import { ProjectListData } from './BarangayData';
 import { 
-	PaperClipOutlined, 
-	CheckCircleOutlined, 
 	ClockCircleOutlined,
 	EyeOutlined, 
 	EditOutlined,
@@ -25,16 +21,16 @@ const ItemAction = ({id, removeId}) => (
 			<Menu>
 				<Menu.Item key="0">
 					<EyeOutlined />
-					<span>View</span>
+					<span className="ml-2">View</span>
 				</Menu.Item>
 				<Menu.Item key="1">
 					<EditOutlined />
-					<span>Edit</span>
+					<span className="ml-2">Edit</span>
 				</Menu.Item>
 				<Menu.Divider />
 				<Menu.Item key="2" onClick={() => removeId(id)}>
 					<DeleteOutlined />
-					<span>Delete Project</span>
+					<span className="ml-2">Delete</span>
 				</Menu.Item>
 			</Menu>
 		}
@@ -48,24 +44,16 @@ const ItemHeader = ({name, category}) => (
 	</div>
 )
 
-const ItemInfo = ({attachmentCount, completedTask, totalTask, statusColor, dayleft}) => (
+const ItemInfo = ({statusColor, dayleft}) => (
 	<Flex alignItems="center">
 		<div className="mr-3">
-			<Tooltip title="Attachment">
-				<PaperClipOutlined className="text-muted font-size-md"/>
-				<span className="ml-1 text-muted">{attachmentCount}</span>
-			</Tooltip>
+			<span className="text-muted">Created</span>
 		</div>
-		<div className="mr-3">
-			<Tooltip title="Task Completed">
-				<CheckCircleOutlined className="text-muted font-size-md"/>
-				<span className="ml-1 text-muted">{completedTask}/{totalTask}</span>
-			</Tooltip>
-		</div>
+	
 		<div>
 		<Tag className={statusColor === "none"? 'bg-gray-lightest' : ''} color={statusColor !== "none"? statusColor : ''}>
 			<ClockCircleOutlined />
-			<span className="ml-2 font-weight-semibold">{dayleft} days left</span>
+			<span className="ml-2 font-weight-semibold">{dayleft} days ago</span>
 		</Tag>
 		</div>
 	</Flex>
@@ -107,9 +95,6 @@ const ListItem = ({ data, removeId }) => (
 			</Col>
 			<Col xs={24} sm={24} md={6}>
 				<ItemInfo 
-					attachmentCount={data.attachmentCount}
-					completedTask={data.completedTask}
-					totalTask={data.totalTask}
 					statusColor={data.statusColor}
 					dayleft={data.dayleft}
 				/>
@@ -139,9 +124,6 @@ const GridItem = ({ data, removeId }) => (
 		</Flex>
 		<div className="mt-2">
 			<ItemInfo 
-				attachmentCount={data.attachmentCount}
-				completedTask={data.completedTask}
-				totalTask={data.totalTask}
 				statusColor={data.statusColor}
 				dayleft={data.dayleft}
 			/>
@@ -184,14 +166,14 @@ const CampaignRequested = () => {
 
 	return (
 		<>
-			<div className={`${view === VIEW_LIST? 'container' : 'container-fluid'}`}>
+			<div>
 				{
 					view === VIEW_LIST ?
 					list.map(elm => <ListItem data={elm} removeId={id => deleteItem(id)} key={elm.id}/>)
 					:
 					<Row gutter={16}>
 						{list.map(elm => (
-							<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8} key={elm.id}>
+							<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} key={elm.id}>
 								<GridItem data={elm} removeId={id => deleteItem(id)}/>
 							</Col>
 						))}
