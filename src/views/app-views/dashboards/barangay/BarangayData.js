@@ -140,3 +140,96 @@ export const barangayEvents = [
 		desc: "Group for Designer",
 	}
 ]
+
+export const CampaignListData = [
+	{
+		id: 27,
+		name: 'Eastern SaaS',
+		type: 'Health',
+		progression: 80,
+		dayAgo: 21,
+		statusColor: "none",
+		member: [
+			{
+				name: 'Frederick Adams',
+				img: "/img/avatars/thumb-8.jpg",
+				avatarColor: ""
+			},
+			{
+				name: 'Joyce Freeman',
+				img: "/img/avatars/thumb-5.jpg",
+				avatarColor: ""
+			},
+			{
+				name: 'Clayton Bates',
+				img: "",
+				avatarColor: "cyan"
+			},
+			{
+				name: 'Clayton Bates',
+				img: "",
+				avatarColor: "cyan"
+			},
+		]
+	},
+	{
+		id: 28,
+		name: 'Wind Chill App',
+		type: 'Sport',
+		progression: 45,
+		dayAgo: 19,
+		statusColor: "none",
+		member: [
+			{
+				name: 'Eileen Horton',
+				img: "/img/avatars/thumb-1.jpg",
+				avatarColor: ""
+			},
+			{
+				name: 'Gabriel Frazier',
+				img: "",
+				avatarColor: "blue"
+			},
+		]
+	},
+	{
+		id: 29,
+		name: 'IOP Web',
+		type: 'Health',
+		progression: 73,
+		dayAgo: 6,
+		statusColor: "orange",
+		member: [
+			{
+				name: 'Debra Hamilton',
+				img: "",
+				avatarColor: "gold"
+			},
+			{
+				name: 'Stacey Ward',
+				img: "",
+				avatarColor: "purple"
+			}
+		]
+	},
+	{
+		id: 30,
+		name: 'Wind Chill API',
+		type: 'Health',
+		progression: 87,
+		dayAgo: 2,
+		statusColor: "red",
+		member: [
+			{
+				name: 'Troy Alexander',
+				img: "",
+				avatarColor: "red"
+			},
+			{
+				name: 'Lloyd Obrien',
+				img: "/img/avatars/thumb-11.jpg",
+				avatarColor: ""
+			},
+		]
+	},
+]

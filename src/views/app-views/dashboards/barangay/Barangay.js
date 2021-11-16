@@ -1,7 +1,7 @@
 import { Row, Col, Card} from 'antd';
 import Officials from "./Officials";
 import Events from "./Events";
-import About from "./About";
+import About from "./About/About";
 import MissionAndVision from "./MissionAndVision"
 import Projects from "./Projects";
 
