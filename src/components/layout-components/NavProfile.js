@@ -15,13 +15,13 @@ const menuItem = [
 	{
 		title: "Edit Profile",
 		icon: EditOutlined ,
-		path: "/"
+		path: "/app/account"
     },
     
     {
 		title: "Account Setting",
 		icon: SettingOutlined,
-		path: "/"
+		path: "/app/account"
     },
     {
 		title: "Billing",
@@ -35,7 +35,7 @@ const menuItem = [
 	}
 ]
 
-export const NavProfile = ({signOut}) => {
+export const NavProfile = ({signOut, match}) => {
   const profileImg = "/img/avatars/thumb-1.jpg";
   const profileMenu = (
     <div className="nav-profile nav-dropdown">
