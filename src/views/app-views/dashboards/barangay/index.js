@@ -1,10 +1,12 @@
-import HeaderCover from "./HeaderCover";
-import Header from "./Header";
+import HeaderCover from "./Header/HeaderCover";
+import Header from "./Header/Header";
 import Barangay from "./Barangay";
-import Campaign from "./Campaign"
+import Campaign from "./Campaign/Campaign"
+import CampaignPage from "./Campaign/CampaignPage"
+import EditCampaign from "./Campaign/EditCampaign";
 import CertificateRequestForm from "./CertificateRequestForm";
 import ReportIncident from "./ReportIncident";
-import AboutPage from "./AboutPage";
+import AboutPage from "./About/AboutPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const Index = ({match}) => {
@@ -20,6 +22,8 @@ const Index = ({match}) => {
           <Switch>
             <Route path={match.url} component={Barangay} exact></Route>
             <Route path={`${match.url}/campaign`} component={Campaign} exact></Route>
+            <Route path={`${match.url}/campaign/:id`} component={CampaignPage} exact></Route>
+            <Route path={`${match.url}/campaign/edit/:id`} component={EditCampaign} exact></Route>
             <Route path={`${match.url}/certificate-request`} component={CertificateRequestForm} exact></Route>
             <Route path={`${match.url}/report-incident`} component={ReportIncident} exact></Route>
             <Route path={`${match.url}/about`} component={AboutPage} exact></Route>

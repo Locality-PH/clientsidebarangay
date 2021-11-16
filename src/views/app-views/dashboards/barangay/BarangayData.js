@@ -141,16 +141,13 @@ export const barangayEvents = [
 	}
 ]
 
-export const ProjectListData = [
+export const CampaignListData = [
 	{
 		id: 27,
 		name: 'Eastern SaaS',
-		category: 'Pending',
-		attachmentCount: 12,
-		totalTask: 32,
-		completedTask: 27,
+		type: 'Health',
 		progression: 80,
-		dayleft: 21,
+		dayAgo: 21,
 		statusColor: "none",
 		member: [
 			{
@@ -178,12 +175,9 @@ export const ProjectListData = [
 	{
 		id: 28,
 		name: 'Wind Chill App',
-		category: 'Mobile Application',
-		attachmentCount: 5,
-		totalTask: 36,
-		completedTask: 15,
+		type: 'Sport',
 		progression: 45,
-		dayleft: 19,
+		dayAgo: 19,
 		statusColor: "none",
 		member: [
 			{
@@ -201,12 +195,9 @@ export const ProjectListData = [
 	{
 		id: 29,
 		name: 'IOP Web',
-		category: 'Web Backend Application',
-		attachmentCount: 8,
-		totalTask: 27,
-		completedTask: 19,
+		type: 'Health',
 		progression: 73,
-		dayleft: 6,
+		dayAgo: 6,
 		statusColor: "orange",
 		member: [
 			{
@@ -224,12 +215,9 @@ export const ProjectListData = [
 	{
 		id: 30,
 		name: 'Wind Chill API',
-		category: 'Backend Services',
-		attachmentCount: 2,
-		totalTask: 15,
-		completedTask: 13,
+		type: 'Health',
 		progression: 87,
-		dayleft: 2,
+		dayAgo: 2,
 		statusColor: "red",
 		member: [
 			{

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Radio, Button, Row, Col, Tooltip, Tag, Progress, Avatar, Menu, Card } from 'antd';
-import { ProjectListData } from './BarangayData';
+import { Row, Col, Tooltip, Tag, Progress, Avatar, Menu, Card } from 'antd';
+import { CampaignListData } from '.././BarangayData';
 import { 
 	ClockCircleOutlined,
 	EyeOutlined, 
@@ -11,23 +11,28 @@ import utils from 'utils';
 import { COLORS } from 'constants/ChartConstant';
 import Flex from 'components/shared-components/Flex';
 import EllipsisDropdown from 'components/shared-components/EllipsisDropdown'
+import { Link, useLocation } from "react-router-dom";
 
-const VIEW_LIST = 'LIST';
-const VIEW_GRID = 'GRID';
-
-const ItemAction = ({id, removeId}) => (
+const ItemAction = ({id, removeId, pathname}) => (
 	<EllipsisDropdown 
 		menu={
 			<Menu>
 				<Menu.Item key="0">
-					<EyeOutlined />
-					<span className="ml-2">View</span>
+					<Link to={`${pathname}/${id}`}>
+						<EyeOutlined />
+						<span className="ml-2">View</span>
+					</Link>
 				</Menu.Item>
+
 				<Menu.Item key="1">
-					<EditOutlined />
-					<span className="ml-2">Edit</span>
+					<Link to={`${pathname}/edit/${id}`}>
+						<EditOutlined />
+						<span className="ml-2">Edit</span>
+					</Link>
 				</Menu.Item>
+
 				<Menu.Divider />
+
 				<Menu.Item key="2" onClick={() => removeId(id)}>
 					<DeleteOutlined />
 					<span className="ml-2">Delete</span>
@@ -37,14 +42,14 @@ const ItemAction = ({id, removeId}) => (
 	/>
 )
 
-const ItemHeader = ({name, category}) => (
+const ItemHeader = ({name, type}) => (
 	<div>
 		<h4 className="mb-0">{name}</h4>
-		<span className="text-muted">{category}</span>
+		<span className="text-muted">{type} - Pending</span>
 	</div>
 )
 
-const ItemInfo = ({statusColor, dayleft}) => (
+const ItemInfo = ({statusColor, dayAgo}) => (
 	<Flex alignItems="center">
 		<div className="mr-3">
 			<span className="text-muted">Created</span>
@@ -53,7 +58,7 @@ const ItemInfo = ({statusColor, dayleft}) => (
 		<div>
 		<Tag className={statusColor === "none"? 'bg-gray-lightest' : ''} color={statusColor !== "none"? statusColor : ''}>
 			<ClockCircleOutlined />
-			<span className="ml-2 font-weight-semibold">{dayleft} days ago</span>
+			<span className="ml-2 font-weight-semibold">{dayAgo} days ago</span>
 		</Tag>
 		</div>
 	</Flex>
@@ -87,45 +92,16 @@ const ItemMember = ({member}) => (
 	</>
 )
 
-const ListItem = ({ data, removeId }) => (
-	<div className="bg-white rounded p-3 mb-3 border">
-		<Row align="middle">
-    	<Col xs={24} sm={24} md={8}>
-				<ItemHeader name={data.name} category={data.category} />
-			</Col>
-			<Col xs={24} sm={24} md={6}>
-				<ItemInfo 
-					statusColor={data.statusColor}
-					dayleft={data.dayleft}
-				/>
-			</Col>
-			<Col xs={24} sm={24} md={5}>
-				<ItemProgress progression={data.progression} />
-			</Col>
-			<Col xs={24} sm={24} md={3}>
-				<div className="ml-0 ml-md-3">
-					<ItemMember member={data.member}/>
-				</div>
-			</Col>
-			<Col xs={24} sm={24} md={2}>
-				<div className="text-right">
-					<ItemAction id={data.id} removeId={removeId}/>
-				</div>
-			</Col>
-		</Row>
-	</div>
-)
-
-const GridItem = ({ data, removeId }) => (
+const Item = ({ data, removeId, pathname}) => (
 	<Card>
 		<Flex alignItems="center" justifyContent="between">
-			<ItemHeader name={data.name} category={data.category} />
-			<ItemAction id={data.id} removeId={removeId}/>
+			<ItemHeader name={data.name} type={data.type} />
+			<ItemAction id={data.id} removeId={removeId} pathname={pathname}/>
 		</Flex>
 		<div className="mt-2">
 			<ItemInfo 
 				statusColor={data.statusColor}
-				dayleft={data.dayleft}
+				dayAgo={data.dayAgo}
 			/>
 		</div>
 		<div className="mt-3">
@@ -151,13 +127,9 @@ const getProgressStatusColor = progress => {
 }
 
 const CampaignRequested = () => {
+	const location = useLocation()
 
-	const [view, setView] = useState(VIEW_GRID);
-	const [list, setList] = useState(ProjectListData);
-
-	const onChangeProjectView = e => {
-		setView(e.target.value)
-	}
+	const [list, setList] = useState(CampaignListData);
 
 	const	deleteItem = id =>{
 		const data = list.filter(elm => elm.id !== id)
@@ -166,20 +138,13 @@ const CampaignRequested = () => {
 
 	return (
 		<>
-			<div>
-				{
-					view === VIEW_LIST ?
-					list.map(elm => <ListItem data={elm} removeId={id => deleteItem(id)} key={elm.id}/>)
-					:
-					<Row gutter={16}>
-						{list.map(elm => (
-							<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} key={elm.id}>
-								<GridItem data={elm} removeId={id => deleteItem(id)}/>
-							</Col>
-						))}
-					</Row>
-				}
-			</div>
+			<Row gutter={16}>
+				{list.map(result => (
+					<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} key={result.id}>
+						<Item data={result} removeId={id => deleteItem(id)} pathname={location.pathname}/>
+					</Col>
+				))}
+			</Row>
 		</>
 	)
 }
