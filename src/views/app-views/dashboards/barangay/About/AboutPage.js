@@ -5,13 +5,7 @@ import {
 	GlobalOutlined,
 	MailOutlined,
 	HomeOutlined,
-	MessageOutlined,
 	PhoneOutlined,
-	EllipsisOutlined,
-	FormOutlined,
-	FileOutlined,
-	SendOutlined,
-	InfoCircleOutlined,
     RightSquareOutlined
 } from '@ant-design/icons';
 

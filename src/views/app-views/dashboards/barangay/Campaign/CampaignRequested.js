@@ -25,7 +25,7 @@ const ItemAction = ({id, removeId, pathname}) => (
 				</Menu.Item>
 
 				<Menu.Item key="1">
-					<Link to={`${pathname}/edit/${id}`}>
+					<Link to={{pathname: `${pathname}/edit/${id}`, state: {prevPath: pathname}}}>
 						<EditOutlined />
 						<span className="ml-2">Edit</span>
 					</Link>
@@ -70,11 +70,11 @@ const ItemProgress = ({progression}) => (
 
 const ItemMember = ({member}) => (
 	<>
-		{member.map((elm, i) => (
+		{member.map((result, i) => (
 				i <= 2?
-			<Tooltip title={elm.name} key={`avatar-${i}`}>
-				<Avatar size="small" className={`ml-1 cursor-pointer ant-avatar-${elm.avatarColor}`} src={elm.img} >
-					{elm.img? '' : <span className="font-weight-semibold font-size-sm">{utils.getNameInitial(elm.name)}</span>}
+			<Tooltip title={result.name} key={`avatar-${i}`}>
+				<Avatar size="small" className={`ml-1 cursor-pointer ant-avatar-${result.avatarColor}`} src={result.img} >
+					{result.img? '' : <span className="font-weight-semibold font-size-sm">{utils.getNameInitial(result.name)}</span>}
 				</Avatar>
 			</Tooltip>
 			:
@@ -132,7 +132,7 @@ const CampaignRequested = () => {
 	const [list, setList] = useState(CampaignListData);
 
 	const	deleteItem = id =>{
-		const data = list.filter(elm => elm.id !== id)
+		const data = list.filter(result => result.id !== id)
 		setList(data)
 	}
 

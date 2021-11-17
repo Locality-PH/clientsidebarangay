@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Select, Button, Card, Upload} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { Link, useHistory } from "react-router-dom";
 const { Option } = Select;
 
 const EditCampaign = () => {
@@ -37,11 +38,14 @@ const EditCampaign = () => {
 
     const onFinish = values => {
         console.log('Received values of form: ', values);
-      };
+    };
+
+    const history = useHistory()
 
     return (
         <>
-            <Card title="Edit Campaign">
+        <div className="my-content-center">
+            <Card title="Edit Campaign" style={{width: "35rem"}}>
                 <Form name="complex-form" onFinish={onFinish}>
                     <Form.Item>
                         <h4>Campaign Name</h4>
@@ -93,11 +97,14 @@ const EditCampaign = () => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">Cancel</Button>
+                        <Link to={history.location.state.prevPath}>
+                            <Button type="primary" className="mr-4">Cancel</Button>
+                        </Link>
                         <Button type="primary" htmlType="submit">Save</Button>
                     </Form.Item>
                 </Form>
             </Card>
+        </div>
         </>
     )
 }
