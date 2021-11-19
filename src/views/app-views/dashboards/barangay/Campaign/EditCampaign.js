@@ -1,10 +1,10 @@
 import React from 'react'
 import { Form, Input, Select, Button, Card, Upload} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 const { Option } = Select;
 
-const EditCampaign = () => {
+const EditCampaign = ({barangayUrl}) => {
     const props = {
         action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
         onChange({ file, fileList }) {
@@ -39,8 +39,6 @@ const EditCampaign = () => {
     const onFinish = values => {
         console.log('Received values of form: ', values);
     };
-
-    const history = useHistory()
 
     return (
         <>
@@ -97,7 +95,7 @@ const EditCampaign = () => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Link to={history.location.state.prevPath}>
+                        <Link to={`${barangayUrl}/campaign`}>
                             <Button type="primary" className="mr-4">Cancel</Button>
                         </Link>
                         <Button type="primary" htmlType="submit">Save</Button>

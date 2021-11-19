@@ -21,9 +21,9 @@ const Index = ({match}) => {
             website="facebook.com"></Header>
           <Switch>
             <Route path={match.url} component={Barangay} exact></Route>
-            <Route path={`${match.url}/campaign`} component={Campaign} exact></Route>
-            <Route path={`${match.url}/campaign/:id`} component={CampaignPage} exact></Route>
-            <Route path={`${match.url}/campaign/edit/:id`} component={EditCampaign} exact></Route>
+            <Route path={`${match.url}/campaign`} render={() => <Campaign barangayUrl={match.url}></Campaign>} exact></Route>
+            <Route path={`${match.url}/campaign/:id`} render={result => <CampaignPage match={result.match} barangayUrl={match.url}></CampaignPage>}  exact></Route>
+            <Route path={`${match.url}/campaign/edit/:id`} render={() => <EditCampaign barangayUrl={match.url}></EditCampaign>} exact></Route>
             <Route path={`${match.url}/certificate-request`} component={CertificateRequestForm} exact></Route>
             <Route path={`${match.url}/report-incident`} component={ReportIncident} exact></Route>
             <Route path={`${match.url}/about`} component={AboutPage} exact></Route>
