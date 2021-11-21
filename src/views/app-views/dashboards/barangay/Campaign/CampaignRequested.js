@@ -11,21 +11,21 @@ import utils from 'utils';
 import { COLORS } from 'constants/ChartConstant';
 import Flex from 'components/shared-components/Flex';
 import EllipsisDropdown from 'components/shared-components/EllipsisDropdown'
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const ItemAction = ({id, removeId, pathname}) => (
+const ItemAction = ({id, removeId, barangayUrl}) => (
 	<EllipsisDropdown 
 		menu={
 			<Menu>
 				<Menu.Item key="0">
-					<Link to={`${pathname}/${id}`}>
+					<Link to={`${barangayUrl}/campaign/${id}`}>
 						<EyeOutlined />
 						<span className="ml-2">View</span>
 					</Link>
 				</Menu.Item>
 
 				<Menu.Item key="1">
-					<Link to={`${pathname}/edit/${id}`}>
+					<Link to={`${barangayUrl}/campaign/edit/${id}`}>
 						<EditOutlined />
 						<span className="ml-2">Edit</span>
 					</Link>
@@ -70,11 +70,11 @@ const ItemProgress = ({progression}) => (
 
 const ItemMember = ({member}) => (
 	<>
-		{member.map((elm, i) => (
+		{member.map((result, i) => (
 				i <= 2?
-			<Tooltip title={elm.name} key={`avatar-${i}`}>
-				<Avatar size="small" className={`ml-1 cursor-pointer ant-avatar-${elm.avatarColor}`} src={elm.img} >
-					{elm.img? '' : <span className="font-weight-semibold font-size-sm">{utils.getNameInitial(elm.name)}</span>}
+			<Tooltip title={result.name} key={`avatar-${i}`}>
+				<Avatar size="small" className={`ml-1 cursor-pointer ant-avatar-${result.avatarColor}`} src={result.img} >
+					{result.img? '' : <span className="font-weight-semibold font-size-sm">{utils.getNameInitial(result.name)}</span>}
 				</Avatar>
 			</Tooltip>
 			:
@@ -92,11 +92,11 @@ const ItemMember = ({member}) => (
 	</>
 )
 
-const Item = ({ data, removeId, pathname}) => (
+const Item = ({ data, removeId, barangayUrl}) => (
 	<Card>
 		<Flex alignItems="center" justifyContent="between">
 			<ItemHeader name={data.name} type={data.type} />
-			<ItemAction id={data.id} removeId={removeId} pathname={pathname}/>
+			<ItemAction id={data.id} removeId={removeId} barangayUrl={barangayUrl}/>
 		</Flex>
 		<div className="mt-2">
 			<ItemInfo 
@@ -126,13 +126,12 @@ const getProgressStatusColor = progress => {
 	return COLORS[0]
 }
 
-const CampaignRequested = () => {
-	const location = useLocation()
+const CampaignRequested = ({barangayUrl}) => {
 
 	const [list, setList] = useState(CampaignListData);
 
 	const	deleteItem = id =>{
-		const data = list.filter(elm => elm.id !== id)
+		const data = list.filter(result => result.id !== id)
 		setList(data)
 	}
 
@@ -141,7 +140,7 @@ const CampaignRequested = () => {
 			<Row gutter={16}>
 				{list.map(result => (
 					<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} key={result.id}>
-						<Item data={result} removeId={id => deleteItem(id)} pathname={location.pathname}/>
+						<Item data={result} removeId={id => deleteItem(id)} barangayUrl={barangayUrl}/>
 					</Col>
 				))}
 			</Row>

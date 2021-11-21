@@ -9,7 +9,8 @@ const CertificateRequestForm = () => {
 
     return (
         <>
-            <Card title="Certificate Request Form">
+        <div className="my-content-center">
+            <Card title="Certificate Request Form" style={{width: "35rem"}}>
                 <Form name="complex-form" onFinish={onFinish}>
                 <Form.Item>
                     <h4>Name</h4>
@@ -79,6 +80,9 @@ const CertificateRequestForm = () => {
                 </Form.Item>
                 </Form>
             </Card>
+
+        </div>
+            
         </>
     )
 }
