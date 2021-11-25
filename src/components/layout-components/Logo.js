@@ -55,7 +55,8 @@ export const Logo = (props) => {
       style={{ width: `${getLogoWidthGutter(props, isMobile)}` }}>
 
       <Link to="/app/dashboards/barangay">
-        <img src={getLogo(props)} alt={`${APP_NAME} logo`} style={{ filter: "brightness(100)" }} />
+        {/* <img src={getLogo(props)} alt={`${APP_NAME} logo`} style={{ filter: "brightness(100)" }} /> */}
+        <h2 style={{color: "white", fontFamily: "Calibri", fontWeight: "bolder", paddingTop: "7px"}}>MiBarangay</h2>
       </Link>
     </div>
   )
