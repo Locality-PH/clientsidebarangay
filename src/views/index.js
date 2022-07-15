@@ -2,12 +2,14 @@ import React from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import AppLayout from "layouts/app-layout";
-import AuthLayout from 'layouts/auth-layout';
+import AuthLayout from "layouts/auth-layout";
+import PreLayout from "layouts/pre-layout";
+
 import AppLocale from "lang";
 import { IntlProvider } from "react-intl";
-import { ConfigProvider } from 'antd';
-import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from 'configs/AppConfig'
-import useBodyClass from 'hooks/useBodyClass';
+import { ConfigProvider } from "antd";
+import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
+import useBodyClass from "hooks/useBodyClass";
 
 function RouteInterceptor({ children, isAuthenticated, ...rest }) {
   return (
@@ -20,7 +22,7 @@ function RouteInterceptor({ children, isAuthenticated, ...rest }) {
           <Redirect
             to={{
               pathname: AUTH_PREFIX_PATH,
-              state: { from: location }
+              state: { from: location },
             }}
           />
         )
@@ -36,7 +38,8 @@ export const Views = (props) => {
   return (
     <IntlProvider
       locale={currentAppLocale.locale}
-      messages={currentAppLocale.messages}>
+      messages={currentAppLocale.messages}
+    >
       <ConfigProvider locale={currentAppLocale.antd} direction={direction}>
         <Switch>
           <Route exact path="/">
@@ -46,19 +49,19 @@ export const Views = (props) => {
             <AuthLayout direction={direction} />
           </Route>
           <RouteInterceptor path={APP_PREFIX_PATH} isAuthenticated={token}>
-            <AppLayout direction={direction} location={location}/>
+            <AppLayout direction={direction} location={location} />
           </RouteInterceptor>
+          <PreLayout />
         </Switch>
       </ConfigProvider>
     </IntlProvider>
-  )
-}
-
+  );
+};
 
 const mapStateToProps = ({ theme, auth }) => {
-  const { locale, direction } =  theme;
+  const { locale, direction } = theme;
   const { token } = auth;
-  return { locale, direction, token }
+  return { locale, direction, token };
 };
 
 export default withRouter(connect(mapStateToProps)(Views));

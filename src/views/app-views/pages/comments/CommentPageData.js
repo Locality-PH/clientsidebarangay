@@ -57,7 +57,7 @@ export const CausesData = [
 export const NewsReportData = [
   {
     img: "/img/avatars/thumb-9.jpg",
-    href: `/home/posts/100001/101111`,
+    href: `${window.location.hostname}:3000/home/feeds/100001/101111`,
     title: "Modified Enhanced Community Quaratine",
     type: "Global Nation",
     content:
@@ -65,7 +65,7 @@ export const NewsReportData = [
   },
   {
     img: "/img/avatars/thumb-2.jpg",
-    href: `/home/posts/100001/101111`,
+    href: "https://ant.design",
     title: "LOL World Championships",
     type: "Sports",
     content:
@@ -73,7 +73,7 @@ export const NewsReportData = [
   },
   {
     img: "/img/avatars/thumb-3.jpg",
-    href: `/home/posts/100001/101111`,
+    href: "https://ant.design",
     title: "Adele's new Album out Nov. 19",
     type: "Entertainment",
     content:
@@ -81,7 +81,7 @@ export const NewsReportData = [
   },
   {
     img: "/img/avatars/thumb-4.jpg",
-    href: `/home/posts/100001/101111`,
+    href: "https://ant.design",
     title: "First Youtube Video",
     type: "Technology",
     content:
@@ -89,7 +89,7 @@ export const NewsReportData = [
   },
   {
     img: "/img/avatars/thumb-4.jpg",
-    href: `/home/posts/100001/101111`,
+    href: "https://ant.design",
     title: "First Youtube Video",
     type: "Technology",
     content:

@@ -5,6 +5,7 @@ export const APP_NAME = "MitiveLane";
 export const API_BASE_URL = env.API_ENDPOINT_URL;
 export const APP_PREFIX_PATH = "/home";
 export const AUTH_PREFIX_PATH = "/auth";
+export const PRE_PREFIX_PATH = "/support";
 
 export const THEME_CONFIG = {
   navType: NAV_TYPE_TOP,

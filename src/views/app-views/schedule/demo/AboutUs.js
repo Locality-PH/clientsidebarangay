@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Carousel } from "antd";
-
+import Campaign from "assets/img/campaign2.png";
 const AboutUs = () => {
   const contentStyle = {
     height: "300px",
@@ -22,7 +22,11 @@ const AboutUs = () => {
             </h2>
             <p>
               MitiveLane is a nonprofit organization for solepurpose is to
-              mitigate, help, manage and improve community development.
+              <strong>
+                {" "}
+                mitigate, help, manage and improve community development{" "}
+              </strong>
+              to make life more easier as possible.
             </p>
           </div>
           <Row className="row">

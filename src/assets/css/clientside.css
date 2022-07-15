@@ -171,7 +171,7 @@
   margin-bottom: 17px;
   text-transform: capitalize;
 }
-.ctr-area .section-title-2 h2 {
+.ctr-area .section-title-2 h1 {
   color: #fff;
   font-weight: 500;
   margin-top: 30px;
@@ -198,11 +198,11 @@
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #223c75;
+  background-color: #364b65;
   border-color: #223c75;
 }
 .btn {
-  padding: 9px 25px;
+  padding: 12px 25px;
   font-size: 16px;
   border-radius: 30px;
   -webkit-transition: 0.4s;
@@ -210,10 +210,18 @@
 }
 
 .ctr-area .view-work {
+  padding: 12px 25px;
+
   background: transparent;
-  border-color: #fff;
+  border-color: rgb(62, 60, 204);
   margin-left: 10px;
   border: 1px solid;
+}
+
+.ctr-area .view-work:hover {
+  color: rgb(243, 243, 243);
+  background-color: #3468d8;
+  border-color: #3468d8;
 }
 .ctr-area .section-title-2 {
   padding-left: 0;
@@ -234,8 +242,8 @@
 }
 
 .ptb-80 {
-  padding-bottom: 80px;
-  padding-top: 80px;
+  padding-bottom: 150px;
+  padding-top: 150px;
 }
 .about-mitivelane .pull-left {
   margin-right: 45px;
@@ -284,4 +292,100 @@ ul li {
   background-position: 50%;
   background-size: contain;
   background-repeat: repeat;
+}
+.blog-carousel {
+  width: 40%;
+}
+.blog-carousel div > button[data-direction="right"] {
+  right: -16px;
+}
+.blog-carousel div > button[data-direction="left"],
+.blog-carousel div > button[data-direction="right"] {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50%
+    no-repeat;
+  border: none;
+  cursor: pointer;
+  height: 180px;
+  outline: 0;
+  position: relative;
+  top: 180px;
+}
+div > button[data-direction="left"],
+.blog-carousel div > button[data-direction="right"] {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50%
+    no-repeat;
+  border: none;
+  cursor: pointer;
+  height: 180px;
+  outline: 0;
+  position: relative;
+  top: 180px;
+}
+.blog-carousel div > button[data-direction="left"] {
+  left: -16px;
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.blog-carousel > div:nth-child(2) {
+  padding: 15px 0;
+}
+.blog-data:hover {
+  box-shadow: 0 30px 70px rgb(216, 201, 201);
+  transform: scale3d(1.05, 1.05, 1.05);
+}
+.blog-data {
+  transition: 0.5s;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+.overlay .hr-style {
+  display: none;
+}
+.comment-title {
+  font-family: "Roboto Slab", serif !important;
+  font-size: 17px !important;
+  font-weight: 700;
+  color: #202020d1;
+}
+.overlay {
+  padding: 0px !important;
+}
+.infoStyle {
+  background-color: rgb(243, 243, 243);
+  padding: 20px;
+  border-radius: 8px;
+}
+.no-comDiv {
+  text-align: center;
+}
+.organization-register-container {
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
+
+.organization-register-card {
+  width: 1100px;
+}
+
+@media (max-width: 1399px) {
+  .organization-register-card {
+    width: 800px;
+  }
+}
+
+@media (max-width: 992px) {
+  .organization-register-card {
+    width: 500px;
+  }
+}
+
+@media (max-width: 576px) {
+  .organization-register-card {
+    width: 400px;
+  }
+}
+@media (max-width: 426px) {
+  .organization-register-card {
+    width: 320px;
+  }
 }

@@ -16,6 +16,10 @@ export const AppViews = () => {
           component={lazy(() => import(`./home`))}
         />
         <Route
+          path={`${APP_PREFIX_PATH}/posts`}
+          component={lazy(() => import(`./pages`))}
+        />
+        <Route
           path={`${APP_PREFIX_PATH}/group/:name`}
           component={lazy(() => import(`./organization`))}
         />
