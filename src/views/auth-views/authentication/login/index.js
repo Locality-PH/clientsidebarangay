@@ -1,9 +1,9 @@
 import React from 'react'
-import LoginTwo from '../login-2'
+import Login from '../login-component'
 
 const Login = () => {
 	return (
-		<LoginTwo allowRedirect={true} />
+		<Login allowRedirect={true} />
 	)
 }
 export default Login

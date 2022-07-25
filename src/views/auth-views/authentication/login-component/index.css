@@ -1,7 +1,7 @@
 
 .login-card {
     width: 1000px;
-    margin: 200px 0px;
+    margin: 150px 0px;
 }
 
 .col-login-left{
@@ -31,7 +31,7 @@
 @media (max-width: 1399px) {
     .login-card {
         width: 600px;
-        margin: 100px 0px;
+        margin: 50px 0px;
     }
 }
 
