@@ -389,3 +389,64 @@ div > button[data-direction="left"],
     width: 320px;
   }
 }
+
+.form-label {
+  font-family: "proxima-nova", sans-serif;
+  font-weight: bolder;
+  color: black;
+}
+
+.form-title {
+  font-weight: bolder;
+}
+
+.login-btn {
+  background-color: #0033cc;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+}
+
+.login-card {
+  width: 1000px;
+  margin: 150px 0px;
+}
+
+.col-login-left {
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.footer {
+  text-align: center;
+  margin: 16px 0px 0px 0px;
+  padding: 0px 10px;
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
+
+.footer-content {
+  height: 100%;
+}
+
+@media (max-width: 1399px) {
+  .login-card {
+    width: 600px;
+    margin: 50px 0px;
+  }
+}
+
+@media (max-width: 700px) {
+  .login-card {
+    width: 300px;
+  }
+}
+
+@media (max-height: 790px) {
+  .footer {
+    position: inherit;
+  }
+}

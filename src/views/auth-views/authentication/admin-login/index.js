@@ -1,7 +1,7 @@
 import React from 'react'
 
 //Components
-import LoginFormTest from '../../components/LoginForm.js';
+// import LoginFormTest from '../../components/old-login/LoginForm.js';
 
 //CSS
 import './index.css';
