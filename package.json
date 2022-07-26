@@ -22,6 +22,8 @@
     "google-map-react": "^2.1.9",
     "history": "^4.10.1",
     "immutability-helper": "^3.1.1",
+    "jwt-decode": "^3.1.2",
+    "jwt-encode": "^1.0.1",
     "lodash": "^4.17.20",
     "node-sass": "^4.13.0",
     "rc-queue-anim": "^2.0.0",
