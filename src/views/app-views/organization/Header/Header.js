@@ -29,22 +29,22 @@ const Header = ({
   const menu = (
     <Menu>
       <Menu.Item key="1">
-        <Link to={`/app/dashboards/barangay/${name}/campaign`}>
+        <Link to={`/home/group/${name}/campaign`}>
           <FormOutlined /> <span className="ml-2">Campaign</span>
         </Link>
       </Menu.Item>
       <Menu.Item key="2">
-        <Link to={`/app/dashboards/barangay/${name}/certificate-request`}>
+        <Link to={`/home/group/${name}/certificate-request`}>
           <FileOutlined /> <span className="ml-2">Certificate</span>
         </Link>
       </Menu.Item>
       <Menu.Item key="3">
-        <Link to={`/app/dashboards/barangay/${name}/report-incident`}>
+        <Link to={`/home/group/${name}/report-incident`}>
           <SendOutlined /> <span className="ml-2">Report Incident</span>
         </Link>
       </Menu.Item>
       <Menu.Item key="4">
-        <Link to={`/app/dashboards/barangay/${name}/about`}>
+        <Link to={`/home/group/${name}/about`}>
           <InfoCircleOutlined /> <span className="ml-2">About</span>
         </Link>
       </Menu.Item>
@@ -99,7 +99,7 @@ const Header = ({
                   <h2 className="mt-2 mb-0 mt-md-0">Barangay {name}</h2>
                   <div className="mt-3 ml-md-3 mt-md-0">
                     <Space>
-                      <Link to={`/app/dashboards/barangay/${name}`}>
+                      <Link to={`/home/group/${name}`}>
                         <Button size="small" type="primary">
                           <HomeOutlined />
                           Home
