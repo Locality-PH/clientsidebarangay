@@ -26,7 +26,6 @@ export const DefaultDashboard = () => {
 
   return (
     <>
-      {error && message.error(error)}
       <Row gutter={16}>
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
           <Card
