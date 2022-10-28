@@ -27,8 +27,9 @@ const Index = () => {
       .then((response) => {
         console.log("Organizations ", response.data);
       })
-      .catch(() => {
+      .catch((err) => {
         message.error("Could not fetch the data in the server!");
+        console.log(err);
       });
   };
 

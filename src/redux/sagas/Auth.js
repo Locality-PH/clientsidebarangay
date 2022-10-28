@@ -144,6 +144,7 @@ export function* signInWithFBEmail() {
         email,
         password
       );
+      setTimeout(() => {});
       if (user.message) {
         yield put(showAuthMessage(user.message));
       } else {
