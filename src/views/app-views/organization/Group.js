@@ -23,7 +23,7 @@ const Index = () => {
     setIsLoading(false);
 
     axios
-      .get("/api/organization/get-all-organizations")
+      .get("/api/organization/get-all-organizations", generateToken()[1])
       .then((response) => {
         console.log("Organizations ", response.data);
       })

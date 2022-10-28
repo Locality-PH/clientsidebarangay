@@ -24,8 +24,6 @@ const { useBreakpoint } = Grid;
 
 export const AppLayout = ({ navCollapsed, navType, location, direction }) => {
   const history = useLocation();
-  console.log(history.pathname.includes("schedule"));
-  console.log(history);
   const screens = utils.getBreakPoint(useBreakpoint());
   const isMobile = screens.length === 0 ? false : !screens.includes("lg");
   const isNavSide = navType === NAV_TYPE_SIDE;
