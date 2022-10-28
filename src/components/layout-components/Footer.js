@@ -2,8 +2,6 @@ import React from "react";
 import { APP_NAME } from "configs/AppConfig";
 
 export default function Footer() {
-  console.log(window.location.hostname);
-
   return (
     <footer className="footer">
       <span>

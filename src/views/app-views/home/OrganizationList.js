@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, message } from "antd";
 import GroupLink from "components/shared-components/GroupLink";
-import {
-    BarangayData
-} from "./DefaultDashboardData";
+import { BarangayData } from "./DefaultDashboardData";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
@@ -12,27 +10,24 @@ const OrganizationList = () => {
 
     const [organizationList, setOrganizationList] = useState(BarangayData);
     const [isLoading, setIsLoading] = useState(true);
-
+    
     useEffect(() => {
-        getAllOrganizations()
+        getAllOrganizations();
+    }, []);
 
-    }, [organizationList]);
-
-    const getAllOrganizations = () => {
-        setOrganizationList(BarangayData);
-        setIsLoading(false);
-
-        axios
-            .get(
-                "/api/organization/get-all-organizations"
-            )
+    const getAllOrganizations = async () => {
+        await axios
+            .get("/api/organization/get-latest-organizations", generateToken()[1])
             .then((response) => {
-                console.log("Organizations ", response.data);
+                setOrganizationList(response.data);
+                setIsLoading(false);
+
             })
-            .catch(() => {
+            .catch((err) => {
                 message.error("Could not fetch the data in the server!");
+                console.log(err);
             });
-    }
+    };
 
     return (
         <>
@@ -52,10 +47,11 @@ const OrganizationList = () => {
                             className={`d-flex align-items-center justify-content-between mb-4`}
                         >
                             <GroupLink
+                                key={i}
                                 id={i}
-                                src={result.img}
-                                name={result.name}
-                                subTitle={result.title}
+                                // src={result.img}
+                                name={result.organization_name}
+                                subTitle={result.address}
                             />
                         </div>
                     ))}

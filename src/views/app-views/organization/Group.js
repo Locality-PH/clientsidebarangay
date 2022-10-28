@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card, message } from "antd";
 import Officials from "./other/Officials";
 import Events from "./other/Events";
-import About from "./About/About";
+import About from "./about/About";
 import MissionAndVision from "./other/MissionAndVision";
 import Projects from "./other/Projects";
 import axios from "axios";
@@ -23,12 +23,13 @@ const Index = () => {
     setIsLoading(false);
 
     axios
-      .get("/api/organization/get-all-organizations")
+      .get("/api/organization/get-all-organizations", generateToken()[1])
       .then((response) => {
         console.log("Organizations ", response.data);
       })
-      .catch(() => {
+      .catch((err) => {
         message.error("Could not fetch the data in the server!");
+        console.log(err);
       });
   };
 

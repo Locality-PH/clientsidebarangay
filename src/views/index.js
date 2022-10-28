@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import AppLayout from "layouts/app-layout";
@@ -8,10 +8,26 @@ import PreLayout from "layouts/pre-layout";
 import AppLocale from "lang";
 import { IntlProvider } from "react-intl";
 import { ConfigProvider } from "antd";
-import { APP_PREFIX_PATH, AUTH_PREFIX_PATH } from "configs/AppConfig";
+import {
+  APP_PREFIX_PATH,
+  AUTH_PREFIX_PATH,
+  PRE_PREFIX_PATH,
+} from "configs/AppConfig";
 import useBodyClass from "hooks/useBodyClass";
-
-function RouteInterceptor({ children, isAuthenticated, ...rest }) {
+import { useAuth } from "../contexts/AuthContext";
+import {
+  AUTH_ORGANIZATION,
+  AUTH_ORGANIZATION_LIST,
+  ACCESS_TOKEN,
+  PROFILE_URL,
+  SESSION_TOKEN,
+} from "../redux/constants/Auth";
+function RouteInterceptor({
+  children,
+  isAuthenticated,
+  isAccessToken,
+  ...rest
+}) {
   return (
     <Route
       {...rest}
@@ -34,7 +50,38 @@ function RouteInterceptor({ children, isAuthenticated, ...rest }) {
 export const Views = (props) => {
   const { locale, token, location, direction } = props;
   const currentAppLocale = AppLocale[locale];
+  const {
+    setOrganization,
+    setOrganizationMemberList,
+    authorizationConfig,
+    setPhoto,
+  } = useAuth();
+  const user = JSON.parse(localStorage.getItem(PROFILE_URL) || "[]");
+
   useBodyClass(`dir-${direction}`);
+  useEffect(() => {
+    //set GLobalContext When Refreshed
+    setOrganization(localStorage.getItem(AUTH_ORGANIZATION));
+    setOrganizationMemberList(localStorage.getItem(AUTH_ORGANIZATION_LIST));
+    authorizationConfig(localStorage.getItem(ACCESS_TOKEN));
+    setPhoto(user);
+    // async function getOrganization(token) {
+    //   // Make the initial query
+    //   console.log("token", token);
+    //   const query = await db
+    //     .collection("users")
+    //     .where("age", "==", Number(token))
+    //     .get();
+    //   if (!query.empty) {
+    //     const snapshot = query.docs[0];
+    //     const data = snapshot.data();
+    //     console.log(data);
+    //   } else {
+    //     // not found
+    //   }
+    // }
+    // getOrganization(token);
+  }, []);
   return (
     <IntlProvider
       locale={currentAppLocale.locale}

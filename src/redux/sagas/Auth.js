@@ -1,4 +1,4 @@
-import { all, takeEvery, put, fork, call } from "redux-saga/effects";
+import { all, takeEvery, put, fork, call, delay } from "redux-saga/effects";
 import {
   AUTH_TOKEN,
   ACCESS_TOKEN,
@@ -96,6 +96,7 @@ async function loginOrganization(token) {
             AUTH_ORGANIZATION_LIST,
             JSON.stringify(memberArray)
           );
+          return false;
         }
       } else {
         localStorage.setItem(AUTH_ORGANIZATION_LIST, null);
@@ -103,6 +104,7 @@ async function loginOrganization(token) {
         // setOrganizationMemberList(null);
         // setOrganization(null);
         //  return history.push(AUTH_PREFIX_PATH);
+        return false;
       }
     })
     .catch(async (error) => {
@@ -144,6 +146,7 @@ export function* signInWithFBEmail() {
         email,
         password
       );
+      setTimeout(() => {});
       if (user.message) {
         yield put(showAuthMessage(user.message));
       } else {
@@ -151,6 +154,7 @@ export function* signInWithFBEmail() {
         loginOrganization(user.user.uid);
         //  axios.post("/api/auth/login/"+user.user.uid,)
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
+        yield delay(2000);
         yield put(authenticated(user.user.uid));
       }
     } catch (err) {
@@ -194,7 +198,7 @@ export function* signUpWithFBEmail() {
         yield put(showAuthMessage(user.message));
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
-
+        yield delay(2000);
         yield put(signUpSuccess(user.user.uid));
       }
     } catch (error) {
@@ -212,7 +216,7 @@ export function* signInWithFBGoogle() {
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
         loginOrganization(user.user.uid);
-
+        yield delay(2000);
         yield put(signInWithGoogleAuthenticated(user.user.uid));
       }
     } catch (error) {
@@ -230,7 +234,7 @@ export function* signInWithFacebook() {
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
         loginOrganization(user.user.uid);
-
+        yield delay(2000);
         yield put(signInWithFacebookAuthenticated(user.user.uid));
       }
     } catch (error) {

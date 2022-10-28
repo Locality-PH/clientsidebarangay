@@ -61,6 +61,7 @@ export function AuthProvider({ children }) {
       iat: unix,
       exp: unix + 100000,
     };
+
     const jwt = sign(data, process.env.REACT_APP_ACCESS_TOKEN_SECRET);
     const header = {
       headers: {
