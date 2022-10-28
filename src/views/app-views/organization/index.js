@@ -1,12 +1,12 @@
-import HeaderCover from "./header/HeaderCover";
-import Header from "./header/Header";
+import HeaderCover from "./Header/HeaderCover";
+import Header from "./Header/Header";
 import Barangay from "./Group";
-import Campaign from "./campaign/Campaign"
-import CampaignPage from "./campaign/CampaignPage";
-import EditCampaign from "./campaign/EditCampaign";
+import Campaign from "./Campaign/Campaign";
+import CampaignPage from "./Campaign/CampaignPage";
+import EditCampaign from "./Campaign/EditCampaign";
 import CertificateRequestForm from "./certificate/CertificateRequestForm";
 import ReportIncident from "./blotter/ReportIncident";
-import AboutPage from "./about/AboutPage";
+import AboutPage from "./About/AboutPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const Index = ({ match }) => {

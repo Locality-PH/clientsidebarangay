@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card, message } from "antd";
 import Officials from "./other/Officials";
 import Events from "./other/Events";
-import About from "./about/About";
+import About from "./About/About";
 import MissionAndVision from "./other/MissionAndVision";
 import Projects from "./other/Projects";
 import axios from "axios";
@@ -15,8 +15,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getData()
-
+    getData();
   }, []);
 
   const getData = () => {
@@ -24,16 +23,14 @@ const Index = () => {
     setIsLoading(false);
 
     axios
-      .get(
-        "/api/organization/get-all-organizations"
-      )
+      .get("/api/organization/get-all-organizations")
       .then((response) => {
         console.log("Organizations ", response.data);
       })
       .catch(() => {
         message.error("Could not fetch the data in the server!");
       });
-  }
+  };
 
   return (
     <>
