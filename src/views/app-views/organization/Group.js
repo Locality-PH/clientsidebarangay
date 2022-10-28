@@ -1,11 +1,40 @@
-import { Row, Col, Card } from "antd";
-import Officials from "./Officials";
-import Events from "./Events";
-import About from "./About/About";
-import MissionAndVision from "./MissionAndVision";
-import Projects from "./Projects";
+import React, { useState, useEffect } from "react";
+import { Row, Col, Card, message } from "antd";
+import Officials from "./other/Officials";
+import Events from "./other/Events";
+import About from "./about/About";
+import MissionAndVision from "./other/MissionAndVision";
+import Projects from "./other/Projects";
+import axios from "axios";
+import { useAuth } from "contexts/AuthContext";
 
 const Index = () => {
+  const { currentOrganization, generateToken } = useAuth();
+
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getData()
+
+  }, []);
+
+  const getData = () => {
+    setData([]);
+    setIsLoading(false);
+
+    axios
+      .get(
+        "/api/organization/get-all-organizations"
+      )
+      .then((response) => {
+        console.log("Organizations ", response.data);
+      })
+      .catch(() => {
+        message.error("Could not fetch the data in the server!");
+      });
+  }
+
   return (
     <>
       <Row gutter="16">

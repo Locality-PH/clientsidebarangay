@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Tooltip, Tag, Progress, Avatar, Menu, Card } from "antd";
-import { CampaignListData } from ".././BarangayData";
+import { CampaignListData } from "../BarangayData";
 import {
   ClockCircleOutlined,
   EyeOutlined,

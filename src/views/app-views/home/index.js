@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Card, message, Button } from "antd";
+import OrganizationList from "./OrganizationList";
 import GroupLink from "components/shared-components/GroupLink";
 import TrendingNews from "components/shared-components/TrendingNews";
 import Campaign from "components/shared-components/Campaign";
@@ -15,60 +16,16 @@ import { useAuth } from "contexts/AuthContext";
 
 export const DefaultDashboard = () => {
   const { currentOrganization, generateToken } = useAuth();
-	
-  const [barangayList, setBarangayList] = useState(BarangayData);
+
   const [causesData] = useState(CausesData);
   const [newsReportData] = useState(NewsReportData);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
-
-  useEffect(() => {
-    setBarangayList(BarangayData);
-    setIsLoading(false);
-    setError("This is Error Message");
-	
-	axios
-      .get(
-        "/api/organization/get-all-organizations", generateToken()[1]
-      )
-      .then((response) => {
-        console.log("Organizations ", response.data);
-      })
-      .catch(() => {
-        message.error("Could not fetch the data in the server!");
-      });
-	  
-  }, [barangayList]);
 
   return (
     <>
       <Row gutter={16}>
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <Card
-            title="List of Barangay"
-            loading={isLoading}
-            extra={
-              <a href="#" style={{ fontSize: "1rem" }}>
-                More
-              </a>
-            }
-          >
-            <div className="mt-3">
-              {barangayList.map((result, i) => (
-                <div
-                  key={i}
-                  className={`d-flex align-items-center justify-content-between mb-4`}
-                >
-                  <GroupLink
-                    id={i}
-                    src={result.img}
-                    name={result.name}
-                    subTitle={result.title}
-                  />
-                </div>
-              ))}
-            </div>
-          </Card>
+          <OrganizationList></OrganizationList>
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>

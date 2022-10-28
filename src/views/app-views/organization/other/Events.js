@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button } from "antd";
-import { barangayEvents } from "./BarangayData";
+import { barangayEvents } from "../BarangayData";
 import { Link } from "react-router-dom";
 import AvatarStatus from "components/shared-components/AvatarStatus";
 

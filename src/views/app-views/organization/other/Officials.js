@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "antd";
-import { barangayOfficialsData } from "./BarangayData";
+import { barangayOfficialsData } from "../BarangayData";
 import AvatarStatus from "components/shared-components/AvatarStatus";
 
 const Officials = () => {
