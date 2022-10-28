@@ -409,7 +409,7 @@ div > button[data-direction="left"],
 
 .login-card {
   width: 1000px;
-  margin: 150px 0px;
+  margin: 150px 0px !important;
 }
 
 .col-login-left {
@@ -425,7 +425,7 @@ div > button[data-direction="left"],
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: auto;
+  height: auto !important;
 }
 
 .footer-content {
