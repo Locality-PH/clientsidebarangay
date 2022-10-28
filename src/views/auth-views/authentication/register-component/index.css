@@ -1,11 +1,16 @@
-.auth-login-card {
-  width: 1000px;
-  margin: 150px 0px;
+.auth-register-card {
+    width: 1200px;
+    margin: 50px 0px; 
 }
 
-.auth-login-left {
-  background-repeat: no-repeat;
-  background-size: contain;
+.auth-register-right{
+    padding: 20px 20px 0px 20px;
+}
+
+.auth-register-left .photo{
+    margin-top: 50px;
+    height: 80%;
+    width: 100%;
 }
 
 .auth-footer {
@@ -24,21 +29,22 @@
 }
 
 @media (max-width: 1399px) {
-  .auth-login-card {
+  .auth-register-card {
     width: 600px;
     margin: 50px 0px;
   }
 }
 
 @media (max-width: 700px) {
-  .auth-login-card{
-    width: 300px;
+  .auth-register-card{
+    width: 500px;
   }
   
 }
 
-@media (max-height: 810px) {
+@media (max-height: 880px) {
   .auth-footer {
     position: relative;
   }
 }
+  

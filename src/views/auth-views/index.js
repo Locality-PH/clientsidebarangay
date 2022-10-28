@@ -9,13 +9,10 @@ export const AppViews = () => {
       <Switch>
         <Route path={`${AUTH_PREFIX_PATH}/login`} component={lazy(() => import(`./authentication/login-component`))} />
 
-        <Route path={`${AUTH_PREFIX_PATH}/register`} component={lazy(() =>  import(`./authentication/register-compoent`))} />
+        <Route path={`${AUTH_PREFIX_PATH}/register`} component={lazy(() =>  import(`./authentication/register-component`))} />
 
         <Route path={`${AUTH_PREFIX_PATH}/forgot-password`} component={lazy(() => import(`./authentication/forgot-password`))} />
 
-        <Route path={`${AUTH_PREFIX_PATH}/admin-login`} component={lazy(() => import(`./authentication/admin-login`))} />
-
-        <Route path={`${AUTH_PREFIX_PATH}/admin-register`} component={lazy(() => import(`./authentication/admin-register`))} />
         <Redirect from={`${AUTH_PREFIX_PATH}`} to={`${AUTH_PREFIX_PATH}/login`} />
 
       </Switch>

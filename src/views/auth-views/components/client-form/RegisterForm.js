@@ -5,34 +5,78 @@ import { FaFacebook } from 'react-icons/fa';
 
 import './RegisterForm.css';
 
+
 function RegisterForm() {
+    const handleRegister = (value) => {
+        console.log("value", value)
+    }
+
+    const rules = {
+        email: [
+          {
+            required: true,
+            message: "Please input your email address",
+          },
+          {
+            type: "email",
+            message: "Please enter a validate email!",
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: "Please input your password",
+          },
+        ],
+        confirm_password: [
+          {
+            required: true,
+            message: "Please confirm your password!",
+          },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue("password") === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject("Passwords do not match!");
+            },
+          }),
+        ],
+      };
+
     return (
         <div className="container">
             <div style={{ alignSelf: 'center' }}>
                 <h1>Sign up</h1>
 
-                <Form>
+                <Form
+                    name="register_form"
+                    onFinish={handleRegister}
+                    layout="vertical"
+                    labelWrap
+                >
                     <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Enter username!' }]}
+                        name="email"
+                        rules={rules.email}
+                        label="Email Address :"
                     >
-                        <label className="form-label"> Username: </label>
+
                         <Input />
                     </Form.Item>
 
                     <Form.Item
                         name="password"
-                        rules={[{ required: true, message: 'Enter password!' }]}
+                        rules={rules.password}
+                        label="Password :"
                     >
-                        <label className="form-label"> Password: </label>
                         <Input.Password />
                     </Form.Item>
 
                     <Form.Item
                         name="confirm-password"
-                        rules={[{ required: true, message: 'Confirm your new password!' }]}
+                        rules={rules.confirm_password}
+                        label="Confirm Password :"
                     >
-                        <label className="form-label"> Confirm Password: </label>
                         <Input.Password />
                     </Form.Item>
 
@@ -64,7 +108,7 @@ function RegisterForm() {
                     <Form.Item >
                         <Row justify="center">
                             <Col>
-                                <a>Already have an account? Sign in now.</a>
+                                <a href="/auth/login">Already have an account? Sign in now.</a>
                             </Col>
                         </Row>
                     </Form.Item>

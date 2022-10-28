@@ -115,6 +115,7 @@ export const LoginForm = (props) => {
               className="login-btn"
               block
               loading={loading}
+              background
             >
               Login
             </Button>

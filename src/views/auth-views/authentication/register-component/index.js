@@ -34,14 +34,14 @@ const RegisterTwo = props => {
 		<div style={{ height: "100vh" }}>
 			<Row className="container" justify='center' align="middle" >
 
-				<Card className="login-card">
+				<Card className="auth-register-card">
 					<Row >
 
-						<Col xl={12} span={24} className="login_right">
+						<Col xl={12} span={24} className="auth-register-right">
 							<RegisterForm />
 						</Col>
 
-						<Col xl={12} span={0} className="col-login-left" >
+						<Col xl={12} span={0} className="auth-register-left" >
 							<img src={loginImgURL} alt="picture" className="photo" />
 
 						</Col>

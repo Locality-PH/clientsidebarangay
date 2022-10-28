@@ -21,11 +21,11 @@ const LoginComponent = (props) => {
   return (
     <div style={{ height: "100vh" }}>
       <Row className="container" justify="center" align="middle">
-        <Card className="login-card">
+        <Card className="auth-login-card">
           <Row>
             <Col
               xl={12}
-              className="col-login-left"
+              className="auth-login-left"
               style={{ backgroundImage: `url(${loginImgURL})` }}
             ></Col>
 
@@ -33,7 +33,7 @@ const LoginComponent = (props) => {
               xl={12}
               span={24}
               style={{ padding: "20px 20px 0px 20px" }}
-              className="login_right"
+              className="auth-login-right"
             >
               <LoginForm {...props} />
             </Col>

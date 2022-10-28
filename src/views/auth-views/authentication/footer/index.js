@@ -10,14 +10,14 @@ import {
 
 const Footer = () => {
   return (
-    <div className="footer">
+    <div className="auth-footer">
       <Row
         className="w-100 h-100"
         justify="center"
         align="middle"
         style={{ padding: "15px 10px" }}
       >
-        <Space className="footer-content" direction="vertical">
+        <Space className="auth-footer-content" direction="vertical">
           <Space>
             <FaFacebook size="2em" color="black" />
             <FaInstagram size="2em" color="black" />

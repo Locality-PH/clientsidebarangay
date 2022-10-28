@@ -10,7 +10,7 @@
 }
 
 .login-btn {
-    background-color: #0033cc;
+    background-color: #0033cc !important;
     color: white;
     font-weight: bold; 
     width: 100%;
