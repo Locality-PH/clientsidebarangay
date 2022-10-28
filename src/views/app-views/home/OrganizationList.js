@@ -11,9 +11,7 @@ const OrganizationList = () => {
   const [organizationList, setOrganizationList] = useState(BarangayData);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    setTimeout(() => {
-      getAllOrganizations();
-    }, 500);
+    getAllOrganizations();
   }, []);
 
   const getAllOrganizations = async () => {
