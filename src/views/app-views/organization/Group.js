@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card, message } from "antd";
 import Officials from "./other/Officials";
 import Events from "./other/Events";
-import About from "./About/About";
+import About from "./about/About";
 import MissionAndVision from "./other/MissionAndVision";
 import Projects from "./other/Projects";
 import axios from "axios";

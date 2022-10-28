@@ -24,7 +24,7 @@ const OrganizationList = () => {
 
         axios
             .get(
-                "/api/organization/get-all-organizations"
+                "/api/organization/get-all-organizations", generateToken()[1]
             )
             .then((response) => {
                 console.log("Organizations ", response.data);
