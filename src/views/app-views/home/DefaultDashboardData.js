@@ -1,25 +1,30 @@
 export const BarangayData = [
   {
+    id: 0,
     img: "/img/avatars/thumb-2.jpg",
     title: "Sumulong St, Morong, Rizal",
     name: "Caniogan",
   },
   {
+    id: 1,
     img: "/img/avatars/thumb-3.jpg",
     title: "Sumulong St, Morong, Rizal",
     name: "Baras",
   },
   {
+    id: 2,
     img: "/img/avatars/thumb-4.jpg",
     title: "Sumulong St, Morong, Rizal",
     name: "Maybangcal",
   },
   {
+    id: 3,
     img: "/img/avatars/thumb-5.jpg",
     title: "Sumulong St, Morong, Rizal",
     name: "Taghangen",
   },
   {
+    id: 4,
     img: "/img/avatars/thumb-6.jpg",
     title: "Sumulong St, Morong, Rizal",
     name: "San Guilliermo",

@@ -10,8 +10,12 @@ import {
   NewsReportData,
 } from "./DefaultDashboardData";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "contexts/AuthContext";
 
 export const DefaultDashboard = () => {
+  const { currentOrganization, generateToken } = useAuth();
+	
   const [barangayList, setBarangayList] = useState(BarangayData);
   const [causesData] = useState(CausesData);
   const [newsReportData] = useState(NewsReportData);
@@ -22,6 +26,18 @@ export const DefaultDashboard = () => {
     setBarangayList(BarangayData);
     setIsLoading(false);
     setError("This is Error Message");
+	
+	axios
+      .get(
+        "/api/organization/get-all-organizations", generateToken()[1]
+      )
+      .then((response) => {
+        console.log("Organizations ", response.data);
+      })
+      .catch(() => {
+        message.error("Could not fetch the data in the server!");
+      });
+	  
   }, [barangayList]);
 
   return (
