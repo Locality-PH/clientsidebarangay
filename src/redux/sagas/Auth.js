@@ -150,7 +150,7 @@ export function* signInWithFBEmail() {
         console.log(auth.currentUser);
         loginOrganization(user.user.uid);
         //  axios.post("/api/auth/login/"+user.user.uid,)
-        // localStorage.setItem(AUTH_TOKEN, user.user.uid);
+        localStorage.setItem(AUTH_TOKEN, user.user.uid);
         yield put(authenticated(user.user.uid));
       }
     } catch (err) {
@@ -165,6 +165,12 @@ export function* signOut() {
       const signOutUser = yield call(FirebaseService.signOutRequest);
       if (signOutUser === undefined) {
         localStorage.removeItem(AUTH_TOKEN);
+        localStorage.removeItem(AUTH_ORGANIZATION);
+        localStorage.removeItem(AUTH_ORGANIZATION_LIST);
+        localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(SESSION_TOKEN);
+        localStorage.removeItem(PROFILE_URL);
+
         yield put(signOutSuccess(signOutUser));
       } else {
         yield put(showAuthMessage(signOutUser.message));

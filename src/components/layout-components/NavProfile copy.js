@@ -129,36 +129,25 @@ export const NavProfile = ({ signOut, match }) => {
     </div>
   );
   return (
-    <>
-      {timer ? (
-        <Dropdown
-          placement="bottomRight"
-          overlay={profileMenu}
-          trigger={["click"]}
-        >
-          <Menu
-            className="d-flex align-item-center avatar-top"
-            mode="horizontal"
-          >
-            <Menu.Item key="profile">
-              {profile?.profile_data ? (
-                <Avatar src={profile?.profile_data} size={45}>
-                  <b> {utils.getNameInitial(user)} </b>{" "}
-                </Avatar>
-              ) : (
-                <Avatar
-                  src={profile?.profile_data}
-                  size={45}
-                  style={{ backgroundColor: profile?.profile_color }}
-                >
-                  <b> {utils.getNameInitial(user)} </b>{" "}
-                </Avatar>
-              )}
-            </Menu.Item>
-          </Menu>
-        </Dropdown>
-      ) : null}
-    </>
+    <Dropdown placement="bottomRight" overlay={profileMenu} trigger={["click"]}>
+      <Menu className="d-flex align-item-center avatar-top" mode="horizontal">
+        <Menu.Item key="profile">
+          {profile?.profile_data ? (
+            <Avatar src={profile?.profile_data} size={45}>
+              <b> {utils.getNameInitial(user)} </b>{" "}
+            </Avatar>
+          ) : (
+            <Avatar
+              src={profile?.profile_data}
+              size={45}
+              style={{ backgroundColor: profile?.profile_color }}
+            >
+              <b> {utils.getNameInitial(user)} </b>{" "}
+            </Avatar>
+          )}
+        </Menu.Item>
+      </Menu>
+    </Dropdown>
   );
 };
 
