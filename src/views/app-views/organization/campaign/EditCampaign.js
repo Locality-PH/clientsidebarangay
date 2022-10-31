@@ -4,7 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 const { Option } = Select;
 
-const EditCampaign = ({ barangayUrl }) => {
+const EditCampaign = ({ organizationId }) => {
     const props = {
         action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
         onChange({ file, fileList }) {
@@ -84,6 +84,15 @@ const EditCampaign = ({ barangayUrl }) => {
                         </Form.Item>
 
                         <Form.Item>
+                            <h4>Icon</h4>
+                            <Upload>
+                                <Button>
+                                    <UploadOutlined /> Upload
+                                </Button>
+                            </Upload>
+                        </Form.Item>
+
+                        <Form.Item>
                             <h4>Cover</h4>
                             <Form.Item >
                                 <Upload {...props}>
@@ -95,7 +104,7 @@ const EditCampaign = ({ barangayUrl }) => {
                         </Form.Item>
 
                         <Form.Item>
-                            <Link to={`${barangayUrl}/campaign`}>
+                            <Link to={`/home/group/${organizationId}/campaign`}>
                                 <Button type="primary" className="mr-4">Cancel</Button>
                             </Link>
                             <Button type="primary" htmlType="submit">Save</Button>

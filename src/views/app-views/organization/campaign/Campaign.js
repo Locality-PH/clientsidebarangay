@@ -3,7 +3,7 @@ import { Row, Col } from 'antd';
 import CampaignForm from './CampaignForm';
 import CampaignRequested from './CampaignRequested';
 
-const Campaign = ({ barangayUrl }) => {
+const Campaign = ({ organizationId }) => {
   return (
     <>
       <Row gutter={16}>
@@ -12,7 +12,7 @@ const Campaign = ({ barangayUrl }) => {
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={16}>
-          <CampaignRequested barangayUrl={barangayUrl}></CampaignRequested>
+          <CampaignRequested organizationId={organizationId}></CampaignRequested>
         </Col>
       </Row>
     </>

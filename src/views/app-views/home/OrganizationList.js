@@ -2,24 +2,26 @@ import React, { useState, useEffect } from "react";
 import { Card, message } from "antd";
 import GroupLink from "components/shared-components/GroupLink";
 import { BarangayData } from "./DefaultDashboardData";
+import {withRouter, Link} from 'react-router-dom';
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
 const OrganizationList = () => {
     const { currentOrganization, generateToken } = useAuth();
 
-    const [organizationList, setOrganizationList] = useState(BarangayData);
+    const [organizationList, setOrganizationList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
-        getAllOrganizations();
+        getLatestOrganizations();
     }, []);
 
-    const getAllOrganizations = async () => {
+    const getLatestOrganizations = async () => {
         await axios
             .get("/api/organization/get-latest-organizations", generateToken()[1])
             .then((response) => {
                 setOrganizationList(response.data);
+                console.log(response.data)
                 setIsLoading(false);
 
             })
@@ -34,11 +36,7 @@ const OrganizationList = () => {
             <Card
                 title="List of Barangay"
                 loading={isLoading}
-                extra={
-                    <a href="#" style={{ fontSize: "1rem" }}>
-                        More
-                    </a>
-                }
+                extra={<Link to="feeds/organizations" style={{fontSize: "1rem"}}>More</Link>}
             >
                 <div className="mt-3">
                     {organizationList.map((result, i) => (
@@ -48,7 +46,7 @@ const OrganizationList = () => {
                         >
                             <GroupLink
                                 key={i}
-                                id={i}
+                                id={result.organization_id}
                                 // src={result.img}
                                 name={result.organization_name}
                                 subTitle={result.address}

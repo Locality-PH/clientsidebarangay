@@ -82,6 +82,15 @@ const CampaignForm = () => {
                     </Form.Item>
 
                     <Form.Item>
+                        <h4>Icon</h4>
+                        <Upload>
+                            <Button>
+                                <UploadOutlined /> Upload
+                            </Button>
+                        </Upload>
+                    </Form.Item>
+
+                    <Form.Item>
                         <h4>Cover</h4>
                         <Form.Item >
                             <Upload {...props}>
