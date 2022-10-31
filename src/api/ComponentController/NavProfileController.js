@@ -6,7 +6,6 @@ export async function logOut(signOut, generateToken) {
     session_token: localStorage.getItem(SESSION_TOKEN),
   };
   const token = generateToken();
-  console.log(token);
   await axios
     .post("/api/logout", data, token[1])
     .then((response) => {

@@ -64,6 +64,14 @@ export async function authOrganization(token, authType, history, redirect) {
     profile_url: auth.currentUser?.photoURL,
     user: auth.currentUser?.displayName,
   };
+
+  const authOption2 = {
+    uuid: token,
+    email: auth.currentUser?.email,
+    code: null,
+    user: auth.currentUser?.displayName,
+    profile_url: auth.currentUser?.photoURL,
+  };
   if (authType == "Login")
     axios
       .post("/api/auth/login/" + token, authOption, header)
@@ -92,12 +100,13 @@ export async function authOrganization(token, authType, history, redirect) {
                 organization: t[0].organization_id,
               });
             });
-            console.log(memberArray);
             localStorage.setItem(
               AUTH_ORGANIZATION_LIST,
               JSON.stringify(memberArray)
             );
-            return history.push(redirect);
+            setTimeout(() => {
+              return history.push(redirect);
+            }, 1000);
           }
         } else {
           localStorage.setItem(AUTH_ORGANIZATION_LIST, null);
@@ -112,12 +121,10 @@ export async function authOrganization(token, authType, history, redirect) {
         signOut();
         console.log(error);
       });
-  console.log("pre");
 
   if (authType == "Register") {
-    console.log("pre");
     axios
-      .post("/api/auth/register", authOption, header)
+      .post("/api/auth/register", authOption2, header)
       .then((res) => {
         localStorage.setItem(ACCESS_TOKEN, res.data.accessToken);
         localStorage.setItem(SESSION_TOKEN, res.data.accessToken);
@@ -133,7 +140,6 @@ export async function authOrganization(token, authType, history, redirect) {
             profile_color: response.profileLogo,
           })
         );
-        console.log("after");
 
         if (response.organizations[0] && response.members[0]) {
           if (response.organizations[0].length > 0) {
@@ -144,11 +150,11 @@ export async function authOrganization(token, authType, history, redirect) {
                 organization: t[0].organization_id,
               });
             });
-            console.log(memberArray);
             localStorage.setItem(
               AUTH_ORGANIZATION_LIST,
               JSON.stringify(memberArray)
             );
+
             return history.push(redirect);
           }
         } else {
@@ -157,6 +163,7 @@ export async function authOrganization(token, authType, history, redirect) {
           // setOrganizationMemberList(null);
           // setOrganization(null);
           //  return history.push(AUTH_PREFIX_PATH);
+
           return history.push(redirect);
         }
       })
@@ -204,11 +211,10 @@ export function* signInWithFBEmail() {
       if (user.message) {
         yield put(showAuthMessage(user.message));
       } else {
-        console.log(auth.currentUser);
         // authOrganization(user.user.uid, "Login");
         //  axios.post("/api/auth/login/"+user.user.uid,)
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
-        yield delay(2000);
+
         yield put(authenticated(user.user.uid));
       }
     } catch (err) {
@@ -254,7 +260,6 @@ export function* signUpWithFBEmail() {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
         // authOrganization(user.user.uid, "Register");
 
-        yield delay(2000);
         yield put(signUpSuccess(user.user.uid));
       }
     } catch (error) {
@@ -272,7 +277,7 @@ export function* signInWithFBGoogle() {
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
         //  authOrganization(user.user.uid, "Login");
-        yield delay(2000);
+
         yield put(signInWithGoogleAuthenticated(user.user.uid));
       }
     } catch (error) {
@@ -290,7 +295,7 @@ export function* signInWithFacebook() {
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
         //   authOrganization(user.user.uid, "Login");
-        yield delay(2000);
+
         yield put(signInWithFacebookAuthenticated(user.user.uid));
       }
     } catch (error) {

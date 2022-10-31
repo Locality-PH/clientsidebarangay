@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Form, Input, Button, Checkbox, Alert } from "antd";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -19,6 +19,9 @@ import { authOrganization } from "redux/sagas/Auth";
 import { AUTH_TOKEN, ACCESS_TOKEN } from "redux/constants/Auth";
 
 function RegisterForm(props) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [initialData, setInitialData] = useState({});
+
   const {
     signUp,
     showLoading,
@@ -51,14 +54,20 @@ function RegisterForm(props) {
     form.validateFields().then((values) => {
       showLoading();
 
-      signUp(values);
+      // signUp(values);
     });
   };
 
   const handleRegister = (value) => {
-    console.log("value", value);
     form.validateFields().then((values) => {
       showLoading();
+      //   console.log(form.getFieldValue("email"));
+      // setInitialData({
+      //   email: form.getFieldValue("email"),
+      //   password: form.getFieldValue("password"),
+      //   [`confirm-password`]: form.getFieldValue("confirm-password"),
+      // });
+      // localStorage.setItem("register-form", JSON.stringify(memberArray))
 
       signUp(values);
     });
@@ -97,16 +106,26 @@ function RegisterForm(props) {
     ],
   };
   useEffect(() => {
-    console.log(redirect, token);
+    let cancel = true;
+
     if (token !== null) {
-      authOrganization(token, "Login", history, redirect);
+      if (cancel)
+        if (!localStorage.getItem(ACCESS_TOKEN)) {
+          setIsLoading(true);
+          authOrganization(token, "Register", history, redirect);
+        }
+      if (localStorage.getItem(ACCESS_TOKEN) && token) history.push(redirect);
     }
+
     if (showMessage) {
       setTimeout(() => {
         hideAuthMessage();
       }, 3000);
     }
-  });
+    return () => {
+      cancel = false;
+    };
+  }, [token]);
   return (
     <div className="container">
       <div style={{ alignSelf: "center" }}>
@@ -125,6 +144,7 @@ function RegisterForm(props) {
           name="register_form"
           onFinish={handleRegister}
           layout="vertical"
+          initialValues={initialData}
         >
           <Form.Item
             name="email"
@@ -155,9 +175,10 @@ function RegisterForm(props) {
 
           <Form.Item>
             <Button
-              loading={loading}
+              loading={loading || isLoading}
               htmlType="submit"
               className="w-100"
+              block
               style={{
                 backgroundColor: "#0033cc",
                 color: "white",

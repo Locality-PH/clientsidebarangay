@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-
+import React, { useEffect, useState } from "react";
+import Loading from "components/shared-components/Loading";
 import { Row, Col, Form, Input, Button, Checkbox, Alert } from "antd";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
@@ -22,6 +22,7 @@ import "./LoginForm.css";
 
 export const LoginForm = (props) => {
   let history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     otherSignIn,
@@ -47,7 +48,6 @@ export const LoginForm = (props) => {
   };
 
   const onLogin = (values) => {
-    console.log(values);
     showLoading();
     signIn(values);
   };
@@ -63,104 +63,131 @@ export const LoginForm = (props) => {
   };
 
   useEffect(() => {
-    console.log(redirect, token);
+    let cancel = true;
     if (token !== null) {
-      authOrganization(token, "Login", history, redirect);
+      if (cancel)
+        if (!localStorage.getItem(ACCESS_TOKEN)) {
+          setIsLoading(true);
+          authOrganization(token, "Login", history, redirect, setIsLoading);
+        }
+      if (localStorage.getItem(ACCESS_TOKEN) && token) history.push(redirect);
 
       //  if (localStorage.getItem(ACCESS_TOKEN)) history.push(redirect);
     }
     if (showMessage) {
       setTimeout(() => {
         hideAuthMessage();
+        setIsLoading(false);
       }, 3000);
     }
+    return () => {
+      cancel = false;
+    };
   });
 
   return (
-    <div>
-      <div style={{ alignSelf: "center" }}>
-        <h1 className="form-title">Login now</h1>
-        <motion.div
-          initial={{ opacity: 0, marginBottom: 0 }}
-          animate={{
-            opacity: showMessage ? 1 : 0,
-            marginBottom: showMessage ? 20 : 0,
-          }}
+    <>
+      {/* {isLoading ? (
+        <Row
+          align="middle"
+          justify="center"
+          className="organization-register-container"
+          style={{ height: "600px" }}
         >
-          <Alert type="error" showIcon message={message}></Alert>
-        </motion.div>
-
-        <Form
-          name="login-form"
-          initialValues={initialCredential}
-          onFinish={onLogin}
-        >
-          <Form.Item
-            name="email"
-            label="Username: "
-            rules={[{ required: true, message: "Please input your username!" }]}
+          {" "}
+          <Loading />
+        </Row>
+      ) : ( */}
+      <div>
+        <div style={{ alignSelf: "center" }}>
+          <h1 className="form-title">Login now</h1>
+          <motion.div
+            initial={{ opacity: 0, marginBottom: 0 }}
+            animate={{
+              opacity: showMessage ? 1 : 0,
+              marginBottom: showMessage ? 20 : 0,
+            }}
           >
-            <Input />
-          </Form.Item>
+            <Alert type="error" showIcon message={message}></Alert>
+          </motion.div>
 
-          <Form.Item
-            name="password"
-            label="Password: "
-            rules={[{ required: true, message: "Please input your password!" }]}
+          <Form
+            name="login-form"
+            initialValues={initialCredential}
+            onFinish={onLogin}
           >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              htmlType="submit"
-              className="login-btn"
-              block
-              loading={loading}
+            <Form.Item
+              name="email"
+              label="Username: "
+              rules={[
+                { required: true, message: "Please input your username!" },
+              ]}
             >
-              Login
-            </Button>
-          </Form.Item>
+              <Input />
+            </Form.Item>
 
-          <Form.Item name="remember" wrapperCol={{ span: 24 }}>
-            <Row justify="space-between">
+            <Form.Item
+              name="password"
+              label="Password: "
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                htmlType="submit"
+                className="login-btn"
+                block
+                loading={loading || isLoading}
+              >
+                Login
+              </Button>
+            </Form.Item>
+
+            <Form.Item name="remember" wrapperCol={{ span: 24 }}>
+              <Row justify="space-between">
+                <Col>
+                  <Checkbox>Remember me</Checkbox>
+                </Col>
+                <Col>
+                  {" "}
+                  <a href="url">Forgot Password?</a>
+                </Col>
+              </Row>
+            </Form.Item>
+
+            <Form.Item>
+              <Row justify="center" gutter={10}>
+                <Col>
+                  <Button onClick={onGoogleLogin}>
+                    <FcGoogle style={{ marginRight: "10px" }} /> Sign in with
+                    Google
+                  </Button>
+                </Col>
+                <Col>
+                  <Button>
+                    <FaFacebook style={{ marginRight: "10px" }} />
+                    Sign in with Facebook
+                  </Button>
+                </Col>
+              </Row>
+            </Form.Item>
+
+            <Row justify="center" style={{ marginBottom: "10px" }}>
               <Col>
-                <Checkbox>Remember me</Checkbox>
-              </Col>
-              <Col>
-                {" "}
-                <a href="url">Forgot Password?</a>
+                <a href="/auth/register">
+                  Don't have an account yet? Sign up now.
+                </a>
               </Col>
             </Row>
-          </Form.Item>
-
-          <Form.Item>
-            <Row justify="center" gutter={10}>
-              <Col>
-                <Button onClick={onGoogleLogin}>
-                  <FcGoogle style={{ marginRight: "10px" }} /> Sign in with
-                  Google
-                </Button>
-              </Col>
-              <Col>
-                <Button>
-                  <FaFacebook style={{ marginRight: "10px" }} />
-                  Sign in with Facebook
-                </Button>
-              </Col>
-            </Row>
-          </Form.Item>
-
-          <Row justify="center" style={{ marginBottom: "10px" }}>
-            <Col>
-              <a href="/auth/register">
-                Don't have an account yet? Sign up now.
-              </a>
-            </Col>
-          </Row>
-        </Form>
+          </Form>
+        </div>
       </div>
-    </div>
+      {/* )} */}
+    </>
   );
 };
 
