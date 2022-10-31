@@ -11,6 +11,7 @@ import {
   NewsReportData,
 } from "./DefaultDashboardData";
 import { withRouter } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
@@ -31,11 +32,7 @@ export const DefaultDashboard = () => {
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
           <Card
             title="Trending Campaign"
-            extra={
-              <a href="#" style={{ fontSize: "1rem" }}>
-                More
-              </a>
-            }
+            extra={<Link to="feeds/campaigns" style={{fontSize: "1rem"}}>More</Link>}
           >
             <div className="mt-3">
               {causesData.map((result, i) => (

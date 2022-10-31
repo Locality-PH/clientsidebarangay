@@ -32,7 +32,7 @@ const Content = ({ children, extraContent }) => (
     </Row>
 );
 
-const CampaignPage = ({ match, barangayUrl }) => {
+const CampaignPage = ({ match, organizationId }) => {
     return (
         <>
             <div className="my-content-center">
@@ -43,14 +43,14 @@ const CampaignPage = ({ match, barangayUrl }) => {
                         subTitle="Health"
                         tags={<Tag color="blue">Pending</Tag>}
                         extra={[
-                            <Link to={`${barangayUrl}/campaign`}>
-                                <Button key="3" type="primary"><ArrowLeftOutlined />Back</Button>
+                            <Link key={1} to={`/home/group/${organizationId}/campaign`}>
+                                <Button type="primary"><ArrowLeftOutlined />Back</Button>
                             </Link>,
-                            <Link to={`${barangayUrl}/campaign/edit/${match.params.id}`}>
-                                <Button key="2" type="primary"><EditOutlined />Edit</Button>
+                            <Link key={2} to={`/home/group/${organizationId}/campaign/edit/${match.params.id}`}>
+                                <Button type="primary"><EditOutlined />Edit</Button>
                             </Link>,
-                            <Link to="/">
-                                <Button key="1" type="primary" danger><DeleteOutlined />Delete</Button>
+                            <Link key={3} to="/">
+                                <Button type="primary" danger><DeleteOutlined />Delete</Button>
                             </Link>,
                         ]}
                         avatar={{ src: "/img/avatars/thumb-1.jpg" }}

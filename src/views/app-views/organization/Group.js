@@ -1,44 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Card, message } from "antd";
-import Officials from "./other/Officials";
-import Events from "./other/Events";
+import Officials from "./officials/Officials";
+import Events from "./events/Events";
 import About from "./about/About";
 import MissionAndVision from "./other/MissionAndVision";
 import Projects from "./other/Projects";
-import axios from "axios";
-import { useAuth } from "contexts/AuthContext";
 
-const Index = () => {
-  const { currentOrganization, generateToken } = useAuth();
-
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = () => {
-    setData([]);
-    setIsLoading(false);
-
-    axios
-      .get("/api/organization/get-all-organizations", generateToken()[1])
-      .then((response) => {
-        console.log("Organizations ", response.data);
-      })
-      .catch((err) => {
-        message.error("Could not fetch the data in the server!");
-        console.log(err);
-      });
-  };
-
+const Index = ({ organizationId }) => {
   return (
     <>
       <Row gutter="16">
         <Col xs={24} sm={24} md={8}>
           <Officials></Officials>
-          <Events></Events>
+          <Events organizationId={organizationId}></Events>
           <About></About>
         </Col>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import utils from "utils";
 import { Avatar, Button } from "antd";
 import { Link } from "react-router-dom";
 
@@ -28,7 +29,13 @@ export const BarangayLinks = (props) => {
   return (
     <>
       <div className="avatar-status d-flex align-items-center">
-        {renderAvatar({ icon, src, type, size, shape, gap, text })}
+        {/*renderAvatar({ icon, src, type, size, shape, gap, text })*/}
+        <Avatar
+          className="font-size-sm"
+          style={{ backgroundColor: "black" }}
+        >
+          {utils.getNameInitial(name)}
+        </Avatar>
         <div className="ml-2">
           <div>
             <div className="avatar-status-name h4">{name}</div>
@@ -38,7 +45,7 @@ export const BarangayLinks = (props) => {
         </div>
       </div>
       <div>
-        <Link to={`/home/group/${name}`}>
+        <Link to={`/home/group/${id}`}>
           <Button type="primary" shape="round">
             View
           </Button>
