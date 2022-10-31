@@ -27,11 +27,12 @@ import publicIp from "react-public-ip";
 import platform from "platform";
 import jwt_decode from "jwt-decode";
 import sign from "jwt-encode";
+import { HistoryOutlined } from "@ant-design/icons";
 
 const family = platform.os.family;
 const browser = platform.name;
 
-async function loginOrganization(token) {
+export async function authOrganization(token, authType, history, redirect) {
   const ipv4 = (await publicIp.v4()) || "";
   const date = new Date().getTime() / 1000;
   const unix = Math.round(date);
@@ -57,60 +58,113 @@ async function loginOrganization(token) {
     },
   };
 
-  const login = {
+  const authOption = {
     auth_id: token,
     email: auth.currentUser?.email,
     profile_url: auth.currentUser?.photoURL,
     user: auth.currentUser?.displayName,
   };
+  if (authType == "Login")
+    axios
+      .post("/api/auth/login/" + token, authOption, header)
+      .then((res) => {
+        localStorage.setItem(ACCESS_TOKEN, res.data.accessToken);
+        localStorage.setItem(SESSION_TOKEN, res.data.accessToken);
+        let tmp = generateToken();
+        localStorage.setItem(ACCESS_TOKEN, tmp[0]);
+        let organzationArray = [];
+        let memberArray = [];
+        let response = jwt_decode(res.data.accessToken);
+        localStorage.setItem(
+          PROFILE_URL,
+          JSON.stringify({
+            profile_data: res.data?.profileUrl,
+            profile_color: response.profileLogo,
+          })
+        );
 
-  axios
-    .post("/api/auth/login/" + token, login, header)
-    .then((res) => {
-      localStorage.setItem(ACCESS_TOKEN, res.data.accessToken);
-      localStorage.setItem(SESSION_TOKEN, res.data.accessToken);
-      let tmp = generateToken();
-      localStorage.setItem(ACCESS_TOKEN, tmp[0]);
-      let organzationArray = [];
-      let memberArray = [];
-      let response = jwt_decode(res.data.accessToken);
-      localStorage.setItem(
-        PROFILE_URL,
-        JSON.stringify({
-          profile_data: res.data?.profileUrl,
-          profile_color: response.profileLogo,
-        })
-      );
-
-      if (response.organizations[0] && response.members[0]) {
-        if (response.organizations[0].length > 0) {
-          localStorage.setItem(AUTH_ORGANIZATION, organzationArray);
-          response.members.map((t) => {
-            memberArray.push({
-              organization_role: t[0].organization_member_id,
-              organization: t[0].organization_id,
+        if (response.organizations[0] && response.members[0]) {
+          if (response.organizations[0].length > 0) {
+            // localStorage.setItem(AUTH_ORGANIZATION, organzationArray);
+            response.members.map((t) => {
+              memberArray.push({
+                organization_role: t[0].organization_member_id,
+                organization: t[0].organization_id,
+              });
             });
-          });
-          console.log(memberArray);
-          localStorage.setItem(
-            AUTH_ORGANIZATION_LIST,
-            JSON.stringify(memberArray)
-          );
-          return false;
+            console.log(memberArray);
+            localStorage.setItem(
+              AUTH_ORGANIZATION_LIST,
+              JSON.stringify(memberArray)
+            );
+            return history.push(redirect);
+          }
+        } else {
+          localStorage.setItem(AUTH_ORGANIZATION_LIST, null);
+          localStorage.setItem(AUTH_ORGANIZATION, null);
+          // setOrganizationMemberList(null);
+          // setOrganization(null);
+          //  return history.push(AUTH_PREFIX_PATH);
+          return history.push(redirect);
         }
-      } else {
-        localStorage.setItem(AUTH_ORGANIZATION_LIST, null);
-        localStorage.setItem(AUTH_ORGANIZATION, null);
-        // setOrganizationMemberList(null);
-        // setOrganization(null);
-        //  return history.push(AUTH_PREFIX_PATH);
-        return false;
-      }
-    })
-    .catch(async (error) => {
-      signOut();
-      console.log(error);
-    });
+      })
+      .catch(async (error) => {
+        signOut();
+        console.log(error);
+      });
+  console.log("pre");
+
+  if (authType == "Register") {
+    console.log("pre");
+    axios
+      .post("/api/auth/register", authOption, header)
+      .then((res) => {
+        localStorage.setItem(ACCESS_TOKEN, res.data.accessToken);
+        localStorage.setItem(SESSION_TOKEN, res.data.accessToken);
+        let tmp = generateToken();
+        localStorage.setItem(ACCESS_TOKEN, tmp[0]);
+        //    let organzationArray = [];
+        let memberArray = [];
+        let response = jwt_decode(res.data.accessToken);
+        localStorage.setItem(
+          PROFILE_URL,
+          JSON.stringify({
+            profile_data: res.data?.profileUrl,
+            profile_color: response.profileLogo,
+          })
+        );
+        console.log("after");
+
+        if (response.organizations[0] && response.members[0]) {
+          if (response.organizations[0].length > 0) {
+            // localStorage.setItem(AUTH_ORGANIZATION, organzationArray);
+            response.members.map((t) => {
+              memberArray.push({
+                organization_role: t[0].organization_member_id,
+                organization: t[0].organization_id,
+              });
+            });
+            console.log(memberArray);
+            localStorage.setItem(
+              AUTH_ORGANIZATION_LIST,
+              JSON.stringify(memberArray)
+            );
+            return history.push(redirect);
+          }
+        } else {
+          localStorage.setItem(AUTH_ORGANIZATION_LIST, null);
+          localStorage.setItem(AUTH_ORGANIZATION, null);
+          // setOrganizationMemberList(null);
+          // setOrganization(null);
+          //  return history.push(AUTH_PREFIX_PATH);
+          return history.push(redirect);
+        }
+      })
+      .catch(async (error) => {
+        signOut();
+        console.log(error);
+      });
+  }
 }
 function generateToken() {
   let response = jwt_decode(localStorage.getItem(ACCESS_TOKEN));
@@ -151,7 +205,7 @@ export function* signInWithFBEmail() {
         yield put(showAuthMessage(user.message));
       } else {
         console.log(auth.currentUser);
-        loginOrganization(user.user.uid);
+        // authOrganization(user.user.uid, "Login");
         //  axios.post("/api/auth/login/"+user.user.uid,)
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
         yield delay(2000);
@@ -198,6 +252,8 @@ export function* signUpWithFBEmail() {
         yield put(showAuthMessage(user.message));
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
+        // authOrganization(user.user.uid, "Register");
+
         yield delay(2000);
         yield put(signUpSuccess(user.user.uid));
       }
@@ -215,7 +271,7 @@ export function* signInWithFBGoogle() {
         yield put(showAuthMessage(user.message));
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
-        loginOrganization(user.user.uid);
+        //  authOrganization(user.user.uid, "Login");
         yield delay(2000);
         yield put(signInWithGoogleAuthenticated(user.user.uid));
       }
@@ -233,7 +289,7 @@ export function* signInWithFacebook() {
         yield put(showAuthMessage(user.message));
       } else {
         localStorage.setItem(AUTH_TOKEN, user.user.uid);
-        loginOrganization(user.user.uid);
+        //   authOrganization(user.user.uid, "Login");
         yield delay(2000);
         yield put(signInWithFacebookAuthenticated(user.user.uid));
       }

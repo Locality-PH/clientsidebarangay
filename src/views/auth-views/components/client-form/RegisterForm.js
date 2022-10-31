@@ -1,123 +1,245 @@
-import React from 'react';
-import { Row, Col, Card, Form, Input, Button, Checkbox } from "antd";
-import { FcGoogle } from 'react-icons/fc';
-import { FaFacebook } from 'react-icons/fa';
+import React, { useEffect } from "react";
+import { Row, Col, Card, Form, Input, Button, Checkbox, Alert } from "antd";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import {
+  signUp,
+  showAuthMessage,
+  showLoading,
+  hideAuthMessage,
+  signInWithGoogle,
+  signInWithFacebook,
+} from "redux/actions/Auth";
+import "./RegisterForm.css";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
+import { motion } from "framer-motion";
+import { authOrganization } from "redux/sagas/Auth";
+import { AUTH_TOKEN, ACCESS_TOKEN } from "redux/constants/Auth";
 
-import './RegisterForm.css';
+function RegisterForm(props) {
+  const {
+    signUp,
+    showLoading,
+    token,
+    loading,
+    redirect,
+    message,
+    showMessage,
+    hideAuthMessage,
+    otherSignIn,
+    signInWithGoogle,
+    signInWithFacebook,
+    extra,
+  } = props;
 
+  const [form] = Form.useForm();
+  let history = useHistory();
 
-function RegisterForm() {
-    const handleRegister = (value) => {
-        console.log("value", value)
+  const onGoogleLogin = () => {
+    showLoading();
+    signInWithGoogle();
+  };
+
+  const onFacebookLogin = () => {
+    showLoading();
+    signInWithFacebook();
+  };
+  const onSignUp = (values) => {
+    // const datas = values.code;
+    form.validateFields().then((values) => {
+      showLoading();
+
+      signUp(values);
+    });
+  };
+
+  const handleRegister = (value) => {
+    console.log("value", value);
+    form.validateFields().then((values) => {
+      showLoading();
+
+      signUp(values);
+    });
+  };
+
+  const rules = {
+    email: [
+      {
+        required: true,
+        message: "Please input your email address",
+      },
+      {
+        type: "email",
+        message: "Please enter a validate email!",
+      },
+    ],
+    password: [
+      {
+        required: true,
+        message: "Please input your password",
+      },
+    ],
+    confirm_password: [
+      {
+        required: true,
+        message: "Please confirm your password!",
+      },
+      ({ getFieldValue }) => ({
+        validator(_, value) {
+          if (!value || getFieldValue("password") === value) {
+            return Promise.resolve();
+          }
+          return Promise.reject("Passwords do not match!");
+        },
+      }),
+    ],
+  };
+  useEffect(() => {
+    console.log(redirect, token);
+    if (token !== null) {
+      authOrganization(token, "Login", history, redirect);
     }
+    if (showMessage) {
+      setTimeout(() => {
+        hideAuthMessage();
+      }, 3000);
+    }
+  });
+  return (
+    <div className="container">
+      <div style={{ alignSelf: "center" }}>
+        <h1>Sign up</h1>
+        <motion.div
+          initial={{ opacity: 0, marginBottom: 0 }}
+          animate={{
+            opacity: showMessage ? 1 : 0,
+            marginBottom: showMessage ? 20 : 0,
+          }}
+        >
+          <Alert type="error" showIcon message={message}></Alert>
+        </motion.div>
+        <Form
+          form={form}
+          name="register_form"
+          onFinish={handleRegister}
+          layout="vertical"
+        >
+          <Form.Item
+            name="email"
+            rules={rules.email}
+            label="Email Address :"
+            hasFeedback
+          >
+            <Input />
+          </Form.Item>
 
-    const rules = {
-        email: [
-          {
-            required: true,
-            message: "Please input your email address",
-          },
-          {
-            type: "email",
-            message: "Please enter a validate email!",
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: "Please input your password",
-          },
-        ],
-        confirm_password: [
-          {
-            required: true,
-            message: "Please confirm your password!",
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject("Passwords do not match!");
-            },
-          }),
-        ],
-      };
+          <Form.Item
+            name="password"
+            hasFeedback
+            rules={rules.password}
+            label="Password :"
+          >
+            <Input.Password />
+          </Form.Item>
 
-    return (
-        <div className="container">
-            <div style={{ alignSelf: 'center' }}>
-                <h1>Sign up</h1>
+          <Form.Item
+            name="confirm-password"
+            rules={rules.confirm_password}
+            label="Confirm Password :"
+            hasFeedback
+          >
+            <Input.Password />
+          </Form.Item>
 
-                <Form
-                    name="register_form"
-                    onFinish={handleRegister}
-                    layout="vertical"
-                    labelWrap
+          <Form.Item>
+            <Button
+              loading={loading}
+              htmlType="submit"
+              className="w-100"
+              style={{
+                backgroundColor: "#0033cc",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              Register
+            </Button>
+          </Form.Item>
+
+          <Form.Item name="remember" wrapperCol={{ span: 24 }}>
+            <Row justify="space-between">
+              <Col>
+                <Checkbox>Remember me</Checkbox>{" "}
+              </Col>
+              <Col>
+                {" "}
+                <a href="url">Forgot Password?</a>
+              </Col>
+            </Row>
+          </Form.Item>
+
+          <Form.Item>
+            <Row justify="center" gutter={10}>
+              <Col>
+                <Button
+                  onClick={() => onGoogleLogin()}
+                  className="mr-2"
+                  disabled={loading}
                 >
-                    <Form.Item
-                        name="email"
-                        rules={rules.email}
-                        label="Email Address :"
-                    >
+                  <FcGoogle style={{ marginRight: "10px" }} /> Sign up with
+                  Google
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  className="mr-2"
+                  onClick={() => onFacebookLogin()}
+                  disabled={loading}
+                >
+                  <FaFacebook style={{ marginRight: "10px" }} />
+                  Sign up with Facebook
+                </Button>
+              </Col>
+            </Row>
+          </Form.Item>
 
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="password"
-                        rules={rules.password}
-                        label="Password :"
-                    >
-                        <Input.Password />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="confirm-password"
-                        rules={rules.confirm_password}
-                        label="Confirm Password :"
-                    >
-                        <Input.Password />
-                    </Form.Item>
-
-                    <Form.Item >
-                        <Button htmlType="submit" className="w-100" style={{ backgroundColor: "#0033cc", color: "white", fontWeight: "bold" }} >
-                            Register
-                        </Button>
-                    </Form.Item>
-
-                    <Form.Item name="remember" wrapperCol={{ span: 24 }}>
-                        <Row justify="space-between">
-
-                            <Col><Checkbox>Remember me</Checkbox> </Col>
-                            <Col> <a href="url">Forgot Password?</a></Col>
-                        </Row>
-                    </Form.Item>
-
-                    <Form.Item >
-                        <Row justify="center" gutter={10}>
-                            <Col>
-                                <Button ><FcGoogle style={{ marginRight: "10px" }} /> Sign up with Google</Button>
-                            </Col>
-                            <Col>
-                                <Button><FaFacebook style={{ marginRight: "10px" }} />Sign up with Facebook</Button>
-                            </Col>
-                        </Row>
-                    </Form.Item>
-
-                    <Form.Item >
-                        <Row justify="center">
-                            <Col>
-                                <a href="/auth/login">Already have an account? Sign in now.</a>
-                            </Col>
-                        </Row>
-                    </Form.Item>
-                </Form>
-
-            </div>
-
-        </div >
-    )
+          <Form.Item>
+            <Row justify="center">
+              <Col>
+                <a href="/auth/login">Already have an account? Sign in now.</a>
+              </Col>
+            </Row>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
 }
 
-export default RegisterForm
+RegisterForm.propTypes = {
+  otherSignIn: PropTypes.bool,
+  showForgetPassword: PropTypes.bool,
+  extra: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+};
+RegisterForm.defaultProps = {
+  otherSignIn: true,
+  showForgetPassword: true,
+};
+
+const mapStateToProps = ({ auth }) => {
+  const { loading, message, showMessage, token, redirect } = auth;
+  return { loading, message, showMessage, token, redirect };
+};
+
+const mapDispatchToProps = {
+  signUp,
+  showAuthMessage,
+  hideAuthMessage,
+  showLoading,
+  signInWithGoogle,
+  signInWithFacebook,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

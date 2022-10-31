@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Row, Col, Form, Input, Button, Checkbox, Alert } from "antd";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-
+import { AUTH_TOKEN, ACCESS_TOKEN } from "redux/constants/Auth";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -14,9 +14,9 @@ import {
   signInWithGoogle,
   signInWithFacebook,
 } from "redux/actions/Auth";
-
 import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
+import { authOrganization } from "redux/sagas/Auth";
 
 import "./LoginForm.css";
 
@@ -65,7 +65,9 @@ export const LoginForm = (props) => {
   useEffect(() => {
     console.log(redirect, token);
     if (token !== null) {
-      history.push(redirect);
+      authOrganization(token, "Login", history, redirect);
+
+      //  if (localStorage.getItem(ACCESS_TOKEN)) history.push(redirect);
     }
     if (showMessage) {
       setTimeout(() => {
@@ -115,7 +117,6 @@ export const LoginForm = (props) => {
               className="login-btn"
               block
               loading={loading}
-              background
             >
               Login
             </Button>
