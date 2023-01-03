@@ -1,43 +1,90 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Form,
   Avatar,
   Button,
   Input,
-  DatePicker,
   Row,
   Col,
   message,
+  Select,
   Upload,
   Card,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { ROW_GUTTER } from "constants/ThemeConstant";
 import Flex from "components/shared-components/Flex";
-const EditPorfile = () => {
-  const [formData, setFormData] = useState({});
-  const [form] = Form.useForm();
+import countryList from "react-select-country-list";
+import { formatPhoneNumber } from "helper/Formula";
+import { useAuth } from "contexts/AuthContext";
+import { PROFILE_URL, AUTH_TOKEN } from "redux/constants/Auth";
+import axios from "axios";
 
+const EditPorfile = () => {
+  const { currentUser, generateToken } = useAuth();
+  console.log(currentUser);
+  const options = useMemo(() => countryList().getData(), []);
+  const [formData, setFormData] = useState({});
+  const [formData2, setFormData2] = useState({});
+  const [formatPhoneData, setFormatPhoneData] = useState("");
+  const [country, setCountry] = useState("");
+  const [form] = Form.useForm();
+  const [form2] = Form.useForm();
+
+  // Country Select
+  const changeHandler = (value) => {
+    setCountry(value);
+  };
+
+  // Format Phone to (xxx) xxx-xxxxx
+  const handleInputPhone = (e) => {
+    const formattedPhoneNumber = formatPhoneNumber(e.target.value);
+    setFormatPhoneData(formattedPhoneNumber);
+  };
+
+  //get Details
+  const getData = async (_) => {
+    const data = {
+      auth_id: localStorage.getItem(AUTH_TOKEN),
+    };
+    await axios
+      .post("/api/app/user/details", data, generateToken()[1])
+      .then((response) => {
+        // setIsLoading(false);
+        // setDisplayName(response.data.full_name);
+        console.log(response.data);
+        // form.setFieldsValue({
+        //   email: currentUser?.email,
+        //   name: response.data.full_name,
+        // });
+      });
+  };
   useEffect(() => {
+    getData();
     setFormData({
+      avatarUrl: "/img/avatars/thumb-6.jpg",
+      name: currentUser?.displayName,
+      email: currentUser?.email,
+    });
+    setFormData2({
       avatarUrl: "/img/avatars/thumb-6.jpg",
       name: "Charlie Howard",
       email: "charlie.howard@themenate.com",
       userName: "Charlie",
       dateOfBirth: null,
-      phoneNumber: "+44 (1532) 135 7921",
+      phoneNumber: formatPhoneData,
       address1: "San Isidro St",
       city: "Morong",
       country: "Philippines",
       postcode: "1972",
     });
-    form.setFieldsValue({
+    form2.setFieldsValue({
       avatarUrl: "/img/avatars/thumb-6.jpg",
       name: "Charlie Howard",
       email: "charlie.howard@themenate.com",
       userName: "Charlie",
       dateOfBirth: null,
-      phoneNumber: "+44 (1532) 135 7921",
+      phoneNumber: formatPhoneData,
       website: "",
       address1: "San Isidro St",
       city: "Morong",
@@ -45,15 +92,15 @@ const EditPorfile = () => {
 
       postcode: "1972",
     });
-  }, []);
+    form.setFieldsValue({
+      avatarUrl: "/img/avatars/thumb-6.jpg",
+      name: currentUser?.displayName,
+      email: currentUser?.email,
+    });
+  }, [formatPhoneData]);
   return (
     <>
-      <Form
-        name="basicInformation"
-        layout="vertical"
-        form={form}
-        initialValues={formData}
-      >
+      <Form form={form} name="basicInformation" layout="vertical">
         <Card className="setting-content">
           <Flex
             alignItems="center"
@@ -113,12 +160,27 @@ const EditPorfile = () => {
             </Row>
           </div>
         </Card>
+      </Form>
+      <Form
+        name="billingInfo"
+        layout="vertical"
+        form={form2}
+        initialValues={formData2}
+      >
         <Card className="setting-content" title={"Billing Information"}>
           <Row gutter={ROW_GUTTER}>
-            {" "}
             <Col xs={24} sm={24} md={24}>
-              <Form.Item label="Address 1" name="address1">
-                <Input />
+              <Form.Item
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter an address",
+                  },
+                ]}
+                label="Address 1"
+                name="address1"
+              >
+                <Input placeholder="4199 Roberts Loop" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={24}>
@@ -127,26 +189,76 @@ const EditPorfile = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={12}>
-              <Form.Item label="Phone Number" name="phoneNumber">
-                <Input />
+              <Form.Item
+                label="Phone Number"
+                name="phoneNumber"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter a phone number!",
+                  },
+                ]}
+                //    validateTrigger="onBlur"
+              >
+                <Input
+                  onChange={(e) => handleInputPhone(e)}
+                  value={formatPhoneData}
+                  placeholder="(915) xxx xxxx"
+                />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={12}>
-              <Form.Item label="City" name="city">
-                <Input />
+              <Form.Item
+                label="City"
+                name="city"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter a city!",
+                  },
+                ]}
+              >
+                <Input placeholder="New York" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={12}>
-              <Form.Item label="Country" name="country">
-                <Input />
+              <Form.Item
+                label="Country"
+                name="country"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter a country!",
+                  },
+                ]}
+              >
+                <Select
+                  options={options}
+                  value={country}
+                  placeholder="United States"
+                  onChange={changeHandler}
+                  showSearch
+                ></Select>
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={12}>
-              <Form.Item label="Post code" name="postcode">
-                <Input />
+              <Form.Item
+                label="Post code"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter a postal code!",
+                  },
+                ]}
+                name="postcode"
+              >
+                <Input placeholder="1234" />
               </Form.Item>
             </Col>
           </Row>
+          <Button type="primary" htmlType="submit">
+            Save Change
+          </Button>
         </Card>
       </Form>
     </>

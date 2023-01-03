@@ -23,23 +23,19 @@ import "./LoginForm.css";
 export const LoginForm = (props) => {
   let history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
+  const [counter, setCounter] = useState(1);
 
   const {
-    otherSignIn,
-    showForgetPassword,
     hideAuthMessage,
-    onForgetPasswordClick,
     showLoading,
     signInWithGoogle,
     signInWithFacebook,
-    extra,
     signIn,
     token,
     loading,
     redirect,
     showMessage,
     message,
-    allowRedirect,
   } = props;
 
   const initialCredential = {
@@ -48,6 +44,8 @@ export const LoginForm = (props) => {
   };
 
   const onLogin = (values) => {
+    setCounter(counter + 1);
+
     showLoading();
     signIn(values);
   };
@@ -64,6 +62,31 @@ export const LoginForm = (props) => {
 
   useEffect(() => {
     let cancel = true;
+
+    if (counter === 2)
+      if (token !== null) {
+        if (cancel)
+          if (!localStorage.getItem(ACCESS_TOKEN)) {
+            setIsLoading(true);
+            authOrganization(token, "Login", history, redirect, setIsLoading);
+          }
+        if (localStorage.getItem(ACCESS_TOKEN) && token) history.push(redirect);
+
+        //  if (localStorage.getItem(ACCESS_TOKEN)) history.push(redirect);
+      }
+    if (showMessage) {
+      setTimeout(() => {
+        hideAuthMessage();
+        setIsLoading(false);
+      }, 3000);
+    }
+    return () => {
+      cancel = false;
+    };
+  }, [counter]);
+  useEffect(() => {
+    let cancel = true;
+
     if (token !== null) {
       if (cancel)
         if (!localStorage.getItem(ACCESS_TOKEN)) {
@@ -83,8 +106,7 @@ export const LoginForm = (props) => {
     return () => {
       cancel = false;
     };
-  });
-
+  }, []);
   return (
     <>
       {/* {isLoading ? (

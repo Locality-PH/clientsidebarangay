@@ -85,18 +85,11 @@ export const HeaderNav = (props) => {
       onSearchClose();
     }
   });
-  useEffect(
-    () => {
-      const listener = window.addEventListener(
-        "resize",
-        updateWindowDimensions
-      );
-      updateWindowDimensions();
-      return listener;
-    },
-    [height],
-    [width]
-  );
+  useEffect(() => {
+    const listener = window.addEventListener("resize", updateWindowDimensions);
+    updateWindowDimensions();
+    return () => window.removeEventListener("resize", listener);
+  }, []);
 
   return (
     <Header

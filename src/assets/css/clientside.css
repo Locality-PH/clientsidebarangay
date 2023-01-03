@@ -61,6 +61,13 @@
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
+
+.setting-center {
+  padding: 0rem 1rem !important;
+
+  margin-top: 0px !important;
+  line-height: 70px !important;
+}
 .pt-2-1 {
   padding-top: 0.6rem !important;
 }

@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import { AUTH_ORGANIZATION, ACCESS_TOKEN } from "redux/constants/Auth";
 import jwt_decode from "jwt-decode";
 import sign from "jwt-encode";
+import { message } from "antd";
 
 const AuthContext = React.createContext();
 
@@ -80,12 +81,27 @@ export function AuthProvider({ children }) {
       .sendPasswordResetEmail(email)
       .then(() => {
         console.log(email);
+        message.success(`email sent to ${email} successfully`);
       })
       .catch((error) => {
         console.log(error);
+        message.warning(error.message);
       });
   }
+  async function sendEmailVerification() {
+    return firebase
+      .auth()
+      .currentUser.sendEmailVerification()
+      .then(() => {
+        console.log("success");
 
+        message.success(`Verification sent to ${email} successfully`);
+      })
+      .catch((error) => {
+        console.log(error);
+        message.warning(error.message);
+      });
+  }
   useEffect(() => {
     const listener = window.addEventListener("storage", checkUserOrganization);
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -111,6 +127,7 @@ export function AuthProvider({ children }) {
     authorization,
     generateToken,
     resetEmailPassword,
+    sendEmailVerification,
   };
   return (
     <AuthContext.Provider value={value}>

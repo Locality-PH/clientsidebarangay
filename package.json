@@ -61,6 +61,7 @@
     "react-resize-detector": "^6.6.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-select-country-list": "^2.2.3",
     "react-show-more-text": "^1.5.2",
     "react-simple-maps": "^2.3.0",
     "react-sticky": "^6.0.3",

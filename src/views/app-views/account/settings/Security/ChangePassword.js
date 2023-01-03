@@ -1,85 +1,92 @@
-import React, { Component } from "react";
-import { Form, Button, Input, Row, Col, message, Card } from "antd";
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col, message, Card } from "antd";
+import { useAuth } from "contexts/AuthContext";
 
-export class ChangePassword extends Component {
-  changePasswordFormRef = React.createRef();
+const ChangePassword = () => {
+  const { currentUser, resetEmailPassword } = useAuth();
 
-  onFinish = () => {
-    message.success({ content: "Password Changed!", duration: 2 });
-    this.onReset();
+  const [editOrganization, setEditOrganization] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
+
+  const handleSubmitAccount = () => {
+    console.log(editOrganization);
+    setEditOrganization(!editOrganization);
   };
-
-  onReset = () => {
-    this.changePasswordFormRef.current.resetFields();
+  const handleResetPassword = async () => {
+    await resetEmailPassword(currentUser?.email)
+      .then((_) => {
+        setShowResetPassword(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  useEffect(() => {
+    if (showResetPassword) {
+      const timeoutId = setTimeout(() => {
+        setShowResetPassword(false);
+        setEditOrganization(false);
+      }, 3000);
 
-  render() {
-    return (
-      <Card className="setting-content">
-        <h2 className="mb-4">Change Password</h2>
-        <Row>
-          <Col xs={24} sm={24} md={24} lg={24}>
-            <Form
-              name="changePasswordForm"
-              layout="vertical"
-              ref={this.changePasswordFormRef}
-              onFinish={this.onFinish}
-            >
-              <Form.Item
-                label="Current Password"
-                name="currentPassword"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your currrent password!",
-                  },
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-              <Form.Item
-                label="New Password"
-                name="newPassword"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your new password!",
-                  },
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-              <Form.Item
-                label="Confirm Password"
-                name="confirmPassword"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please confirm your password!",
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(rule, value) {
-                      if (!value || getFieldValue("newPassword") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject("Password not matched!");
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-              <div className="text-right">
-                <Button type="primary" htmlType="submit">
-                  Change password
-                </Button>
-              </div>
-            </Form>
-          </Col>
-        </Row>
-      </Card>
-    );
-  }
-}
+      return () => clearTimeout(timeoutId);
+    }
+  }, [showResetPassword]);
+  return (
+    <Card className="setting-content">
+      <h2 className="mb-4">Change Password</h2>
+      <Row>
+        <Col xs={24} sm={24} md={24} lg={24}>
+          <Form
+            name="changePasswordForm"
+            layout="vertical"
+            initialValues={{ currentPassword: "**********" }}
+          >
+            <Row>
+              {editOrganization ? (
+                <>
+                  <Button
+                    size="medium"
+                    type="primary"
+                    loading={showResetPassword}
+                    onClick={() => {
+                      handleResetPassword();
+                    }}
+                  >
+                    Reset your password by email
+                  </Button>{" "}
+                  {showResetPassword ? (
+                    <span style={{ paddingLeft: "2px", color: "green" }}>
+                      **reset password sent**
+                    </span>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  <Col xs={24} sm={24} md={8} lg={8}>
+                    <div className="mb-4 font-size-md">Current Password </div>
+                  </Col>
+                  <Col xs={24} sm={24} md={12} lg={12}>
+                    <div className=" font-size-md">*************</div>
+                  </Col>
+                </>
+              )}
+            </Row>
+          </Form>
+          <div className="mt-3 text-left">
+            {editOrganization ? (
+              <>
+                <Button onClick={() => handleSubmitAccount()}>Cancel</Button>
+              </>
+            ) : (
+              <Button onClick={() => handleSubmitAccount()} type="primary">
+                Edit Information
+              </Button>
+            )}
+          </div>
+        </Col>
+      </Row>
+    </Card>
+  );
+};
 
 export default ChangePassword;
