@@ -1,33 +1,15 @@
 import React from "react";
 
-//CSS
-import "./index.css";
-
 //Components
 import EditProfile from "./EditProfile";
-import ChangePassword from "./Security/ChangePassword";
 import Billing from "./Billing";
 import Notification from "./Notification";
 import Deactivate from "./Removal";
 import Security from "./Security/index";
 
 //Hooks
-import {
-  Button,
-  message,
-  Row,
-  Col,
-  Form,
-  Card,
-  Space,
-  Layout,
-  Menu,
-  Breadcrumb,
-  Divider,
-} from "antd";
+import { Row, Col, Menu } from "antd";
 import { Link, Redirect, Route, Switch } from "react-router-dom";
-
-const { SubMenu } = Menu;
 
 const AccountSettings = ({ match, location }) => {
   return (
