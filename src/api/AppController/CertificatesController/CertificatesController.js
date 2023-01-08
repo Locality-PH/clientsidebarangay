@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useRef } from "react";
 import { AUTH_ORGANIZATION } from "redux/constants/Auth";
+
 export const getCertificateAll = async (setPdf, generateToken, count) => {
   let isApiSubscribed = true;
   await axios
@@ -58,7 +58,6 @@ export const getCertificateData = async (
           //  delete data["template_type"];
           if (data.content[0]?.blocks.length == 0) delete data["content"];
           setParentData(res.data[0]);
-          setFirstTime(!firstTime);
         }
       });
   } catch (e) {
@@ -66,6 +65,8 @@ export const getCertificateData = async (
     history.push(
       `/app/${localStorage.getItem(AUTH_ORGANIZATION)}/cert-display/list`
     );
+  } finally {
+    setFirstTime(!firstTime);
   }
   return () => {
     // cancel the subscription
@@ -93,7 +94,6 @@ export const updateCertificateData = async (data, generateToken) => {
   };
 };
 export const deleteCertificateData = async (data, generateToken) => {
-  console.log(data);
   try {
     await axios.delete(`/api/cert-display/${data}`, generateToken).then((_) => {
       console.log("delete");

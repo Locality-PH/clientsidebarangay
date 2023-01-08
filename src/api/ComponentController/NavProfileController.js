@@ -1,6 +1,7 @@
 import axios from "axios";
-import history from "history";
 import { SESSION_TOKEN } from "redux/constants/Auth";
+import { message } from "antd";
+
 export async function logOut(signOut, generateToken) {
   const data = {
     session_token: localStorage.getItem(SESSION_TOKEN),
@@ -10,10 +11,11 @@ export async function logOut(signOut, generateToken) {
     .post("/api/logout", data, token[1])
     .then((response) => {
       if (response.data.length > 0) {
-        signOut();
+        return signOut();
       }
     })
     .catch((error) => {
       console.log(error);
+      return message.error(error.message);
     });
 }

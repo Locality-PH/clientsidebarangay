@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-import { Form, Button, Input, Row, Col, message, Tabs, Card } from "antd";
+import { Form, Button, Input, message, Tabs, Card } from "antd";
 const { TabPane } = Tabs;
 
 const Removal = () => {

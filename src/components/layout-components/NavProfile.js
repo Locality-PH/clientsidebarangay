@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Menu, Dropdown, Avatar } from "antd";
 import { connect } from "react-redux";
 import {
-  EditOutlined,
+  HomeOutlined,
   SettingOutlined,
   ShopOutlined,
   QuestionCircleOutlined,
   LogoutOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import Icon from "components/util-components/Icon";
 import { signOut } from "redux/actions/Auth";
@@ -15,17 +16,18 @@ import { useHistory } from "react-router-dom";
 import utils from "utils";
 import { useAuth } from "contexts/AuthContext";
 import { logOut } from "api/ComponentController/NavProfileController";
+import { Link } from "react-router-dom";
 
 const menuItem = [
   {
-    title: "Edit Profile",
-    icon: EditOutlined,
+    title: "Profile Pages",
+    icon: HomeOutlined,
     path: "/home/account",
   },
   {
-    title: "Profile Pages",
+    title: "Edit Profile",
     icon: EditOutlined,
-    path: "/home/account",
+    path: "/home/account/settings/edit-profile",
   },
   {
     title: "Account Setting",
@@ -35,7 +37,7 @@ const menuItem = [
   {
     title: "Billing",
     icon: ShopOutlined,
-    path: "/",
+    path: "/home/account/settings/billing",
   },
 ];
 const menuItem2 = [
@@ -52,75 +54,78 @@ const menuItem2 = [
   {
     title: "Help Center",
     icon: QuestionCircleOutlined,
-    path: "/",
+    path: "/#",
   },
 ];
-export const NavProfile = ({ signOut, match }) => {
-  const { currentUser, generateToken, currentPhoto } = useAuth();
+export const NavProfile = ({ signOut }) => {
   let history = useHistory();
+  const profileImg = "/img/avatars/thumb-1.jpg";
+  const [current, setCurrent] = useState();
+  const { currentUser, generateToken } = useAuth();
+  const [timer, setTimer] = useState(false);
+
   const [profile, setProfile] = useState(
     JSON.parse(localStorage.getItem(PROFILE_URL) || "[]")
   );
   const user =
     currentUser?.displayName != null ? currentUser.displayName : "N/A";
+
+  const handleClick = (e) => {
+    setCurrent(e.key);
+
+    history.push(e.key);
+    setCurrent(null);
+  };
+
   const signOutNode = () => {
     logOut(signOut, generateToken);
   };
-
-  const [timer, setTimer] = useState(false);
-  useEffect(() => {
-    let mount = true;
-    if (!timer)
-      setTimeout(() => {
+  React.useEffect(() => {
+    if (!timer) {
+      const timeoutId = setTimeout(() => {
         setTimer(true);
       }, 1500);
-    return () => {
-      setTimer(true);
-      mount = false;
-    };
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [timer]);
+  React.useEffect(() => {
+    const profile = JSON.parse(localStorage.getItem(PROFILE_URL) || "[]");
+    setProfile(profile);
   }, []);
-  useEffect(() => {
-    let mount = true;
-    if (mount)
-      setProfile(JSON.parse(localStorage.getItem(PROFILE_URL) || "[]"));
-
-    return () => {
-      mount = false;
-    };
-  }, [localStorage.getItem(PROFILE_URL)]);
-  const profileImg = "/img/avatars/thumb-1.jpg";
   const profileMenu = (
     <div className="nav-profile nav-dropdown">
       <div className="nav-profile-header" />
       <div className="nav-profile-body">
-        <Menu>
-          {menuItem.map((el, i) => {
+        <Menu onClick={handleClick} selectedKeys={[current]}>
+          {menuItem.map((el, _) => {
             return (
-              <Menu.Item key={i}>
-                <a href={el.path}>
+              <Menu.Item key={el.path}>
+                <Link to={el.path}>
                   <Icon className="mr-3" type={el.icon} />
                   <span className="font-weight-normal">{el.title}</span>
-                </a>
+                </Link>
               </Menu.Item>
             );
-          })}{" "}
-          <Menu.Item key={menuItem.length + 1} onClick={(e) => signOutNode()}>
+          })}
+          <Menu.Item key={menuItem.length + 1} onClick={(_) => signOutNode()}>
             <span>
               <LogoutOutlined className="mr-3" />
               <span className="font-weight-normal">Sign Out</span>
             </span>
           </Menu.Item>
         </Menu>
-      </div>{" "}
+      </div>
       <div className="nav-profile-body-2">
-        <Menu>
-          {menuItem2.map((el, i) => {
+        <Menu onClick={handleClick} selectedKeys={[current]}>
+          {menuItem2.map((el, _) => {
             return (
-              <Menu.Item key={i}>
-                <a href={el.path}>
+              <Menu.Item key={el.path}>
+                <Link to={el.path}>
                   <Icon className="mr-3" type={el.icon} />
                   <span className="font-weight-normal">{el.title}</span>
-                </a>
+                </Link>
               </Menu.Item>
             );
           })}
@@ -143,7 +148,7 @@ export const NavProfile = ({ signOut, match }) => {
             <Menu.Item key="profile">
               {profile?.profile_data ? (
                 <Avatar src={profile?.profile_data} size={45}>
-                  <b> {utils.getNameInitial(user)} </b>{" "}
+                  <b> {utils.getNameInitial(user)} </b>;
                 </Avatar>
               ) : (
                 <Avatar
@@ -151,7 +156,7 @@ export const NavProfile = ({ signOut, match }) => {
                   size={45}
                   style={{ backgroundColor: profile?.profile_color }}
                 >
-                  <b> {utils.getNameInitial(user)} </b>{" "}
+                  <b> {utils.getNameInitial(user)} </b>;
                 </Avatar>
               )}
             </Menu.Item>

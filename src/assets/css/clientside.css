@@ -5,6 +5,20 @@
   margin-top: 80px !important;
   min-height: calc(100vh - 130px - 55px);
 }
+.setting-menu {
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset !important;
+}
+
+.setting-content {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.setting-menu .title {
+  padding: 10px 0px 0px 20px;
+}
 .display-content {
   display: block !important;
   box-sizing: border-box;
