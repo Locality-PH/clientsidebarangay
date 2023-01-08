@@ -13,10 +13,25 @@ const OrganizationList = () => {
     const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
-        getLatestOrganizations();
+        getAllOrganizations();
     }, []);
 
-    const getLatestOrganizations = async () => {
+    const getAllOrganizations = async () => {
+        await axios
+            .get("/api/organization/get-all-organizations", generateToken()[1])
+            .then((response) => {
+                setOrganizationList(response.data);
+                console.log(response.data)
+                setIsLoading(false);
+
+            })
+            .catch((err) => {
+                message.error("Could not fetch the data in the server!");
+                console.log(err);
+            });
+    };
+	
+	 const getLatestOrganizations = async () => {
         await axios
             .get("/api/organization/get-latest-organizations", generateToken()[1])
             .then((response) => {
@@ -35,6 +50,7 @@ const OrganizationList = () => {
         <>
             <Card
                 title="List of Barangay"
+				style={{ height: "33.3rem", overflow: "auto" }}
                 loading={isLoading}
                 extra={<Link to="feeds/organizations" style={{fontSize: "1rem"}}>More</Link>}
             >
