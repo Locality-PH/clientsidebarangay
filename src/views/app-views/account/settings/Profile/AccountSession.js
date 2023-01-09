@@ -16,6 +16,9 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 const AccountSession = () => {
+  //Constant
+  const source = axios.CancelToken.source();
+  const cancelToken = source.token;
   const postsPerPage = 3;
   let arrayForHoldingSession = [];
   const { generateToken } = useAuth();
@@ -80,15 +83,20 @@ const AccountSession = () => {
     }
   };
   const getData = async () => {
+    let controller = new AbortController();
+
     const data = {
       auth_id: localStorage.getItem(AUTH_TOKEN),
       limit: limit,
     };
     let isApiSubscribed = true;
     await axios
-      .post("/api/app/user/sessions", data, generateToken()[1])
+      .post("/api/app/user/sessions", data, generateToken()[1], {
+        signal: controller.signal,
+      })
       .then((response) => {
         if (isApiSubscribed) {
+          controller = null;
           setIsLoading(false);
           setSessionDataAll(response.data.session);
           setTotalSession(response.data.session.length);
@@ -98,6 +106,7 @@ const AccountSession = () => {
       .catch((error) => {
         console.log(error);
       });
+    return () => controller?.abort();
   };
   useEffect(() => {
     if (showMessage) {

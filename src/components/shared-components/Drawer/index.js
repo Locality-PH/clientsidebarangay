@@ -24,7 +24,7 @@ import {
   CalendarOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-const UserView = (props) => {
+const BillingDrawer = (props) => {
   let size = 500;
   let data = {
     cardNumber: "",
@@ -400,4 +400,4 @@ const UserView = (props) => {
   );
 };
 
-export default UserView;
+export default React.memo(BillingDrawer);

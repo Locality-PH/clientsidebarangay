@@ -162,7 +162,7 @@ const BillingTable = () => {
     try {
       const billingData = await getPaymethod(generateToken);
       const i = [].concat.apply([], billingData[0].billing_method);
-      setSelectedRowKeys([i[2]._id]);
+      setSelectedRowKeys([i[3]._id]);
       return setCreditCards(i);
     } catch (e) {
       // Handle fetch error

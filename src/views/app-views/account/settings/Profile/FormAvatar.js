@@ -107,34 +107,42 @@ const FormAvatar = (props) => {
   };
 
   // Get Data
-  const getData = async (_) => {
+  const getData = async (signal) => {
+    let controller = new AbortController();
+
     try {
       const config = generateToken()[1];
       await axios
-        .post("/api/app/user/details", data, config)
+        .post("/api/app/user/details", data, config, signal)
         .then((response) => {
           form.setFieldsValue({
             email: currentUser?.email,
             name: response.data.full_name,
           });
           setDisplayName(response.data.full_name);
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 1000);
+          controller = null;
         });
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
+    return () => controller?.abort();
   };
 
   // UseEffect Declaration
   useEffect(() => {
+    let controller = new AbortController();
+    let signal = { signal: controller.signal };
     let data = JSON.parse(localStorage.getItem(PROFILE_URL));
 
     setProfileAvatar(data.profile_data);
     setUrl(data.profile_data);
     setFile(data.profile_data);
-    getData();
+    getData(signal);
+    return () => controller?.abort();
   }, [isLoading]);
 
   useEffect(() => {

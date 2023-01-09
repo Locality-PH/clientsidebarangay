@@ -25,7 +25,6 @@ const FormBillingInfo = (props) => {
         data,
         generateToken()[1]
       );
-      console.log("billing form", response.data);
       const res = response.data;
 
       form2.setFieldsValue({
