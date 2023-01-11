@@ -59,6 +59,8 @@ const BillingDrawer = (props) => {
   // Toogle Front & Back
   const [isFrontOfCardVisible, setIsFrontOfCardVisible] = useState(true);
 
+  const [onSubmitReset, setOnSubmitReset] = useState(false);
+
   if (width > 1400) {
     size = 600;
   } else if (width > 1024) {
@@ -70,7 +72,6 @@ const BillingDrawer = (props) => {
   } else {
     size = width;
   }
-  console.log(cardNumber);
   const toggleCardFlip = () => {
     setIsFrontOfCardVisible(!isFrontOfCardVisible);
   };
@@ -81,28 +82,33 @@ const BillingDrawer = (props) => {
     if (type == "card") {
       data.cardNumber = value;
       setCardNumber(formatCreditCardNumber(value));
-      console.log(formatCreditCardNumber(value));
+      form.setFieldsValue({ cardNumber: formatCreditCardNumber(value) });
       setIsFrontOfCardVisible(true);
     }
     if (type == "card-gcash") {
       data.cardNumber = value;
       setCardNumber(value);
+
       console.log(formatCreditCardNumber(value));
       setIsFrontOfCardVisible(true);
     }
     if (type == "holder") {
       data.cardHolder = value;
       setCardHolder(value);
+      form.setFieldsValue({ cardHolder: value });
       setIsFrontOfCardVisible(true);
     }
     if (type == "thru") {
       data.validThru = value;
       setValidThru(formatExpirationDate(value));
+      form.setFieldsValue({ validThru: formatExpirationDate(value) });
+
       setIsFrontOfCardVisible(true);
     }
     if (type == "cvc") {
       data.cvc = value;
       setCvc(formatCVC(value));
+      form.setFieldsValue({ cvc: formatCVC(value) });
       setIsFrontOfCardVisible(false);
     }
   };
@@ -119,7 +125,7 @@ const BillingDrawer = (props) => {
     } else {
       values.issuer = issuer;
       const finalData = {
-        card_number: values.issuer,
+        card_number: values.cardNumber,
         card_holder: values.cardHolder,
         issuer: values.issuer,
         valid_thru: values.validThru,
@@ -140,31 +146,37 @@ const BillingDrawer = (props) => {
       setIssuer("");
       setCvc("");
       setPaymentMethod({});
-
+      submitForm();
+      setOnSubmitReset(!onSubmitReset);
       setDrawer(false);
     }
   };
-  const onFinishGcash = (values) => {
+  const onFinishGcash = async (values) => {
     values.issuer = "GCash";
     values.validThru = "N/A";
     values.cvc = "N/A";
     const finalData = {
-      card_number: values.issuer,
+      card_number: values.cardNumber,
       card_holder: values.cardHolder,
       issuer: values.issuer,
       valid_thru: values.validThru,
       cvc: values.cvc,
       active_card: false,
     };
-    setPaymentMethod(finalData);
+    const billingData = await axios.post(
+      "/api/app/user/billing/create",
+      finalData,
+      generateToken
+    );
+    setPaymentMethod(billingData.data);
     setCardNumber("");
     setCardHolder("");
     setValidThru("");
     setIssuer("");
     setCvc("");
     setPaymentMethod({});
-    setDrawer(false);
     submitForm();
+    setDrawer(false);
   };
   const submitForm = () => {
     form.resetFields();
@@ -184,7 +196,10 @@ const BillingDrawer = (props) => {
     [height],
     [width]
   );
-
+  // useEffect(() => {
+  //   form.resetFields();
+  // }),
+  //   [];
   // Usage
   // functions
 
@@ -206,10 +221,11 @@ const BillingDrawer = (props) => {
         }}
         justify="center"
       >
+        {" "}
         {paymentType == "credit" ? (
           <Col xs={22} sm={22} md={22} lg={22} xl={22} justify="center">
             <Card className="mt-2 setting-content">
-              <Form onFinish={onFinish} name="basicInformation">
+              <Form form={form} onFinish={onFinish} name="basicInformation">
                 <div className="mb-3 cursor-pointer" onClick={toggleCardFlip}>
                   <Cards
                     number={cardNumber}
@@ -237,7 +253,7 @@ const BillingDrawer = (props) => {
                       <Input
                         //  className="display-content" "([a-zA-Z]{3,30}\\s*)+""
                         suffix={<CreditCardOutlined />}
-                        value={cardNumber}
+                        //value={cardNumber}
                         onChange={(e) => onHandleData("card", e.target.value)}
                         placeholder="Card Number"
                         maxLength={22}
@@ -274,6 +290,7 @@ const BillingDrawer = (props) => {
                         placeholder="12/12"
                         onChange={(e) => onHandleData("thru", e.target.value)}
                         maxLength={5}
+                        value={validThru}
                       />
                     </Form.Item>
                   </Col>
