@@ -13,7 +13,7 @@ const OrganizationList = () => {
     const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
-        getAllOrganizations();
+        getLatestOrganizations();
     }, []);
 
     const getAllOrganizations = async () => {
@@ -50,7 +50,7 @@ const OrganizationList = () => {
         <>
             <Card
                 title="List of Barangay"
-				style={{ height: "33.3rem", overflow: "auto" }}
+				// style={{ height: "33.3rem", overflow: "auto" }}
                 loading={isLoading}
                 extra={<Link to="feeds/organizations" style={{fontSize: "1rem"}}>More</Link>}
             >

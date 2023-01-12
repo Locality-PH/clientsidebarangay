@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Table, Input, Button, Tag, message, Avatar } from 'antd';
+import { Card, Table, Input, Button, Tag, message, Avatar, Row, Col, Skeleton } from 'antd';
 import Flex from 'components/shared-components/Flex'
 import AvatarStatus from 'components/shared-components/AvatarStatus';
 import { BarangayData } from "./DefaultDashboardData";
@@ -36,81 +36,52 @@ const Organizations = () => {
             });
     };
 
-    const tableColumns = [
-        {
-            title: 'Organization',
-            dataIndex: 'name',
-            render: (_, record) => (
-                <div className="d-flex align-items-center">
-                    <Avatar
-                        size={30}
-                        className="font-size-sm"
-                        style={{ backgroundColor: "black" }}
-                    >
-                        {utils.getNameInitial(record.organization_name)}
-                    </Avatar>
-                    <span className="ml-2">{record.organization_name}</span>
-                </div>
-            ),
-            sorter: (a, b) => utils.antdTableSorter(a, b, 'name')
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            render: (_, record) => (
-                <span className="font-weight-semibold">{record.address}</span>
-            )
-        },
-        {
-            title: 'Email',
-            dataIndex: 'email',
-            render: (_, record) => (
-                <Tag color="green">{record.email}</Tag>
-            )
-        },
-        {
-            title: 'Actions',
-            dataIndex: 'actions',
-            render: (_, record) => (
-                <Button type="primary" shape="round"><Link to={`/home/group/${record.organization_id}`}>View</Link></Button>
-            )
-        }
-
-    ]
-
-    const onBarangaySearch = (e) => {
-        const value = e.currentTarget.value;
-        const searchArray = e.currentTarget.value ? barangayList : BarangayData;
-        const data = utils.wildCardSearch(searchArray, value);
-        setBarangayList(data);
-    };
-
     return (
         <>
-            <Card title="Organizations">
-                <Flex
-                    alignItems="center"
-                    className=""
-                    justifyContent="between"
-                    mobileFlex={false}
-                >
-                    <Flex className="mb-1" mobileFlex={false}>
-                        <div className="mb-3 mr-md-3">
-                            <Input
-                                placeholder="Search"
-                                prefix={<SearchOutlined />}
-                                onChange={(e) => onBarangaySearch(e)}
-                            />
-                        </div>
-                    </Flex>
-                </Flex>
-                <Table
-                    pagination={true}
-                    columns={tableColumns}
-                    dataSource={barangayList}
-                    rowKey='organization_id'
-                />
-            </Card>
+            {!isLoading ?
+                <Row justify="center">
+                    <Col sm={24} md={15}>
+                        {barangayList.map((result, i) => (
+                            <Card key={i}>
+                                <div
+                                    className={`d-flex align-items-center justify-content-between`}
+                                >
+                                    <div className="avatar-status d-flex align-items-center">
+                                        <Avatar
+                                            className="font-size-sm"
+                                            style={{ backgroundColor: "black" }}
+                                            shape="square"
+                                        >
+                                            {utils.getNameInitial(result.organization_name)}
+                                        </Avatar>
+                                        <div className="ml-2">
+                                            <div>
+                                                <div className="avatar-status-name h4">{result.organization_name}</div>
+                                                <span></span>
+                                            </div>
+                                            <div className="text-muted avatar-status-subtitle h5">{result.address}</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <Link to={`/home/group/${result.organization_id}`}>
+                                            <Button type="primary" shape="round">
+                                                View
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </Card>
+                        ))
+                        }
+                    </Col>
+                </Row>
+                :
+                <Card>
+                    <Skeleton loading={isLoading} avatar active></Skeleton>
+                    <Skeleton loading={isLoading} avatar active></Skeleton>
+                    <Skeleton loading={isLoading} avatar active></Skeleton>
+                </Card>
+            }
         </>
     )
 }
