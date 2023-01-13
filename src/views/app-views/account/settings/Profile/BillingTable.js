@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Table, Button, Tooltip, Row, Col, Card, Popconfirm } from "antd";
+import {
+  Table,
+  Button,
+  Tooltip,
+  Row,
+  Col,
+  Card,
+  Popconfirm,
+  message,
+} from "antd";
 import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import BillingDrawer from "components/shared-components/Drawer";
 import { AUTH_TOKEN } from "redux/constants/Auth";
@@ -8,7 +17,7 @@ import { useAuth } from "contexts/AuthContext";
 import notification from "components/shared-components/Notification";
 import {
   getPaymethod,
-  createPaymethod,
+  updatePaymethod,
   deletePaymethod,
 } from "api/AppController/AccountsController/BillingDetailsController";
 const BillingTable = () => {
@@ -136,14 +145,27 @@ const BillingTable = () => {
   ];
   // Delete Payment Method
   const onDeleteBilling = async (record) => {
+    console.log(selectedRowKeys[0]);
     let data = creditCards;
-    setCreditCards(data.filter((credit) => credit._id !== record._id));
-    let secondData = data.filter((credit) => credit._id !== record._id);
-    console.log(secondData[0]._id);
-    setSelectedRowKeys([secondData[0]._id]);
-    await Promise.all([
-      deletePaymethod(record._id, [secondData[0]._id], generateToken),
-    ]);
+    setCreditCards(data.filter((credit) => credit?._id !== record?._id));
+
+    let secondData = data.filter((credit) => credit?._id !== record?._id);
+    console.log(secondData[0]?._id);
+    setSelectedRowKeys([secondData[0]?._id]);
+    console.log(record);
+
+    if (selectedRowKeys[0] === record?._id)
+      await Promise.all([
+        deletePaymethod(
+          record?._id,
+          secondData[0]?._id || "N/A",
+          generateToken
+        ),
+      ]);
+    else
+      await Promise.all([
+        deletePaymethod(record?._id, secondData[0]?._id, generateToken),
+      ]);
 
     // return notification({
     //   type: "success",
@@ -153,25 +175,20 @@ const BillingTable = () => {
   };
 
   const getBilling = async () => {
-    // const billingData = await axios.get(
-    //   "/api/app/user/billing/data",
-
-    //   generateToken()[1]
-    // );
-    //(async () => {
     try {
       const billingData = await getPaymethod(generateToken);
       const i = [].concat.apply([], billingData[0].billing_method);
-      setSelectedRowKeys([i[2]._id]);
+      let secondData = i.filter((credit) => credit.active_card === true);
+      console.log(secondData[0]);
+      setSelectedRowKeys([secondData[0]?._id]);
       return setCreditCards(i);
     } catch (e) {
-      // Handle fetch error
+      message.error(e.message);
     }
-    //    })();
   };
 
   const showDrawer = (type) => {
-    if (creditCards.length <= 3)
+    if (creditCards.length >= 3)
       return notification({
         type: "warning",
         title: "Maximum Limit",
@@ -188,8 +205,15 @@ const BillingTable = () => {
   };
 
   const rowSelectionCredit = {
-    onChange: (key, rows) => {
+    onChange: async (key, rows) => {
+      console.log("new " + key);
+      console.log(key);
+
+      console.log("old " + selectedRowKeys);
       setSelectedRowKeys(key);
+      await Promise.all([
+        updatePaymethod(selectedRowKeys[0], key[0], generateToken),
+      ]);
     },
   };
 
@@ -201,7 +225,7 @@ const BillingTable = () => {
       // let credit = creditCards;
       let payment = paymentMethod;
       // payment.user_id = localStorage.getItem(AUTH_TOKEN);
-      // payment._id = credit.length + 1;
+      // payment?._id = credit.length + 1;
       setCreditCards((oldArray) => [...oldArray, payment]);
     }
   }, [paymentMethod]);
@@ -225,7 +249,17 @@ const BillingTable = () => {
   );
   return (
     <>
-      {billingMemoDrawer}
+      <BillingDrawer
+        visible={drawer}
+        paymentMethod={paymentMethod}
+        setPaymentMethod={setPaymentMethod}
+        setDrawer={setDrawer}
+        paymentType={paymentMethodType}
+        close={() => {
+          closeDrawer();
+        }}
+        generateToken={generateToken()[1]}
+      />
       <Card className="setting-content">
         <h2 className="mb-2">Billing</h2>
         <Table

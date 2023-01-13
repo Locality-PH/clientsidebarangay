@@ -33,9 +33,28 @@ export const createPaymethod = async (data, generateToken) => {
 
 export const deletePaymethod = async (idDelete, idSet, generateToken) => {
   try {
-    const data = { card_id: idDelete, id_set: idSet };
+    const data = { card_id: idDelete, card_id_new: idSet };
     const response = await axios.post(
       "/api/app/user/billing/delete",
+      data,
+      generateToken()[1]
+    );
+    message.success(response.data);
+  } catch (error) {
+    console.log(error);
+    message.error("The action can't be completed, please try again.");
+    return;
+  }
+};
+export const updatePaymethod = async (
+  card_id_prev,
+  card_id_new,
+  generateToken
+) => {
+  try {
+    const data = { card_id_prev: card_id_prev, card_id_new: card_id_new };
+    const response = await axios.post(
+      "/api/app/user/billing/updateCard",
       data,
       generateToken()[1]
     );
