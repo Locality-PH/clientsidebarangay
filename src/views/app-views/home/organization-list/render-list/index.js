@@ -12,7 +12,7 @@ const renderAvatar = (props) => {
   );
 };
 
-export const BarangayLinks = (props) => {
+export const RenderList = (props) => {
   const {
     name,
     suffix,
@@ -45,7 +45,7 @@ export const BarangayLinks = (props) => {
         </div>
       </div>
       <div>
-        <Link to={`/home/group/${id}`}>
+        <Link to={`/home/organization/${id}`}>
           <Button type="primary" shape="round">
             View
           </Button>
@@ -55,11 +55,11 @@ export const BarangayLinks = (props) => {
   );
 };
 
-BarangayLinks.propTypes = {
+RenderList.propTypes = {
   name: PropTypes.string,
   src: PropTypes.string,
   type: PropTypes.string,
   onNameClick: PropTypes.func,
 };
 
-export default BarangayLinks;
+export default RenderList;

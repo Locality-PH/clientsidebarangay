@@ -6,18 +6,18 @@ import About from "./about/About";
 import MissionAndVision from "./other/MissionAndVision";
 import Projects from "./other/Projects";
 
-const Index = ({ organizationId }) => {
+const Organization = ({ organizationId }) => {
   return (
     <>
       <Row gutter="16">
         <Col xs={24} sm={24} md={8}>
-          <Officials></Officials>
+          <Officials/>
           <Events organizationId={organizationId}></Events>
-          <About></About>
+          <About/>
         </Col>
 
         <Col xs={24} sm={24} md={16}>
-          <MissionAndVision></MissionAndVision>
+          <MissionAndVision/>
           <Projects></Projects>
           <Card>
             <img
@@ -34,4 +34,4 @@ const Index = ({ organizationId }) => {
   );
 };
 
-export default Index;
+export default Organization;

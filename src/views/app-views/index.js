@@ -17,21 +17,21 @@ export const AppViews = () => {
           exact
         />
         <Route
-          path={`${APP_PREFIX_PATH}/feeds/organizations`}
-          component={lazy(() => import(`./home/Organizations`))}
+          path={`${APP_PREFIX_PATH}/feeds/list/organizations`}
+          component={lazy(() => import(`./home/organization-list/search/index.js`))}
           exact
         />
-        <Route
+        {/* <Route
           path={`${APP_PREFIX_PATH}/feeds/campaigns`}
           component={lazy(() => import(`./home/Campaigns`))}
           exact
-        />
+        /> */}
         <Route
           path={`${APP_PREFIX_PATH}/posts`}
           component={lazy(() => import(`./pages`))}
         />
         <Route
-          path={`${APP_PREFIX_PATH}/group/:organization_id`}
+          path={`${APP_PREFIX_PATH}/organization/:organization_id`}
           component={lazy(() => import(`./organization`))}
         />
         <Route

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Button } from 'antd';
-import { BarangayData } from './DefaultDashboardData';
+import { BarangayData } from '../DefaultDashboardData';
 import { Link } from 'react-router-dom';
 
 const Campaigns = () => {

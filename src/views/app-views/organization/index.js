@@ -3,7 +3,7 @@ import { Row, Col, Card, message, Button, Skeleton } from "antd";
 
 import HeaderCover from "./header/HeaderCover";
 import Header from "./header/Header";
-import Barangay from "./Group";
+import Barangay from "./organization";
 import Message from "./message/Message"
 
 import Campaign from "./campaign/Campaign";

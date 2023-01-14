@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Table, Input, Button, Tag, message, Avatar } from 'antd';
 import Flex from 'components/shared-components/Flex'
 import AvatarStatus from 'components/shared-components/AvatarStatus';
-import { BarangayData } from "./DefaultDashboardData";
+import { BarangayData } from "../../DefaultDashboardData";
 import utils from 'utils'
 import { Link } from "react-router-dom";
 import {
@@ -79,10 +79,10 @@ const Organizations = () => {
     ]
 
     const onBarangaySearch = (e) => {
-        const value = e.currentTarget.value;
-        const searchArray = e.currentTarget.value ? barangayList : BarangayData;
-        const data = utils.wildCardSearch(searchArray, value);
-        setBarangayList(data);
+        // const value = e.currentTarget.value;
+        // const searchArray = e.currentTarget.value ? barangayList : BarangayData;
+        // const data = utils.wildCardSearch(searchArray, value);
+        // setBarangayList(data);
     };
 
     return (

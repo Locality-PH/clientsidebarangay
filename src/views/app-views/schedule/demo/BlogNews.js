@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Carousel } from "@trendyol-js/react-carousel";
 import { Row, Col, Card } from "antd";
-import News from "components/shared-components/News";
+import News from "views/app-views/home/announcement";
 import { NewsReportData } from "./DefaultDashboardData";
 import CommentSection from "components/shared-components/CommentSection";
 const BlogComponent = () => {

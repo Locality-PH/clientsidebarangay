@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "antd";
-import News from "components/shared-components/News";
+import News from "views/app-views/home/announcement";
 
 export const CommentPage = () => {
   const [newsReportData] = useState({
