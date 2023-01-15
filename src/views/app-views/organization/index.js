@@ -113,9 +113,13 @@ const Index = ({ match }) => {
               />
               <Route
                 path={`${match.url}/report-incident`}
-                component={ReportIncident}
+                render={() => (
+                  <ReportIncident
+                    organizationId={match.params.organization_id}
+                  ></ReportIncident>
+                )}
                 exact
-              />
+              ></Route>
               <Route path={`${match.url}/about`} component={AboutPage} exact />
 
               <Route
