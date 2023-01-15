@@ -10,8 +10,7 @@ import {
   message,
 } from "antd";
 import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import BillingDrawer from "components/shared-components/Drawer";
-import { AUTH_TOKEN } from "redux/constants/Auth";
+import BillingDrawer from "components/shared-components/DrawerBilling";
 import { ccFormat } from "helper/Formula";
 import { useAuth } from "contexts/AuthContext";
 import notification from "components/shared-components/Notification";
@@ -20,7 +19,11 @@ import {
   updatePaymethod,
   deletePaymethod,
 } from "api/AppController/AccountsController/BillingDetailsController";
-const BillingTable = () => {
+
+const BillingTable = (props) => {
+  const { setParentData, parentData } = props;
+  const data = props;
+  let type = data.type;
   const { generateToken } = useAuth();
   const tmp = [
     {
@@ -143,16 +146,48 @@ const BillingTable = () => {
       ),
     },
   ];
+
+  const tableColumnsBillingSelect = [
+    {
+      title: "",
+      dataIndex: "issuer",
+      key: "issuer",
+      render: (_, record) => {
+        let image = "";
+        if (record.issuer == "mastercard") image = "/img/others/img-9.png";
+
+        if (record.issuer == "visa") image = "/img/others/img-8.png";
+
+        if (record.issuer == "GCash")
+          image = "/img/others/cards/GCash-Logo.png";
+        return (
+          <>
+            {record.issuer == "GCash" ? (
+              <img
+                style={{ height: "13%" }}
+                src={image}
+                alt={record.cardType}
+              />
+            ) : (
+              <img
+                style={{ height: "auto" }}
+                src={image}
+                alt={record.cardType}
+              />
+            )}
+
+            <span className="ml-2">{record.issuer}</span>
+          </>
+        );
+      },
+    },
+  ];
   // Delete Payment Method
   const onDeleteBilling = async (record) => {
-    console.log(selectedRowKeys[0]);
     let data = creditCards;
     setCreditCards(data.filter((credit) => credit?._id !== record?._id));
-
     let secondData = data.filter((credit) => credit?._id !== record?._id);
-    console.log(secondData[0]?._id);
     setSelectedRowKeys([secondData[0]?._id]);
-    console.log(record);
 
     if (selectedRowKeys[0] === record?._id)
       await Promise.all([
@@ -179,7 +214,6 @@ const BillingTable = () => {
       const billingData = await getPaymethod(generateToken);
       const i = [].concat.apply([], billingData[0].billing_method);
       let secondData = i.filter((credit) => credit.active_card === true);
-      console.log(secondData[0]);
       setSelectedRowKeys([secondData[0]?._id]);
       return setCreditCards(i);
     } catch (e) {
@@ -206,11 +240,12 @@ const BillingTable = () => {
 
   const rowSelectionCredit = {
     onChange: async (key, rows) => {
-      console.log("new " + key);
-      console.log(key);
-
-      console.log("old " + selectedRowKeys);
+      //    console.log("new " + key);
+      //  console.log("old " + selectedRowKeys);
       setSelectedRowKeys(key);
+      let childData = parentData;
+      childData.issuer = rows[0]?.issuer;
+      setParentData(childData);
       await Promise.all([
         updatePaymethod(selectedRowKeys[0], key[0], generateToken),
       ]);
@@ -222,10 +257,7 @@ const BillingTable = () => {
   }, []);
   useEffect(() => {
     if (!(JSON.stringify(paymentMethod) === "{}")) {
-      // let credit = creditCards;
       let payment = paymentMethod;
-      // payment.user_id = localStorage.getItem(AUTH_TOKEN);
-      // payment?._id = credit.length + 1;
       setCreditCards((oldArray) => [...oldArray, payment]);
     }
   }, [paymentMethod]);
@@ -260,13 +292,15 @@ const BillingTable = () => {
         }}
         generateToken={generateToken()[1]}
       />
-      <Card className="setting-content">
+      <Card className={`${type == "request" ? null : `setting-content`}`}>
         <h2 className="mb-2">Billing</h2>
         <Table
           locale={locale}
           dataSource={creditCards}
           // rowSelection={rowSelection}
-          columns={tableColumnsBilling}
+          columns={
+            type == "save" ? tableColumnsBilling : tableColumnsBillingSelect
+          }
           pagination={false}
           rowKey="_id"
           rowSelection={{
@@ -276,71 +310,73 @@ const BillingTable = () => {
             ...rowSelectionCredit,
           }}
         />
-        <div className="mt-3 text-left">
-          <Row gutter={24}>
-            <Col sm={24} md={24} lg={24} className="text-left">
-              <h4 className="mb-2">Credit Card/Debit Card</h4>
-            </Col>
-            <Col sm={24} md={24} lg={14}>
-              <Button
-                style={{ padding: "0 20px" }}
-                className="card-platform"
-                onClick={() => showDrawer("credit")}
-              >
-                <Row justify="space-between" className=" d-flex">
-                  <Col className="text-left">
-                    <img
-                      style={{ width: "9%", marginRight: "5px" }}
-                      src="/img/others/img-7.png"
-                    />
-                    Credit Card/Debit Card
-                  </Col>
-                  <Col sm={5} md={5} lg={5}>
-                    <img
-                      className="card-brand"
-                      style={{ width: "25%" }}
-                      src="/img/others/cards/amex.png"
-                    />
-                    <img
-                      style={{ width: "25%" }}
-                      className="card-brand"
-                      src="/img/others/cards/jcb.png"
-                    />
-                    <img
-                      style={{ width: "25%" }}
-                      className="card-brand"
-                      src="/img/others/cards/mc.png"
-                    />
-                    <img
-                      style={{ width: "25%" }}
-                      className="card-brand"
-                      src="/img/others/cards/visa.png"
-                    />
-                  </Col>
-                </Row>
-              </Button>
-            </Col>
-            <Col sm={24} md={24} lg={24} className="text-left">
-              <h4 className="mt-2">E-Wallet</h4>
-            </Col>
-            <Col sm={24} md={24} lg={12}>
-              <Button
-                style={{ padding: "0 20px" }}
-                className="card-platform"
-                onClick={() => showDrawer("e-wallet")}
-              >
-                <Row justify="space-between" className=" d-flex">
-                  <Col className="text-left">
-                    <Row>
-                      <h4 className="mt-2 mr-1">GCash</h4>
-                      <span className="pt-2-1">GCash</span>
-                    </Row>
-                  </Col>
-                </Row>
-              </Button>
-            </Col>
-          </Row>
-        </div>
+        {type == "request" ? null : (
+          <div className="mt-3 text-left">
+            <Row gutter={24}>
+              <Col sm={24} md={24} lg={24} className="text-left">
+                <h4 className="mb-2">Credit Card/Debit Card</h4>
+              </Col>
+              <Col sm={24} md={24} lg={14}>
+                <Button
+                  style={{ padding: "0 20px" }}
+                  className="card-platform"
+                  onClick={() => showDrawer("credit")}
+                >
+                  <Row justify="space-between" className=" d-flex">
+                    <Col className="text-left">
+                      <img
+                        style={{ width: "9%", marginRight: "5px" }}
+                        src="/img/others/img-7.png"
+                      />
+                      Credit Card/Debit Card
+                    </Col>
+                    <Col sm={5} md={5} lg={5}>
+                      <img
+                        className="card-brand"
+                        style={{ width: "25%" }}
+                        src="/img/others/cards/amex.png"
+                      />
+                      <img
+                        style={{ width: "25%" }}
+                        className="card-brand"
+                        src="/img/others/cards/jcb.png"
+                      />
+                      <img
+                        style={{ width: "25%" }}
+                        className="card-brand"
+                        src="/img/others/cards/mc.png"
+                      />
+                      <img
+                        style={{ width: "25%" }}
+                        className="card-brand"
+                        src="/img/others/cards/visa.png"
+                      />
+                    </Col>
+                  </Row>
+                </Button>
+              </Col>
+              <Col sm={24} md={24} lg={24} className="text-left">
+                <h4 className="mt-2">E-Wallet</h4>
+              </Col>
+              <Col sm={24} md={24} lg={12}>
+                <Button
+                  style={{ padding: "0 20px" }}
+                  className="card-platform"
+                  onClick={() => showDrawer("e-wallet")}
+                >
+                  <Row justify="space-between" className=" d-flex">
+                    <Col className="text-left">
+                      <Row>
+                        <h4 className="mt-2 mr-1">GCash</h4>
+                        <span className="pt-2-1">GCash</span>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Button>
+              </Col>
+            </Row>
+          </div>
+        )}
       </Card>
     </>
   );

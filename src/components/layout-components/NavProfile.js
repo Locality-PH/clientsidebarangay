@@ -17,12 +17,12 @@ import utils from "utils";
 import { useAuth } from "contexts/AuthContext";
 import { logOut } from "api/ComponentController/NavProfileController";
 import { Link } from "react-router-dom";
-
+import { AUTH_TOKEN } from "redux/constants/Auth";
 const menuItem = [
   {
     title: "Profile Pages",
     icon: HomeOutlined,
-    path: "/home/account",
+    path: `/home/account/settings/profile/${localStorage.getItem(AUTH_TOKEN)}`,
   },
   {
     title: "Edit Profile",
@@ -59,7 +59,6 @@ const menuItem2 = [
 ];
 export const NavProfile = ({ signOut }) => {
   let history = useHistory();
-  const profileImg = "/img/avatars/thumb-1.jpg";
   const [current, setCurrent] = useState();
   const { currentUser, generateToken } = useAuth();
   const [timer, setTimer] = useState(false);
@@ -148,7 +147,7 @@ export const NavProfile = ({ signOut }) => {
             <Menu.Item key="profile">
               {profile?.profile_data ? (
                 <Avatar src={profile?.profile_data} size={45}>
-                  <b> {utils.getNameInitial(user)} </b>;
+                  <b> {utils.getNameInitial(user)} </b>
                 </Avatar>
               ) : (
                 <Avatar
@@ -156,7 +155,7 @@ export const NavProfile = ({ signOut }) => {
                   size={45}
                   style={{ backgroundColor: profile?.profile_color }}
                 >
-                  <b> {utils.getNameInitial(user)} </b>;
+                  <b> {utils.getNameInitial(user)} </b>
                 </Avatar>
               )}
             </Menu.Item>

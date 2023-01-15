@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Table, Button, Tooltip, Row, Col, Card, Popconfirm } from "antd";
 import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import BillingDrawer from "components/shared-components/Drawer";
+import BillingDrawer from "components/shared-components/DrawerBilling";
 import { AUTH_TOKEN } from "redux/constants/Auth";
 import { ccFormat } from "helper/Formula";
 import { useAuth } from "contexts/AuthContext";

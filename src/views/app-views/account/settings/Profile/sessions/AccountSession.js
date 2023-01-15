@@ -63,7 +63,6 @@ const AccountSession = () => {
   };
   const deleteRow = (row) => {
     const objKey = "_id";
-    console.log(row._id);
     let data = sessionData;
     try {
       if (selectedRows.length > 1) {

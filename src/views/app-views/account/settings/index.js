@@ -6,17 +6,20 @@ import Billing from "./Billing";
 import Notification from "./Notification";
 import Deactivate from "./Removal";
 import Security from "./Security/index";
+import Invoice from "./Invoice";
+import InvoiceSelect from "./Profile/invoice/Invoice";
 
 //Hooks
 import { Row, Col, Menu } from "antd";
 import { Link, Redirect, Route, Switch } from "react-router-dom";
 
 const AccountSettings = ({ match, location }) => {
+  const matchUrl = "/home/account/settings";
   return (
     <Row className="h-100 w-100" gutter={14} justify={"center"}>
       <Col span={18}>
         <Menu
-          defaultSelectedKeys={`${match.url}/edit-profile`}
+          defaultSelectedKeys={`${matchUrl}/edit-profile`}
           className="mb-3 setting-menu "
           title={"sad"}
           mode="horizontal"
@@ -27,29 +30,33 @@ const AccountSettings = ({ match, location }) => {
           </Menu.Item>
           <Menu.Item
             className="setting-center"
-            key={`${match.url}/edit-profile`}
+            key={`${matchUrl}/edit-profile`}
           >
             <span>Edit Profile</span>
-            <Link to={"edit-profile"} />
+            <Link to={`${matchUrl}/edit-profile`} />
           </Menu.Item>
-          <Menu.Item className="setting-center" key={`${match.url}/security`}>
+          <Menu.Item className="setting-center" key={`${matchUrl}/security`}>
             <span>Security</span>
-            <Link to={"security"} />
+            <Link to={`${matchUrl}/security`} />
           </Menu.Item>
-          <Menu.Item className="setting-center" key={`${match.url}/billing`}>
+          <Menu.Item className="setting-center" key={`${matchUrl}/billing`}>
             Billing
-            <Link to={"billing"} />
+            <Link to={`${matchUrl}/billing`} />
           </Menu.Item>
-          <Menu.Item
+          <Menu.Item className="setting-center" key={`${matchUrl}/invoice`}>
+            Invoice
+            <Link to={`${matchUrl}/invoice`} />
+          </Menu.Item>
+          {/* <Menu.Item
             className="setting-center"
-            key={`${match.url}/notification`}
+            key={`${matchUrl}/notification`}
           >
             Notification
-            <Link to={"notification"} />
-          </Menu.Item>
-          <Menu.Item className="setting-center" key={`${match.url}/removal`}>
+            <Link to={`${matchUrl}/notification`} />
+          </Menu.Item> */}
+          <Menu.Item className="setting-center" key={`${matchUrl}/removal`}>
             Removal
-            <Link to={"removal"} />
+            <Link to={`${matchUrl}/removal`} />
           </Menu.Item>
         </Menu>
       </Col>
@@ -57,14 +64,18 @@ const AccountSettings = ({ match, location }) => {
         <Switch>
           <Redirect
             exact
-            from={`${match.url}`}
-            to={`${match.url}/edit-profile`}
+            from={`${matchUrl}`}
+            to={`${matchUrl}/edit-profile`}
           />
-          <Route path={`${match.url}/edit-profile`} component={EditProfile} />
-          <Route path={`${match.url}/security`} component={Security} />
-          <Route path={`${match.url}/billing`} component={Billing} />
-          <Route path={`${match.url}/notification`} component={Notification} />
-          <Route path={`${match.url}/removal`} component={Deactivate} />
+          <Route path={`${matchUrl}/edit-profile`} component={EditProfile} />
+          <Route path={`${matchUrl}/security`} component={Security} />
+          <Route path={`${matchUrl}/billing`} component={Billing} />
+          {/* <Route path={`${matchUrl}/invoice/:id`} component={InvoiceSelect} /> */}
+
+          <Route path={`${matchUrl}/invoice`} component={Invoice} />
+
+          <Route path={`${matchUrl}/notification`} component={Notification} />
+          <Route path={`${matchUrl}/removal`} component={Deactivate} />
         </Switch>
       </Col>
     </Row>

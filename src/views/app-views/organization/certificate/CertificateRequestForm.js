@@ -1,107 +1,124 @@
-import React from "react";
-import { Form, Input, InputNumber, Select, Button, Radio, Card } from "antd";
-const { Option } = Select;
+import React, { useState, useEffect } from "react";
+import { Row, Col, Button, Form } from "antd";
+import { AUTH_TOKEN } from "redux/constants/Auth";
+import CertForm from "./CertForm";
+import { SendOutlined } from "@ant-design/icons";
+import FormBillingInfo from "views/app-views/account/settings/Profile/billing/FormBillingInfo";
+import BillingTable from "views/app-views/account/settings/Profile/billing/BillingTable";
+import { useAuth } from "contexts/AuthContext";
+import notification from "components/shared-components/Notification";
 
 const CertificateRequestForm = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+  const { currentUser } = useAuth();
+  const [parentData, setParentData] = useState({
+    email: currentUser?.email,
+    name: currentUser?.displayName,
+  });
 
+  const data = { auth_id: localStorage.getItem(AUTH_TOKEN) };
+  console.log(parentData);
+  let description = "Please fill up the form: ";
+  let show = false;
+  const handleSendData = () => {
+    // Certificate Request
+    if (!parentData.email) {
+      show = true;
+      description += " email, ";
+    }
+    console.log(parentData.name);
+    if (!parentData.name) {
+      show = true;
+      description += " name, ";
+    }
+    if (!parentData.description) {
+      show = true;
+      description += " description, ";
+    }
+    if (!parentData.certificate_type) {
+      show = true;
+      description += " certificate type, ";
+    }
+    if (!parentData.address) {
+      show = true;
+      description += " address, ";
+    }
+
+    if (!parentData.phoneNumber) {
+      show = true;
+      description += " phone number, ";
+    }
+    if (!parentData.postcode) {
+      show = true;
+      description += " postal code, ";
+    }
+    if (!parentData.city) {
+      show = true;
+      description += " city, ";
+    }
+    if (!parentData.city) {
+      show = true;
+      description += " country, ";
+    }
+    // if (!parentData.country) {
+    //   show = true;
+    //   description += " country, ";
+    // }
+    console.log(show);
+    if (show) {
+      notification({
+        message: "Warning",
+        description: description.slice(0, description.length - 2),
+        duration: 10,
+        type: "warning",
+      });
+      show = false;
+      description = "Please fill up the form: ";
+    } else {
+      notification({
+        message: "Success",
+        description:
+          "Request sent please wait for the instruction on your profile page",
+        duration: 10,
+        type: "success",
+      });
+      show = false;
+    }
+    // Billing Information
+    console.log(parentData);
+  };
+  useEffect(() => {
+    console.log(parentData);
+  }, [parentData]);
   return (
     <>
-      <div className="my-content-center">
-        <Card title="Certificate Request Form" style={{ width: "35rem" }}>
-          <Form name="complex-form" onFinish={onFinish}>
-            <Form.Item>
-              <h4>Name</h4>
-              <Form.Item
-                name="name"
-                noStyle
-                rules={[{ required: true, message: "Name is required" }]}
-              >
-                <Input placeholder="Enter Name" />
-              </Form.Item>
-            </Form.Item>
-
-            <Form.Item>
-              <h4>Age</h4>
-              <Form.Item
-                name="age"
-                noStyle
-                rules={[
-                  {
-                    required: true,
-                    message: "Age is required",
-                    type: "number",
-                    min: 0,
-                    max: 99,
-                  },
-                ]}
-              >
-                <InputNumber
-                  style={{ width: "100%" }}
-                  placeholder="Enter Age"
-                />
-              </Form.Item>
-            </Form.Item>
-
-            <Form.Item>
-              <h4>Gender</h4>
-              <Form.Item
-                name="gender"
-                noStyle
-                rules={[{ required: true, message: "Gender is required" }]}
-              >
-                <Radio.Group>
-                  <Radio value="male">Male</Radio>
-                  <Radio value="female">Female</Radio>
-                </Radio.Group>
-              </Form.Item>
-            </Form.Item>
-
-            <Form.Item>
-              <h4>Description</h4>
-              <Form.Item
-                name="description"
-                noStyle
-                rules={[{ required: true, message: "Description is required" }]}
-              >
-                <Input.TextArea placeholder="Write Description" />
-              </Form.Item>
-            </Form.Item>
-
-            <Form.Item>
-              <h4>Certificate Type</h4>
-              <Input.Group compact>
-                <Form.Item
-                  name="type"
-                  noStyle
-                  rules={[
-                    { required: true, message: "Certificate Type is required" },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select Certificate Type"
-                    style={{ width: "100%" }}
-                  >
-                    <Option value="barangay clearance">
-                      Barangay Clearance
-                    </Option>
-                    <Option value="barangay clearance2">
-                      Barangay Clearance2
-                    </Option>
-                  </Select>
-                </Form.Item>
-              </Input.Group>
-            </Form.Item>
-
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Send
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
+      <div className="">
+        <Row gutter={14}>
+          <Col xs={24} sm={24} md={24} lg={15} xl={15} xxl={15}>
+            <CertForm parentData={parentData} setParentData={setParentData} />
+            <FormBillingInfo
+              {...data}
+              type="request"
+              parentData={parentData}
+              setParentData={setParentData}
+            />
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={9} xl={9} xxl={9}>
+            <BillingTable
+              type="request"
+              parentData={parentData}
+              setParentData={setParentData}
+            />{" "}
+            <Button
+              icon={<SendOutlined />}
+              type="primary"
+              className="ml-1"
+              onClick={handleSendData}
+              htmlType="submit"
+            >
+              Send Request
+            </Button>
+          </Col>
+        </Row>
       </div>
     </>
   );

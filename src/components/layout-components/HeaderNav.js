@@ -137,7 +137,8 @@ export const HeaderNav = (props) => {
           <div className="nav-right">
             {/* <MessageOutlined style={{color: "white", fontSize: "1.35em"}}/> */}
             <NavMessage />
-            <NavNotification /> <NavPanel direction={direction} />
+            <NavNotification /> 
+            <NavPanel direction={direction} />
             <NavProfile />
           </div>
           {/* <NavSearch active={searchActive} close={onSearchClose}/> */}

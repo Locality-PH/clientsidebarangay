@@ -4,20 +4,22 @@ import firebase from "firebase/app";
 import "firebase/storage";
 import { message } from "antd";
 
-const deletePhoto = (setLoadingButton, setEditOrganization, oldUrl) => {
+const deletePhoto = async (setLoadingButton, setEditOrganization, oldUrl) => {
   let pictureRef = firebase.storage().refFromURL(oldUrl);
-  pictureRef
+  await pictureRef
     .delete()
     .then(() => {
       console.log("Picture is deleted successfully!");
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        setLoadingButton(false);
+        setEditOrganization(false);
+      }, 1000);
     });
-  setTimeout(() => {
-    setLoadingButton(false);
-    setEditOrganization(false);
-  }, 1000);
 };
 export async function updateAccount(
   values,
@@ -64,13 +66,18 @@ export async function updateAccount(
                 localStorage.setItem(PROFILE_URL, JSON.stringify(data));
                 currentUser.updateProfile({
                   displayName: response.data?.full_name,
-                  profileUrl: response.data?.profile_url,
+                  photoURL: response.data?.profile_url,
                 });
               }
             })
-            .then((_) => {
+            .then(async (_) => {
               // Old Image delete after success
-              deletePhoto(setLoadingButton, setEditOrganization, oldUrl);
+              if (oldUrl)
+                await deletePhoto(
+                  setLoadingButton,
+                  setEditOrganization,
+                  oldUrl
+                );
             })
             .catch((error) => {
               // if error occure delete new image uploaded
@@ -101,17 +108,6 @@ export async function updateAccount(
           }
         })
         .catch((error) => {
-          let pictureRef = firebase.storage().refFromURL(url);
-          pictureRef
-            .delete()
-            .then(() => {
-              console.log("Picture is deleted successfully!");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-
-          console.log(error.message);
           return message.error(error.message);
         });
     }

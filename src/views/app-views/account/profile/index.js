@@ -1,15 +1,23 @@
-// this component is drafted
+import React, { useState, useEffect } from "react";
+import HeaderCover from "./header/HeaderCover";
+import Header from "./header/Header";
 
-import React from 'react'
+import ContentBody from "./body";
 
 const AccountProfile = () => {
-    return (
-        <div>
-  
-            <p>Dis is Account Profile</p>
+  return (
+    <div>
+      <>
+        <HeaderCover img="/img/others/img-12.jpg" />
+        <div className="container my-4">
+          <Header />
+          <div>
+            <ContentBody />
+          </div>
         </div>
-    )
-}
+      </>
+    </div>
+  );
+};
 
-export default AccountProfile
-
+export default AccountProfile;

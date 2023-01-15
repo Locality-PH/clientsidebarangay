@@ -133,6 +133,7 @@ export async function authOrganization(token, authType, history, redirect) {
         //    let organzationArray = [];
         let memberArray = [];
         let response = jwt_decode(res.data.accessToken);
+        console.log();
         localStorage.setItem(
           PROFILE_URL,
           JSON.stringify({
@@ -140,7 +141,12 @@ export async function authOrganization(token, authType, history, redirect) {
             profile_color: response.profileLogo,
           })
         );
-
+        console.log(response);
+        if (response.first_time) {
+          auth.currentUser.updateProfile({
+            displayName: response.full_name,
+          });
+        }
         if (response.organizations[0] && response.members[0]) {
           if (response.organizations[0].length > 0) {
             // localStorage.setItem(AUTH_ORGANIZATION, organzationArray);

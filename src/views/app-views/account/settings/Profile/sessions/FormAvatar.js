@@ -41,16 +41,21 @@ const FormAvatar = (props) => {
   };
 
   // Send image here after image button onChange
-  const handleChange = async (event) => {
-    const fileUploaded = event.target.files[0];
-    let imageValidate = "image";
 
-    if (fileUploaded.type.includes(imageValidate)) {
-      setProfileAvatar(event.target.files[0]);
-      const base64 = checkFileSize(event.target.files[0]);
-      setFile(base64);
-    } else {
-      message.warning("Image not Found");
+  const handleChange = async (event) => {
+    try {
+      const fileUploaded = event.target.files[0];
+      let imageValidate = "image";
+
+      if (fileUploaded.type.includes(imageValidate)) {
+        setProfileAvatar(event.target.files[0]);
+        const base64 = checkFileSize(event.target.files[0]);
+        setFile(base64);
+      } else {
+        message.warning("Image not Found");
+      }
+    } catch (error) {
+      // console.log(console.log(error.message));
     }
   };
   //Check File size
@@ -144,6 +149,11 @@ const FormAvatar = (props) => {
     getData(signal);
     return () => controller?.abort();
   }, [isLoading]);
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem(PROFILE_URL));
+    setUrl(data.profile_data);
+  }, [loadingButton]);
 
   useEffect(() => {
     form.resetFields();

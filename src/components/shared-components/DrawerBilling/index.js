@@ -24,6 +24,7 @@ import {
   CalendarOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
+import { formatPhoneNumber } from "helper/Formula";
 const BillingDrawer = (props) => {
   let size = 500;
   let data = {
@@ -87,9 +88,8 @@ const BillingDrawer = (props) => {
     }
     if (type == "card-gcash") {
       data.cardNumber = value;
-      setCardNumber(value);
-
-      console.log(formatCreditCardNumber(value));
+      setCardNumber(formatPhoneNumber(value));
+      form.setFieldsValue({ cardNumber: formatPhoneNumber(value) });
       setIsFrontOfCardVisible(true);
     }
     if (type == "holder") {
@@ -338,7 +338,11 @@ const BillingDrawer = (props) => {
           <>
             <Col xs={22} sm={22} md={22} lg={22} xl={22} justify="center">
               <Card className="mt-2 setting-content">
-                <Form onFinish={onFinishGcash} name="basicInformation">
+                <Form
+                  onFinish={onFinishGcash}
+                  form={form}
+                  name="basicInformation"
+                >
                   <div className="mb-3">
                     <Image
                       style={{ marginBottom: "-40px", marginTop: "-20px" }}
@@ -368,8 +372,8 @@ const BillingDrawer = (props) => {
                           onChange={(e) =>
                             onHandleData("card-gcash", e.target.value)
                           }
-                          placeholder="xxxxxxxxxxx"
-                          maxLength={11}
+                          placeholder="(xxx) xxx-xxxx"
+                          maxLength={15}
                         />
                       </Form.Item>
                     </Col>

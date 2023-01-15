@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import FormAvatar from "./Profile/FormAvatar";
-import AccountSession from "./Profile/AccountSession";
+import FormAvatar from "./Profile/sessions/FormAvatar";
+import AccountSession from "./Profile/sessions/AccountSession";
 import { useAuth } from "contexts/AuthContext";
 import firebase from "firebase/app";
 import { AUTH_TOKEN } from "redux/constants/Auth";
@@ -14,6 +14,11 @@ const EditPorfile = () => {
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
 
+  axios
+    .get("/api/cert-display/request/data", generateToken()[1])
+    .then((res) => {
+      console.log(res.data);
+    });
   // File Upload
   const handleUpload = (event) => {
     event.preventDefault();

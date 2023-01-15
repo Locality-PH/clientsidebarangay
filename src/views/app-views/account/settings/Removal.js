@@ -1,9 +1,19 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { signOut } from "redux/actions/Auth";
+import { useAuth } from "contexts/AuthContext";
+import { logOutDeactivate } from "api/ComponentController/NavProfileController";
 import { Form, Button, Input, message, Tabs, Card } from "antd";
+import { connect } from "react-redux";
+
 const { TabPane } = Tabs;
 
-const Removal = () => {
+const Removal = ({ signOut }) => {
+  const { generateToken } = useAuth();
+
+  const signOutNode = async () => {
+    logOutDeactivate(signOut, generateToken);
+  };
+
   return (
     <Card className="setting-content">
       <Tabs defaultActiveKey="1" size={"large"}>
@@ -13,10 +23,25 @@ const Removal = () => {
             Your account will be temporarly deleted. You can activate your
             account again by loggging in.
           </p>
-          <Form layout="vertical">
+          <Form layout="vertical" onFinish={signOutNode}>
             <Form.Item
               name="action"
-              rules={[{ required: true, message: "Fill this up!" }]}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Please confirm  the deactivation key!",
+                  onBlur: true,
+                },
+                ({}) => ({
+                  validator(_, value) {
+                    if (!value || "Deactivate Account" === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject("Deactivation key do not match!");
+                  },
+                }),
+              ]}
               label="Type 'Deactivate Account'"
             >
               <Input />
@@ -34,4 +59,4 @@ const Removal = () => {
   );
 };
 
-export default Removal;
+export default connect(null, { signOut })(Removal);
