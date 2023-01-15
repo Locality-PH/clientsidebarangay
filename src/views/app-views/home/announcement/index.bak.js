@@ -22,7 +22,7 @@ const News = (props) => {
   } = props;
   const color = ["#E1F8DC", "#FEF8DD", "#FFE7C7", "#B7E9F7", "#ADF7B6"];
   const randomColor = Math.floor(Math.random() * color.length);
-
+  
   return (
     <>
       <Card

@@ -4,7 +4,9 @@ import { Icon } from "components/util-components/Icon";
 import {
   GlobalOutlined,
   MailOutlined,
-  HomeOutlined,
+  HomeFilled,
+  CloseOutlined,
+  HeartFilled,
   MessageOutlined,
   PhoneOutlined,
   EllipsisOutlined,
@@ -30,22 +32,22 @@ const Header = ({ organizationId, organization }) => {
   const menu = (
     <Menu>
       <Menu.Item key="1">
-        <Link to={`/home/group/${organizationId}/campaign`}>
+        <Link to={`/home/organization/${organizationId}/campaign`}>
           <FormOutlined /> <span className="ml-2">Campaign</span>
         </Link>
       </Menu.Item>
       <Menu.Item key="2">
-        <Link to={`/home/group/${organizationId}/certificate-request`}>
+        <Link to={`/home/organization/${organizationId}/certificate-request`}>
           <FileOutlined /> <span className="ml-2">Certificate</span>
         </Link>
       </Menu.Item>
       <Menu.Item key="3">
-        <Link to={`/home/group/${organizationId}/report-incident`}>
+        <Link to={`/home/organization/${organizationId}/report-incident`}>
           <SendOutlined /> <span className="ml-2">Report Incident</span>
         </Link>
       </Menu.Item>
       <Menu.Item key="4">
-        <Link to={`/home/group/${organizationId}/about`}>
+        <Link to={`/home/organization/${organizationId}/about`}>
           <InfoCircleOutlined /> <span className="ml-2">About</span>
         </Link>
       </Menu.Item>
@@ -100,16 +102,27 @@ const Header = ({ organizationId, organization }) => {
                   <h2 className="mt-2 mb-0 mt-md-0">{name}</h2>
                   <div className="mt-3 ml-md-3 mt-md-0">
                     <Space>
-                      <Link to={`/home/group/${organizationId}`}>
-                        <Button size="small" type="primary">
-                          <HomeOutlined />
+                      <Link to={`/home/organization/${organizationId}`}>
+                        <Button size="small" style={{backgroundColor: "#3e79f7", color: "white"}}>
+                          <HomeFilled />
                           Home
                         </Button>
                       </Link>
-                      <Link to={`/home/group/${organizationId}/message`}>
+
+                      <Button size="small" style={{backgroundColor: "#fc6c85", color: "white"}}>
+                      <HeartFilled style={{color: "white"}}/>
+                        Follow
+                      </Button>
+
+                      <Button size="small" style={{backgroundColor: "	#D70040", color: "white"}}>
+                        <CloseOutlined />
+                        Unfollow
+                      </Button>
+
+                      {/* <Link to={`/home/organization/${organizationId}/message`}>
                         <Button size="small"><MessageOutlined />Message</Button>
-                      </Link>
-                      <DropdownMenu></DropdownMenu>
+                      </Link> */}
+                      <DropdownMenu />
                     </Space>
                   </div>
                 </Flex>
@@ -151,7 +164,7 @@ const Header = ({ organizationId, organization }) => {
                     <Row className="mt-2 mb-2 mt-md-0 ">
                       <Col xs={12} sm={12} md={9}>
                         <Icon
-                          type={HomeOutlined}
+                          type={HomeFilled}
                           className="text-primary font-size-md"
                         />
                         <span className="ml-2 text-muted">Address:</span>

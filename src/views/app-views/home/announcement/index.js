@@ -22,7 +22,7 @@ const News = (props) => {
   } = props;
   const color = ["#E1F8DC", "#FEF8DD", "#FFE7C7", "#B7E9F7", "#ADF7B6"];
   const randomColor = Math.floor(Math.random() * color.length);
-
+  
   return (
     <>
       <Card
@@ -109,48 +109,6 @@ const News = (props) => {
                 ) : null}
               </div>
             </div>
-            {/*  */}
-            {/* <div>
-              <div className="halfDiv">
-                <div className="userInfo">  {" "}v
-                  <div className="commentsTwo">
-                    <a
-                      className="userLink"
-                      target="_blank"
-                      href="https://www.linkedin.com/in/riya-negi-8879631a9/"
-                    >
-                      <div>
-                        <img
-                          src="https://ui-avatars.com/api/name=Riya&amp;background=random"
-                          alt="userIcon"
-                          className="imgdefault"
-                          style={{ position: "relative", top: "7px;" }}
-                        />
-                      </div>
-                      <div className="fullName">Riya Negi </div>
-                    </a>
-                  </div>
-                  <div className="infoStyle">Hey, Loved your blog! </div>
-                  <div style={{ marginLeft: "32px;" }}>
-                    <div>
-                      <button className="replyBtn">
-                        <div className="replyIcon"></div>
-                        <span style={{ marginLeft: "17px" }}>Reply</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="userActions">
-                  <button className="actionsBtn">
-                    <div className="optionIcon"></div>
-                  </button>
-                  <div
-                    className="szh-menu-container"
-                    style={{ position: "relative;" }}
-                  ></div>
-                </div>
-              </div>
-            </div> */}
             {enablePost ? (
               <>
                 <hr className="hr-style" />

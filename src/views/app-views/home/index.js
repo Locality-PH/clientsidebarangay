@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Card, message, Button } from "antd";
-import OrganizationList from "./OrganizationList";
-import GroupLink from "components/shared-components/GroupLink";
+import OrganizationList from "./organization-list";
+import GroupLink from "views/app-views/home/organization-list/render-list";
 import TrendingNews from "components/shared-components/TrendingNews";
 import Campaign from "components/shared-components/Campaign";
-import News from "components/shared-components/News";
+import Announcement from "views/app-views/home/announcement";
 import {
   BarangayData,
   CausesData,
@@ -25,10 +25,12 @@ export const DefaultDashboard = () => {
   return (
     <>
       <Row gutter={16}>
+        {/* OrganizationList */}
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <OrganizationList></OrganizationList>
+          <OrganizationList/>
         </Col>
 
+        {/* Trending Campaign */}
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
           <Card
             title="Trending Campaign"
@@ -52,6 +54,7 @@ export const DefaultDashboard = () => {
           </Card>
         </Col>
 
+        {/* Trending News */}
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
           <Card title="Trending News">
             <TrendingNews
@@ -76,20 +79,13 @@ export const DefaultDashboard = () => {
             />
           </Card>
         </Col>
-
-        {/* <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <Card>
-            <Skeleton loading={true} avatar active>
-              
-            </Skeleton>
-          </Card>
-        </Col> */}
       </Row>
 
+      {/* Post */}
       <Row gutter={16}>
         {newsReportData.map((result, id) => (
           <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8} key={id}>
-            <News
+            <Announcement
               margin={"5px 0px"}
               title={result.title}
               type={result.type}
