@@ -64,7 +64,7 @@ const Index = ({ match }) => {
               <Route path={`${match.url}/campaign/edit/:id`} render={() => <EditCampaign organizationId={match.params.organization_id}></EditCampaign>} exact></Route>
 
               <Route path={`${match.url}/certificate-request`} component={CertificateRequestForm} exact />
-              <Route path={`${match.url}/report-incident`} component={ReportIncident} exact />
+			  <Route path={`${match.url}/report-incident`}  render={() => <ReportIncident organizationId={match.params.organization_id}></ReportIncident>} exact></Route>
               <Route path={`${match.url}/about`} component={AboutPage} exact />
 
               <Route path={`${match.url}/event`} render={() => <EventPage organizationId={match.params.organization_id}></EventPage>} exact></Route>

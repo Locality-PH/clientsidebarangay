@@ -11,7 +11,7 @@ import { useAuth } from "contexts/AuthContext";
 const current = new Date();
 const dateFormat = "YYYY/MM/DD";
 
-const ReportIncident = () => {
+const ReportIncident = ({organizationId}) => {
   const { currentOrganization, generateToken } = useAuth();
   const authToken = localStorage.getItem("auth_token");
 
@@ -47,7 +47,7 @@ const ReportIncident = () => {
     form
       .validateFields()
       .then((values) => {
-        values.organization_id = currentOrganization;
+        values.organization_id = organizationId;
         values.uuid = authToken;
         values.settlement_status = "Unscheduled";
         values.status = "Pending";
