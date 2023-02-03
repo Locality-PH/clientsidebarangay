@@ -88,7 +88,7 @@ export function AuthProvider({ children }) {
         message.warning(error.message);
       });
   }
-  async function sendEmailVerification() {
+  async function sendEmailVerification(email) {
     return firebase
       .auth()
       .currentUser.sendEmailVerification()

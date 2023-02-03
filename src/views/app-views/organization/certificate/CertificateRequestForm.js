@@ -1,25 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button, Form } from "antd";
-import { AUTH_TOKEN } from "redux/constants/Auth";
-import CertForm from "./CertForm";
+// Ant Design
+import { Row, Col, Button } from "antd";
 import { SendOutlined } from "@ant-design/icons";
+// Components
+import CertForm from "./CertForm";
 import FormBillingInfo from "views/app-views/account/settings/Profile/billing/FormBillingInfo";
 import BillingTable from "views/app-views/account/settings/Profile/billing/BillingTable";
-import { useAuth } from "contexts/AuthContext";
 import notification from "components/shared-components/Notification";
+// Middleware
+import { AUTH_TOKEN } from "redux/constants/Auth";
+import { useAuth } from "contexts/AuthContext";
+// API
+import { sendDocument } from "api/AppController/CertificatesController/CertificatesController";
 
-const CertificateRequestForm = () => {
-  const { currentUser } = useAuth();
+const CertificateRequestForm = (props) => {
+  const { organizationId } = props;
+  const { currentUser, generateToken } = useAuth();
   const [parentData, setParentData] = useState({
     email: currentUser?.email,
     name: currentUser?.displayName,
+    organizationId: organizationId,
   });
-
+  const [loading, setLoading] = useState(false);
+  const handleSendDataCallBack = (res) => {
+    console.log(res);
+    if (res === "saved") {
+      notification({
+        message: "Success",
+        description:
+          "Request sent please wait for the instruction on your profile page",
+        duration: 10,
+        type: "success",
+      });
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
   const data = { auth_id: localStorage.getItem(AUTH_TOKEN) };
   console.log(parentData);
   let description = "Please fill up the form: ";
   let show = false;
-  const handleSendData = () => {
+  const handleSendData = async () => {
     // Certificate Request
     if (!parentData.email) {
       show = true;
@@ -74,13 +96,13 @@ const CertificateRequestForm = () => {
       show = false;
       description = "Please fill up the form: ";
     } else {
-      notification({
-        message: "Success",
-        description:
-          "Request sent please wait for the instruction on your profile page",
-        duration: 10,
-        type: "success",
-      });
+      setLoading(!loading);
+      await sendDocument(
+        handleSendDataCallBack,
+        parentData,
+        generateToken()[1]
+      );
+
       show = false;
     }
     // Billing Information
@@ -94,7 +116,11 @@ const CertificateRequestForm = () => {
       <div className="">
         <Row gutter={14}>
           <Col xs={24} sm={24} md={24} lg={15} xl={15} xxl={15}>
-            <CertForm parentData={parentData} setParentData={setParentData} />
+            <CertForm
+              parentData={parentData}
+              organizationId={organizationId}
+              setParentData={setParentData}
+            />
             <FormBillingInfo
               {...data}
               type="request"
@@ -114,6 +140,7 @@ const CertificateRequestForm = () => {
               className="ml-1"
               onClick={handleSendData}
               htmlType="submit"
+              loading={loading}
             >
               Send Request
             </Button>

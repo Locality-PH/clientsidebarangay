@@ -19,26 +19,26 @@ import {
   updatePaymethod,
   deletePaymethod,
 } from "api/AppController/AccountsController/BillingDetailsController";
-
+import { AUTH_TOKEN } from "redux/constants/Auth";
 const BillingTable = (props) => {
   const { setParentData, parentData } = props;
   const data = props;
   let type = data.type;
   const { generateToken } = useAuth();
-  const tmp = [
-    {
-      card_holder: "12321",
-      card_number: "1232132113112323",
-      _id: 1,
-      cvc: "N/A",
-      issuer: "visa",
-      user_id: "kwWXpExbfoTAVnQZQVeVqMzCRFP2",
-      valid_thru: "N/A",
-    },
-  ];
+  // const tmp = [
+  //   {
+  //     card_holder: "12321",
+  //     card_number: "1232132113112323",
+  //     _id: 1,
+  //     cvc: "N/A",
+  //     issuer: "visa",
+  //     user_id: "kwWXpExbfoTAVnQZQVeVqMzCRFP2",
+  //     valid_thru: "N/A",
+  //   },
+  // ];
 
   // Credit Card State
-  const [creditCards, setCreditCards] = useState(tmp);
+  const [creditCards, setCreditCards] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState({});
   const [paymentMethodType, setPaymentMethodType] = useState("");
   const [drawer, setDrawer] = useState(false);
@@ -78,7 +78,7 @@ const BillingTable = (props) => {
           <>
             {record.issuer == "GCash" ? (
               <img
-                style={{ height: "13%" }}
+                style={{ height: "3rem" }}
                 src={image}
                 alt={record.cardType}
               />
@@ -157,14 +157,20 @@ const BillingTable = (props) => {
         if (record.issuer == "mastercard") image = "/img/others/img-9.png";
 
         if (record.issuer == "visa") image = "/img/others/img-8.png";
-
+        if (record.issuer == "walk in") image = "/img/others/walkin.png";
         if (record.issuer == "GCash")
           image = "/img/others/cards/GCash-Logo.png";
         return (
           <>
             {record.issuer == "GCash" ? (
               <img
-                style={{ height: "13%" }}
+                style={{ height: "3rem" }}
+                src={image}
+                alt={record.cardType}
+              />
+            ) : record.issuer == "walk in" ? (
+              <img
+                style={{ height: "3rem" }}
                 src={image}
                 alt={record.cardType}
               />
@@ -214,7 +220,20 @@ const BillingTable = (props) => {
       const billingData = await getPaymethod(generateToken);
       const i = [].concat.apply([], billingData[0].billing_method);
       let secondData = i.filter((credit) => credit.active_card === true);
+      if (!(type == "save")) {
+        const datas = {
+          _id: "none",
+          card_number: "5123 1231 2312 312312",
+          issuer: "walk in",
+          valid_thru: "23/13",
+          active_card: false,
+          user_id: localStorage.getItem(AUTH_TOKEN),
+        };
+        console.log(datas);
+        i.push(datas);
+      }
       setSelectedRowKeys([secondData[0]?._id]);
+      console.log(i);
       return setCreditCards(i);
     } catch (e) {
       message.error(e.message);
@@ -246,9 +265,11 @@ const BillingTable = (props) => {
       let childData = parentData;
       childData.issuer = rows[0]?.issuer;
       setParentData(childData);
-      await Promise.all([
-        updatePaymethod(selectedRowKeys[0], key[0], generateToken),
-      ]);
+      console.log(key[0]);
+      if (key[0] !== "none")
+        await Promise.all([
+          updatePaymethod(selectedRowKeys[0], key[0], generateToken),
+        ]);
     },
   };
 

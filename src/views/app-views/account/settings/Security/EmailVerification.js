@@ -11,7 +11,7 @@ const EmailVerification = () => {
   const handleSendEmailVerification = async () => {
     setLoading(true);
 
-    await sendEmailVerification()
+    await sendEmailVerification(currentUser.email)
       .then((_) => {
         setTimeout(() => {
           setLoading(false);

@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, InputNumber, Select, Button, Radio, Card } from "antd";
-import { AUTH_TOKEN } from "redux/constants/Auth";
+import axios from "axios";
 import debounce from "lodash.debounce";
-const { Option } = Select;
 import { useAuth } from "contexts/AuthContext";
+const { Option } = Select;
 
 const CertificateRequestForm = (props) => {
-  const { setParentData, parentData } = props;
+  const { setParentData, parentData, organizationId } = props;
   const { currentUser } = useAuth();
+
   const [form] = Form.useForm();
+  console.log(organizationId);
 
   const onFinish = debounce((value, title) => {
     try {
@@ -86,13 +88,19 @@ const CertificateRequestForm = (props) => {
             >
               <Select
                 placeholder="Select Certificate Type"
-                style={{ width: "100%" }}
                 onChange={(e) => {
                   onFinish(e, "certificate_type");
                 }}
               >
-                <Option value="barangay clearance">Barangay Clearance</Option>
-                <Option value="barangay clearance2">Barangay Clearance2</Option>
+                <Option key={1} value="indulgancy">
+                  Barangay Indulgancy
+                </Option>
+                <Option key={2} value="certificate">
+                  Barangay Clearance
+                </Option>
+                <Option key={3} value="business">
+                  Business Permit
+                </Option>
               </Select>
             </Form.Item>
           </Form.Item>

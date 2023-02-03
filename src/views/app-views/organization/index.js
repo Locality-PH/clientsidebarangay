@@ -108,7 +108,12 @@ const Index = ({ match }) => {
 
               <Route
                 path={`${match.url}/certificate-request`}
-                component={CertificateRequestForm}
+                render={(result) => (
+                  <CertificateRequestForm
+                    match={result.match}
+                    organizationId={match.params.organization_id}
+                  />
+                )}
                 exact
               />
               <Route
