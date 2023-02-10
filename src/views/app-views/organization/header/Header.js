@@ -114,10 +114,10 @@ const Header = ({ organizationId, organization }) => {
                         Follow
                       </Button>
 
-                      <Button size="small" style={{backgroundColor: "	#D70040", color: "white"}}>
+                      {/* <Button size="small" style={{backgroundColor: "	#D70040", color: "white"}}>
                         <CloseOutlined />
                         Unfollow
-                      </Button>
+                      </Button> */}
 
                       {/* <Link to={`/home/organization/${organizationId}/message`}>
                         <Button size="small"><MessageOutlined />Message</Button>
