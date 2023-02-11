@@ -118,7 +118,7 @@ const FormAvatar = (props) => {
     try {
       const config = generateToken()[1];
       await axios
-        .post("/api/app/user/details", data, config, signal)
+        .get("/api/app/user/details", config, signal)
         .then((response) => {
           form.setFieldsValue({
             email: currentUser?.email,
