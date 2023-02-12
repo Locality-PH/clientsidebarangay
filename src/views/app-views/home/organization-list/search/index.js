@@ -15,8 +15,9 @@ import Flex from "components/shared-components/Flex";
 import AvatarStatus from "components/shared-components/AvatarStatus";
 import { BarangayData } from "../../DefaultDashboardData";
 import utils from "utils";
+import { COLORS } from "constants/ChartConstant";
 import { Link } from "react-router-dom";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
@@ -35,7 +36,6 @@ const Organizations = () => {
       .get("/api/organization/get-all-organizations", generateToken()[1])
       .then((response) => {
         setBarangayList(response.data);
-        console.log(response.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -55,13 +55,25 @@ const Organizations = () => {
                   className={`d-flex align-items-center justify-content-between`}
                 >
                   <div className="avatar-status d-flex align-items-center">
-                    <Avatar
-                      className="font-size-sm"
-                      style={{ backgroundColor: "black" }}
-                      shape="square"
-                    >
-                      {utils.getNameInitial(result.organization_name)}
-                    </Avatar>
+                    {
+                      result.profile != null
+                        ?
+                        <Avatar
+                          className="font-size-sm"
+                          icon={<UserOutlined />}
+                          src={result.profile.fileUrl}
+                        >
+                          {utils.getNameInitial(result.organization_name)}
+                        </Avatar>
+                        :
+                        <Avatar
+                          className="font-size-sm"
+                          style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
+                        >
+                          {utils.getNameInitial(result.organization_name)}
+                        </Avatar>
+                    }
+
                     <div className="ml-2">
                       <div>
                         <div className="avatar-status-name h4">
@@ -75,7 +87,7 @@ const Organizations = () => {
                     </div>
                   </div>
                   <div>
-                    <Link to={`/home/group/${result.organization_id}`}>
+                    <Link to={`/home/organization/${result.organization_id}`}>
                       <Button type="primary" shape="round">
                         View
                       </Button>

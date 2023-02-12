@@ -14,7 +14,10 @@ import {
   FileOutlined,
   SendOutlined,
   InfoCircleOutlined,
+  UserOutlined
 } from "@ant-design/icons";
+import utils from "utils";
+import { COLORS } from "constants/ChartConstant";
 import Flex from "components/shared-components/Flex";
 import { Link } from "react-router-dom";
 
@@ -26,7 +29,6 @@ const Header = ({ organizationId, organization }) => {
     if (organization != null) {
       setName(organization.organization_name)
       setAddress(organization.address)
-
     }
   }, [organization])
   const menu = (
@@ -83,12 +85,26 @@ const Header = ({ organizationId, organization }) => {
                   textAlign: "center",
                 }}
               >
-                <Avatar
-                  shape="round"
-                  size={150}
-                  src="/img/barangay/caniogan/BarangayProfile.jpg"
-                />
+                {
+                  organization.profile != null
+                    ?
+                    <Avatar
+                      icon={<UserOutlined />}
+                      size={150}
+                      src={organization.profile.fileUrl}
+                    >
+                      {utils.getNameInitial(organization.organization_name)}
+                    </Avatar>
+                    :
+                    <Avatar
+                      style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
+                      size={150}
+                    >
+                      {utils.getNameInitial(organization.organization_name)}
+                    </Avatar>
+                }
               </div>
+
               <div className="ml-md-4 w-100">
                 <Flex
                   alignItems="center"
@@ -99,14 +115,14 @@ const Header = ({ organizationId, organization }) => {
                   <div className="mt-3 ml-md-3 mt-md-0">
                     <Space>
                       <Link to={`/home/organization/${organizationId}`}>
-                        <Button size="small" style={{backgroundColor: "#3e79f7", color: "white"}}>
+                        <Button size="small" style={{ backgroundColor: "#3e79f7", color: "white" }}>
                           <HomeFilled />
                           Home
                         </Button>
                       </Link>
 
-                      <Button size="small" style={{backgroundColor: "#fc6c85", color: "white"}}>
-                      <HeartFilled style={{color: "white"}}/>
+                      <Button size="small" style={{ backgroundColor: "#fc6c85", color: "white" }}>
+                        <HeartFilled style={{ color: "white" }} />
                         Follow
                       </Button>
 
@@ -138,7 +154,7 @@ const Header = ({ organizationId, organization }) => {
                         <span className="ml-2 text-muted">Email:</span>
                       </Col>
                       <Col xs={12} sm={12} md={15}>
-                        <span className="font-weight-semibold">rojhon@gmail.com</span>
+                        <span className="font-weight-semibold">	{organization.email}</span>
                       </Col>
                     </Row>
                     <Row>
@@ -151,7 +167,7 @@ const Header = ({ organizationId, organization }) => {
                       </Col>
                       <Col xs={12} sm={12} md={15}>
                         <span className="font-weight-semibold">
-                          0923
+                          {organization.phone_number}
                         </span>
                       </Col>
                     </Row>
@@ -178,7 +194,7 @@ const Header = ({ organizationId, organization }) => {
                         <span className="ml-2 text-muted">Website:</span>
                       </Col>
                       <Col xs={12} sm={12} md={15}>
-                        <span className="font-weight-semibold">website ito</span>
+                        <span className="font-weight-semibold">{organization.website}</span>
                       </Col>
                     </Row>
                   </Col>

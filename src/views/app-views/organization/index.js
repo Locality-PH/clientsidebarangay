@@ -62,7 +62,7 @@ const Index = ({ match }) => {
                 path={`${match.url}`}
                 render={() => (
                   <Barangay
-                    organizationId={match.params.organization_id}
+                    organizationId={match.params.organization_id} organization={organization}
                   ></Barangay>
                 )}
                 exact
@@ -125,7 +125,13 @@ const Index = ({ match }) => {
                 )}
                 exact
               ></Route>
-              <Route path={`${match.url}/about`} component={AboutPage} exact />
+              <Route path={`${match.url}/about`}
+                render={() => (
+                  <AboutPage
+                    organization={organization}
+                  ></AboutPage>
+                )}
+                exact />
 
               <Route
                 path={`${match.url}/event`}
