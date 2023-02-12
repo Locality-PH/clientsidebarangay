@@ -8,11 +8,11 @@ const Campaign = ({ organizationId }) => {
     <>
       <Row gutter={16}>
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <CampaignForm></CampaignForm>
+          <CampaignForm />
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={16}>
-          <CampaignRequested organizationId={organizationId}></CampaignRequested>
+          <CampaignRequested organizationId={organizationId} />
         </Col>
       </Row>
     </>

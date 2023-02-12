@@ -11,22 +11,22 @@ const Organization = ({ organizationId }) => {
     <>
       <Row gutter="16">
         <Col xs={24} sm={24} md={8}>
-          <Officials/>
-          <Events organizationId={organizationId}></Events>
-          <About/>
+          <Officials />
+          <About />
+          {/* <Events organizationId={organizationId}></Events> */}
         </Col>
 
         <Col xs={24} sm={24} md={16}>
-          <MissionAndVision/>
-          <Projects></Projects>
-          <Card>
+          <MissionAndVision />
+          <Projects/>
+          {/* <Card>
             <img
               width="100%"
               alt="logo"
               src="/img/barangay/caniogan/BarangayCover.jpg"
               style={{ borderRadius: "1rem 1rem" }}
             />
-          </Card>
+          </Card> */}
         </Col>
       </Row>
       {/* <Barangay name={match.params.name}></Barangay> */}

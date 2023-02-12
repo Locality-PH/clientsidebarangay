@@ -55,15 +55,11 @@ const Header = ({ organizationId, organization }) => {
   );
 
   const DropdownMenu = () => (
-    <Dropdown key="more" overlay={menu}>
-      <Button
-        style={{
-          border: "none",
-          padding: 0,
-        }}
-      >
+    <Dropdown key="more" overlay={menu} trigger={['click']}>
+      <Button shape="round" size="small">
         <EllipsisOutlined
           style={{
+            marginTop: "-2px !important",
             fontSize: 20,
             verticalAlign: "top",
           }}

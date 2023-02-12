@@ -1,6 +1,5 @@
 .auth-register-card {
     width: 1200px !important;
-    margin: 50px 0px !important; 
 }
 
 .auth-register-right{
@@ -8,9 +7,13 @@
 }
 
 .auth-register-left .photo{
-    margin-top: 50px !important;
-    height: 80% !important;
-    width: 100% !important;
+  height: 65% !important;
+  width: 100% !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50%!important ;
+  -ms-transform: translate(-50%, -50%) !important;
+  transform: translate(-50%, -50%) !important;
 }
 
 .auth-footer {

@@ -11,7 +11,7 @@
 
 .login-btn {
     background-color: #0033cc !important;
-    color: white;
-    font-weight: bold; 
-    width: 100%;
+    color: white !important;
+    font-weight: bold !important; 
+    width: 100% !important;
 }

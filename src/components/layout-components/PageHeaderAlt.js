@@ -18,8 +18,8 @@ export const PageHeaderAlt = ({children, background, className, overlap, navType
 	const getStyle = () => {
 		let style = { backgroundImage: background ? `url(${background})` : 'none' } 
 		if (navType === NAV_TYPE_TOP) {
-			style.marginRight = -widthOffset
-			style.marginLeft = -widthOffset
+			style.marginRight = 0
+			style.marginLeft = 0
 			style.paddingLeft = 0
 			style.paddingRight = 0
 		}
