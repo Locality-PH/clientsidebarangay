@@ -71,12 +71,18 @@ const BillingTable = (props) => {
         if (record.issuer == "mastercard") image = "/img/others/img-9.png";
 
         if (record.issuer == "visa") image = "/img/others/img-8.png";
-
+        if (record.issuer == "walk in") image = "/img/others/walkin.png";
         if (record.issuer == "GCash")
           image = "/img/others/cards/GCash-Logo.png";
         return (
           <>
             {record.issuer == "GCash" ? (
+              <img
+                style={{ height: "3rem" }}
+                src={image}
+                alt={record.cardType}
+              />
+            ) : record.issuer == "walk in" ? (
               <img
                 style={{ height: "3rem" }}
                 src={image}
@@ -140,7 +146,10 @@ const BillingTable = (props) => {
             cancelText="No"
             icon={<QuestionCircleOutlined style={{ color: "red" }} />}
           >
-            <Button type="text" shape="circle" icon={<DeleteOutlined />} />{" "}
+            {console.log(record)}
+            {record._id === "none" ? null : (
+              <Button type="text" shape="circle" icon={<DeleteOutlined />} />
+            )}
           </Popconfirm>
         </Tooltip>
       ),
@@ -195,7 +204,13 @@ const BillingTable = (props) => {
     let secondData = data.filter((credit) => credit?._id !== record?._id);
     setSelectedRowKeys([secondData[0]?._id]);
 
-    if (selectedRowKeys[0] === record?._id)
+    console.log(selectedRowKeys[0], record?._id);
+    if (secondData[0]?._id === "none") {
+      console.log("second");
+
+      await Promise.all([deletePaymethod(record?._id, "N/A", generateToken)]);
+    } else if (selectedRowKeys[0] === record?._id) {
+      console.log("first");
       await Promise.all([
         deletePaymethod(
           record?._id,
@@ -203,10 +218,13 @@ const BillingTable = (props) => {
           generateToken
         ),
       ]);
-    else
+    } else {
+      console.log("third");
+
       await Promise.all([
         deletePaymethod(record?._id, secondData[0]?._id, generateToken),
       ]);
+    }
 
     // return notification({
     //   type: "success",
@@ -220,19 +238,23 @@ const BillingTable = (props) => {
       const billingData = await getPaymethod(generateToken);
       const i = [].concat.apply([], billingData[0].billing_method);
       let secondData = i.filter((credit) => credit.active_card === true);
-      if (!(type == "save")) {
-        const datas = {
-          _id: "none",
-          card_number: "5123 1231 2312 312312",
-          issuer: "walk in",
-          valid_thru: "23/13",
-          active_card: false,
-          user_id: localStorage.getItem(AUTH_TOKEN),
-        };
-        console.log(datas);
-        i.push(datas);
+      // if (!(type == "save")) {
+      const datas = {
+        _id: "none",
+        card_number: " N/A",
+        issuer: "walk in",
+        valid_thru: "N/A",
+        active_card: false,
+        user_id: localStorage.getItem(AUTH_TOKEN),
+      };
+      console.log(datas);
+      i.push(datas);
+      //}
+      if (secondData.length > 0) {
+        setSelectedRowKeys([secondData[0]?._id]);
+      } else {
+        setSelectedRowKeys(["none"]);
       }
-      setSelectedRowKeys([secondData[0]?._id]);
       console.log(i);
       return setCreditCards(i);
     } catch (e) {

@@ -1,9 +1,11 @@
 .app-layout {
   background-color: hsl(0, 0%, 95%);
+  padding: 25px;
 }
 .app-content.layout-top-nav {
   margin-top: 80px !important;
   min-height: calc(100vh - 130px - 55px);
+  padding: 0px;
 }
 .setting-menu {
   border-radius: 15px;
@@ -11,6 +13,10 @@
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset !important;
 }
 
+.ant-typography h5,
+h5.ant-typography {
+  color: rgba(99, 99, 99) !important;
+}
 .setting-content {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
@@ -369,7 +375,7 @@ ul li {
 }
 .ant-carousel {
   /* border-radius: 25px; */
-  margin: 0 25px;
+  margin: 10x 10px;
 }
 
 .slick-list {
@@ -459,7 +465,62 @@ div > button[data-direction="left"],
 .organization-register-card {
   width: 1100px;
 }
+.PDFDocument {
+  /* // display: flex; */
+  flex-direction: column;
+  align-items: center;
+}
 
+.PDFPage {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  /* border: red solid 3px; */
+}
+.PDFPageTwo {
+  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); */
+  /* border: blue solid 3px; */
+  border-style: dashed;
+  border: 2px dashed gray;
+}
+.PDFPageOne {
+  margin-bottom: 25px;
+}
+
+.PDFPage > canvas {
+  max-width: 100%;
+  height: auto !important;
+}
+
+.PDFPageTwo > canvas {
+  max-width: 100%;
+  height: auto !important;
+  width: 100% !important;
+}
+.loading_canvas {
+  height: auto;
+  width: auto;
+  background: blue;
+  position: absolute;
+  top: 10px;
+}
+.cert_loading {
+  border: 0px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.cert_loading .ant-card-body {
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+.content-body-card {
+  padding: 0px 1rem 1rem;
+  margin-top: -1rem;
+}
+.content-border-card {
+  border-radius: 25px !important;
+  margin: 10px 10px !important;
+}
 @media (max-width: 1399px) {
   .organization-register-card {
     width: 800px;

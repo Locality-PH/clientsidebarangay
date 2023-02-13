@@ -55,7 +55,7 @@ export const AppLayout = ({ navCollapsed, navType, location, direction }) => {
     <Layout>
       <HeaderNav />
       <Layout className="app-container">
-        <Layout className="app-layout" style={getLayoutDirectionGutter()}>
+        <Layout className="app-layout">
           <div
             className={` ${
               isNavTop && !history.pathname.includes("schedule")
