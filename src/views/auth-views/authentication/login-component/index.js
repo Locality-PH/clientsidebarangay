@@ -11,11 +11,8 @@ import "./index.css";
 import { Row, Col, Card } from "antd";
 
 //Const
-
-("https://png.pngtree.com/thumb_back/fw800/background/20190220/ourmid/pngtree-blue-gradient-summer-creative-image_9270.jpg");
-
 const loginImgURL =
-  "https://media.istockphoto.com/vectors/register-account-submit-access-login-password-username-internet-vector-id1281150061?b=1&k=20&m=1281150061&s=612x612&w=0&h=Wlus0AvwwVksa9X5w1RUyp1pu8_vbpVOdw25FLBEG_s=";
+  "https://firebasestorage.googleapis.com/v0/b/barangay-dev.appspot.com/o/img%2Flogin_background.jpg?alt=media&token=6c4ec02e-2b59-488f-8fde-8d7d97d6a4fa";
 
 const LoginComponent = (props) => {
   return (

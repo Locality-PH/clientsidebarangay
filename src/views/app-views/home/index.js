@@ -26,12 +26,12 @@ export const DefaultDashboard = () => {
     <>
       <Row gutter={16}>
         {/* OrganizationList */}
-        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
           <OrganizationList/>
         </Col>
 
         {/* Trending Campaign */}
-        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
           <Card
             title="Trending Campaign"
             extra={<Link to="feeds/campaigns" style={{fontSize: "1rem"}}>More</Link>}
@@ -51,32 +51,6 @@ export const DefaultDashboard = () => {
                 </div>
               ))}
             </div>
-          </Card>
-        </Col>
-
-        {/* Trending News */}
-        <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
-          <Card title="Trending News">
-            <TrendingNews
-              title="Modified Enhanced Community Quaratine"
-              newsType="Global Nation"
-              like={109.9}
-            />
-            <TrendingNews
-              title="LOL World Championships"
-              newsType="Sports"
-              like={92.7}
-            />
-            <TrendingNews
-              title="Adele's new Album out Nov. 19"
-              newsType="Entertainment"
-              like={75.1}
-            />
-            <TrendingNews
-              title="First Youtube Video"
-              newsType="Technology"
-              like={56.4}
-            />
           </Card>
         </Col>
       </Row>
