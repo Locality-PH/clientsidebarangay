@@ -6,19 +6,19 @@ import About from "./about/About";
 import MissionAndVision from "./other/MissionAndVision";
 import Projects from "./other/Projects";
 
-const Organization = ({ organizationId }) => {
+const Organization = ({ organizationId, organization }) => {
   return (
     <>
       <Row gutter="16">
         <Col xs={24} sm={24} md={8}>
-          <Officials />
-          <About />
+          <Officials organizationMembers={organization.organization_member} />
+          <About about={organization.about} />
           {/* <Events organizationId={organizationId}></Events> */}
         </Col>
 
         <Col xs={24} sm={24} md={16}>
-          <MissionAndVision />
-          <Projects/>
+          <MissionAndVision mission={organization.mission} vision={organization.vision} />
+          <Projects />
           {/* <Card>
             <img
               width="100%"

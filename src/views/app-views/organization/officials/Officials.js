@@ -1,33 +1,54 @@
 import React, { useState, useEffect } from 'react'
-import { Card } from 'antd';
+import { Card, Avatar } from 'antd';
 import { barangayOfficialsData } from '../BarangayData';
 import AvatarStatus from 'components/shared-components/AvatarStatus';
 import { Link } from 'react-router-dom';
+import utils from "utils";
+import { COLORS } from "constants/ChartConstant";
 
-const Officials = () => {
-    const [officials, setOfficials] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+const Officials = ({ organizationMembers }) => {
+	const [officials, setOfficials] = useState([])
+	const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        setOfficials(barangayOfficialsData)
-        setIsLoading(false)
-    }, [officials])
+	useEffect(() => {
+		setOfficials(barangayOfficialsData)
+		setIsLoading(false)
+	}, [officials])
 
-    return (
-        <>
-            <Card title="Barangay Officials" loading={isLoading} extra={<Link to="/app/dashboards/barangay-list" style={{ fontSize: "1rem" }}>More</Link>}>
-                {
-                    officials.map((result, i) => {
-                        return (
-                            <div className={`${i === (officials.length - 1) ? '' : 'mb-4'}`} key={`connection-${i}`}>
-                                <AvatarStatus src={result.img} name={result.name} subTitle={result.title} />
-                            </div>
-                        )
-                    })
-                }
-            </Card>
-        </>
-    )
+	return (
+		<>
+			<Card title="Barangay Officials" loading={isLoading} extra={<Link to="/app/dashboards/barangay-list" style={{ fontSize: "1rem" }}>More</Link>}>
+				{
+					organizationMembers.map((result, i) => {
+						return (
+							<div
+								key={i}
+								className={`d-flex align-items-center justify-content-between mb-4`}
+							>
+								<div className="avatar-status d-flex align-items-center">
+									<Avatar
+										size={40}
+										className="font-size-sm"
+										style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
+									>
+										{utils.getNameInitial(result.email)}
+									</Avatar>
+
+									<div className="ml-2">
+										<div>
+											<div className="avatar-status-name">{result.email}</div>
+											<span>{ }</span>
+										</div>
+										<div className="text-muted avatar-status-subtitle">{result.role}</div>
+									</div>
+								</div>
+							</div>
+						)
+					})
+				}
+			</Card>
+		</>
+	)
 }
 
 export default Officials

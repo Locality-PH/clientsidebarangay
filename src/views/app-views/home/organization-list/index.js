@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Card, message } from "antd";
+import { Card, message, Avatar, Button } from "antd";
 import { RenderList } from "views/app-views/home/organization-list/render-list";
 import { BarangayData } from "../DefaultDashboardData";
 import { withRouter, Link } from "react-router-dom";
+import { COLORS } from "constants/ChartConstant";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
+import { UserAddOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import utils from "utils";
 
 const OrganizationList = () => {
   const { currentOrganization, generateToken } = useAuth();
@@ -21,7 +24,6 @@ const OrganizationList = () => {
       .get("/api/organization/get-all-organizations", generateToken()[1])
       .then((response) => {
         setOrganizationList(response.data);
-        console.log(response.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -35,7 +37,6 @@ const OrganizationList = () => {
       .get("/api/organization/get-latest-organizations", generateToken()[1])
       .then((response) => {
         setOrganizationList(response.data);
-        console.log(response.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -62,13 +63,42 @@ const OrganizationList = () => {
               key={i}
               className={`d-flex align-items-center justify-content-between mb-4`}
             >
-              <RenderList
-                key={i}
-                id={result.organization_id}
-                // src={result.img}
-                name={result.organization_name}
-                subTitle={result.address}
-              />
+              <div className="avatar-status d-flex align-items-center">
+
+                {
+                  result.profile != null
+                    ?
+                    <Avatar
+                      className="font-size-sm"
+                      icon={<UserOutlined />}
+                      src={result.profile.fileUrl}
+                    >
+                      {utils.getNameInitial(result.organization_name)}
+                    </Avatar>
+                    :
+                    <Avatar
+                      className="font-size-sm"
+                      style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
+                    >
+                      {utils.getNameInitial(result.organization_name)}
+                    </Avatar>
+                }
+
+                <div className="ml-2">
+                  <div>
+                    <div className="avatar-status-name h4">{result.organization_name}</div>
+                    <span>{ }</span>
+                  </div>
+                  <div className="text-muted avatar-status-subtitle h5">{result.address}</div>
+                </div>
+              </div>
+              <div>
+                <Link to={`/home/organization/${result.organization_id}`}>
+                  <Button type="primary" shape="round">
+                    View
+                  </Button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>

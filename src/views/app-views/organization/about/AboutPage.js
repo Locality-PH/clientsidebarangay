@@ -9,7 +9,7 @@ import {
   RightSquareOutlined,
 } from "@ant-design/icons";
 
-const AboutPage = () => {
+const AboutPage = ({ organization }) => {
   return (
     <>
       <Row gutter="16">
@@ -34,13 +34,7 @@ const AboutPage = () => {
         <Col xs={24} sm={24} md={8}>
           <Card title="Who we are?">
             <h4 className="text-muted">
-              The Philippines is one of the world’s largest archipelago nations.
-              It is situated in Southeast Asia in the Western Pacific Ocean. Its
-              islands are classified into three main geographical areas – Luzon,
-              Visayas, and Mindanao. Because of its archipelagic nature,
-              Philippines is a culturally diverse country. With its topography
-              consisting of mountainous terrains, dense forests, plains, and
-              coastal areas.
+              {organization.about}
             </h4>
           </Card>
         </Col>
@@ -59,7 +53,7 @@ const AboutPage = () => {
                 </Col>
                 <Col xs={12} sm={12} md={15}>
                   <span className="font-weight-semibold">
-                    caniogan@gmail.com
+                    {organization.email}
                   </span>
                 </Col>
               </Row>
@@ -73,7 +67,7 @@ const AboutPage = () => {
                   <span className="ml-2 text-muted">Phone:</span>
                 </Col>
                 <Col xs={12} sm={12} md={15}>
-                  <span className="font-weight-semibold">+12 123 1234</span>
+                  <span className="font-weight-semibold">{organization.phone_number}</span>
                 </Col>
               </Row>
 
@@ -87,7 +81,7 @@ const AboutPage = () => {
                 </Col>
                 <Col xs={12} sm={12} md={15}>
                   <span className="font-weight-semibold">
-                    Caniogan Morong, Rizal
+                    {organization.address}
                   </span>
                 </Col>
               </Row>
@@ -101,7 +95,7 @@ const AboutPage = () => {
                   <span className="ml-2 text-muted">Website:</span>
                 </Col>
                 <Col xs={12} sm={12} md={15}>
-                  <span className="font-weight-semibold">facebook.com</span>
+                  <span className="font-weight-semibold">{organization.website}</span>
                 </Col>
               </Row>
             </div>
