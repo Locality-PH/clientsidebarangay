@@ -29,7 +29,9 @@ const index = React.memo(
       </>
     );
   },
-  (prevProps, nextProps) => prevProps.templateType === nextProps.templateType
+  (prevProps, nextProps) =>
+    prevProps.templateType === nextProps.templateType ||
+    prevProps.pdf === nextProps.pdf
 );
 
 export default index;

@@ -13,7 +13,10 @@ import InfinitScroll from "react-infinite-scroll-component";
 import moment from "moment";
 import QueueAnim from "rc-queue-anim";
 const { Meta } = Card;
-const Document = () => {
+const Document = (props) => {
+  const { active } = props;
+  console.log(active);
+
   const { generateToken } = useAuth();
   // Document State
   const [document, setDocument] = useState([]);
@@ -65,8 +68,9 @@ const Document = () => {
   };
   console.log(document);
   useEffect(() => {
+    setDocument([]);
     Promise.all([getDocumentData(fetchCertifiateDataAll, generateToken()[1])]);
-  }, []);
+  }, [active]);
   return (
     <div>
       <InfinitScroll
@@ -111,7 +115,7 @@ const Document = () => {
                 return (
                   <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8} key={i}>
                     <DocumentStatus
-                      img={item?.user_id?.profileUrl?.data}
+                      img={item?.organization_id?.profile?.fileUrl}
                       profileColor={item?.user_id?.profileLogo}
                       title={item?.certificate_type}
                       type={item?.status}

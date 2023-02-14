@@ -27,7 +27,8 @@ import Rejected from "assets/file/rejected.pdf";
 import Pending from "assets/file/pending.pdf";
 import draftToHtmlPuri from "draftjs-to-html";
 import { convertFromRaw, EditorState, convertToRaw } from "draft-js";
-
+import { toCapitalized } from "helper/Formula";
+import utils from "utils";
 const { Text } = Typography;
 const { Title } = Typography;
 
@@ -55,8 +56,17 @@ const News = (props) => {
     entityMap: {},
     blocks: content != null ? content.blocks : [],
   };
-  console.log(contentData);
-
+  const contentDataValidate = {
+    entityMap: {},
+    blocks: [],
+  };
+  const contentStateValidate = convertFromRaw(contentDataValidate);
+  const editorStateValidate = EditorState.createWithContent(
+    contentStateValidate
+  );
+  const htmlPuriValidate = draftToHtmlPuri(
+    convertToRaw(editorStateValidate.getCurrentContent())
+  );
   const contentState = convertFromRaw(contentData);
   const editorState = EditorState.createWithContent(contentState);
   console.log(editorState.getCurrentContent());
@@ -64,8 +74,24 @@ const News = (props) => {
     convertToRaw(editorState.getCurrentContent())
   );
   console.log(htmlPuri);
+  const htmlFinal =
+    htmlPuri === htmlPuriValidate
+      ? "<p>Please wait for the approval or instruction on this dialouge</p>"
+      : htmlPuri;
   const color = ["#E1F8DC", "#FEF8DD", "#FFE7C7", "#B7E9F7", "#ADF7B6"];
+  let colorTag = [
+    "#0085c3",
+    "#7ab800",
+    "#f2af00",
+    "#dc5034",
+    "#ce1126",
+    "#0085c3",
+    "#FF1493",
+    "#AA47BC",
+  ];
   const randomColor = Math.floor(Math.random() * color.length);
+  const randomColorTag = Math.floor(Math.random() * colorTag.length);
+
   const menu = (
     <Menu>
       <Menu.Item key="1">
@@ -115,12 +141,30 @@ const News = (props) => {
         title={
           <>
             <div className="d-flex">
-              <Avatar
-                style={{ backgroundColor: profileColor }}
+              {img != null ? (
+                <Avatar
+                  className="font-size-sm"
+                  src={img}
+                  shape="circle"
+                  style={{ backgroundColor: colorTag[randomColorTag] }}
+                >
+                  {utils.getNameInitial(orgName)}
+                </Avatar>
+              ) : (
+                <Avatar
+                  className="font-size-sm"
+                  style={{ backgroundColor: colorTag[randomColorTag] }}
+                  shape="circle"
+                >
+                  {utils.getNameInitial(orgName)}
+                </Avatar>
+              )}
+              {/* <Avatar
+                style={{ backgroundColor: color }}
                 size={50}
                 src={img}
                 shape="circle"
-              ></Avatar>
+              ></Avatar> */}
 
               <div>
                 <div className="ml-1">
@@ -231,28 +275,32 @@ const News = (props) => {
                 expanded={false}
                 truncatedEndingComponent={"... "}
               >
-                <strong>{title}</strong>
+                <strong>{toCapitalized(title)}</strong>
               </ShowMoreText>
             </h2>
-            <h4 className="text-muted">{subTitle}</h4>
+            <h4 className="text-muted">{toCapitalized(subTitle)}</h4>
             <h4>
-              <ShowMoreText
-                /* Default options */
-                lines={3}
-                more="Show more"
-                less="Show less"
-                className="content-css"
-                anchorClass="my-anchor-css-className"
-                expanded={false}
-                truncatedEndingComponent={"... "}
-              >
-                {/* {content} */}{" "}
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: htmlPuri,
-                  }}
-                />
-              </ShowMoreText>
+              <div>
+                <ShowMoreText
+                  /* Default options */
+                  lines={1}
+                  more="expand"
+                  className="content-css half-black"
+                  less="collapse"
+                  anchorClass="my-anchor-css-className"
+                  expanded={false}
+                  truncatedEndingComponent={"... "}
+                >
+                  {/* {content} */}{" "}
+                  <div className="">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: htmlFinal,
+                      }}
+                    />
+                  </div>
+                </ShowMoreText>
+              </div>
             </h4>
           </div>
         </div>
@@ -273,11 +321,12 @@ News.propTypes = {
   enablePost: PropTypes.bool,
   href: PropTypes.string,
   attachFile: PropTypes.array,
-
+  subTitle: PropTypes.string,
   createdAt: PropTypes.instanceOf(Date),
 };
 
 News.defaultProps = {
+  subTitle: " ",
   padding: "5",
   title: "",
   type: "",

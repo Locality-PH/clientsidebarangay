@@ -68,7 +68,7 @@ const AboutUs = () => {
                   </li>
                 </ul>
                 <div className="mb-2 d-flex">
-                  <a className="btn btn-primary" href="/home-seven">
+                  <a className="btn btn-primary" href="#">
                     Schedule a Demo
                   </a>
                 </div>

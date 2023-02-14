@@ -521,6 +521,22 @@ div > button[data-direction="left"],
   border-radius: 25px !important;
   margin: 10px 10px !important;
 }
+.half-black {
+  background: #8080809c;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+}
+.half-black p{
+  color: rgb(255, 255, 255) !important;
+
+}
+/* .ant-breadcrumb a,
+.ant-typography p,
+p,
+p.ant-typography {
+  color: rgb(255, 255, 255);
+} */
 @media (max-width: 1399px) {
   .organization-register-card {
     width: 800px;

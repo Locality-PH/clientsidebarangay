@@ -239,6 +239,7 @@ const BillingTable = (props) => {
       const i = [].concat.apply([], billingData[0].billing_method);
       let secondData = i.filter((credit) => credit.active_card === true);
       // if (!(type == "save")) {
+      let childData = parentData;
       const datas = {
         _id: "none",
         card_number: " N/A",
@@ -252,7 +253,12 @@ const BillingTable = (props) => {
       //}
       if (secondData.length > 0) {
         setSelectedRowKeys([secondData[0]?._id]);
+
+        childData.issuer = secondData[0]?.issuer;
+        setParentData(childData);
       } else {
+        childData.issuer = `walk in`;
+        setParentData(childData);
         setSelectedRowKeys(["none"]);
       }
       console.log(i);
@@ -287,7 +293,7 @@ const BillingTable = (props) => {
       let childData = parentData;
       childData.issuer = rows[0]?.issuer;
       setParentData(childData);
-      console.log(key[0]);
+      console.log(childData);
       if (key[0] !== "none")
         await Promise.all([
           updatePaymethod(selectedRowKeys[0], key[0], generateToken),
@@ -337,6 +343,12 @@ const BillingTable = (props) => {
       />
       <Card className={`${type == "request" ? null : `setting-content`}`}>
         <h2 className="mb-2">Billing</h2>
+        <p>
+          <i style={{ color: "red" }}>
+            This Billing is still on testing and you can input any credit card
+            to test
+          </i>
+        </p>
         <Table
           locale={locale}
           dataSource={creditCards}

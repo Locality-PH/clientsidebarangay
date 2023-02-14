@@ -92,8 +92,8 @@ const CertificateRequestForm = (props) => {
                   onFinish(e, "certificate_type");
                 }}
               >
-                <Option key={1} value="indulgancy">
-                  Barangay Indulgancy
+                <Option key={1} value="indigency">
+                  Barangay Indigency
                 </Option>
                 <Option key={2} value="certificate">
                   Barangay Clearance
