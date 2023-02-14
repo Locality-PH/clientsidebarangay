@@ -1,5 +1,6 @@
-import React from "react";
-import { Card, Row, Col } from "antd";
+import React, { useState, useEffect } from "react";
+import { Card, Row, Col, Typography } from "antd";
+const { Paragraph, Text } = Typography;
 import { Icon } from "components/util-components/Icon";
 import {
   GlobalOutlined,
@@ -10,6 +11,7 @@ import {
 } from "@ant-design/icons";
 
 const AboutPage = ({ organization }) => {
+  const [ellipsis, setEllipsis] = useState(true);
   return (
     <>
       <Row gutter="16">
@@ -52,9 +54,24 @@ const AboutPage = ({ organization }) => {
                   <span className="ml-2 text-muted">Email:</span>
                 </Col>
                 <Col xs={12} sm={12} md={15}>
-                  <span className="font-weight-semibold">
-                    {organization.email}
-                  </span>
+                  <Text
+                    style={
+                      ellipsis
+                        ? {
+                          width: 100,
+                        }
+                        : undefined
+                    }
+                    ellipsis={
+                      ellipsis
+                        ? {
+                          tooltip: `${organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}`,
+                        }
+                        : false
+                    }
+                  >
+                    {organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}
+                  </Text>
                 </Col>
               </Row>
 
@@ -67,7 +84,24 @@ const AboutPage = ({ organization }) => {
                   <span className="ml-2 text-muted">Phone:</span>
                 </Col>
                 <Col xs={12} sm={12} md={15}>
-                  <span className="font-weight-semibold">{organization.phone_number}</span>
+                  <Text
+                    style={
+                      ellipsis
+                        ? {
+                          width: 100,
+                        }
+                        : undefined
+                    }
+                    ellipsis={
+                      ellipsis
+                        ? {
+                          tooltip: `${organization.phone_number}`,
+                        }
+                        : false
+                    }
+                  >
+                    {organization.phone_number}
+                  </Text>
                 </Col>
               </Row>
 
@@ -80,9 +114,24 @@ const AboutPage = ({ organization }) => {
                   <span className="ml-2 text-muted">Address:</span>
                 </Col>
                 <Col xs={12} sm={12} md={15}>
-                  <span className="font-weight-semibold">
+                  <Text
+                    style={
+                      ellipsis
+                        ? {
+                          width: 100,
+                        }
+                        : undefined
+                    }
+                    ellipsis={
+                      ellipsis
+                        ? {
+                          tooltip: `${organization.address}`,
+                        }
+                        : false
+                    }
+                  >
                     {organization.address}
-                  </span>
+                  </Text>
                 </Col>
               </Row>
 
@@ -95,7 +144,24 @@ const AboutPage = ({ organization }) => {
                   <span className="ml-2 text-muted">Website:</span>
                 </Col>
                 <Col xs={12} sm={12} md={15}>
-                  <span className="font-weight-semibold">{organization.website}</span>
+                  <Text
+                    style={
+                      ellipsis
+                        ? {
+                          width: 100,
+                        }
+                        : undefined
+                    }
+                    ellipsis={
+                      ellipsis
+                        ? {
+                          tooltip: `${organization.website}`,
+                        }
+                        : false
+                    }
+                  >
+                    {organization.website}
+                  </Text>
                 </Col>
               </Row>
             </div>

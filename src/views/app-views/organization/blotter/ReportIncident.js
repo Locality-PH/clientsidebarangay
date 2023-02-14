@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card, Form, Input, Button, message, Col, Row, Tabs, Select, TimePicker, DatePicker, } from "antd";
+import { Card, Form, Input, Button, message, Col, Row, Tabs, Select, TimePicker, DatePicker, Space } from "antd";
+const { Option } = Select;
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+const { TextArea } = Input;
 import Flex from "components/shared-components/Flex";
 import { Editor } from "react-draft-wysiwyg";
 const { TabPane } = Tabs;
@@ -11,316 +14,321 @@ import { useAuth } from "contexts/AuthContext";
 const current = new Date();
 const dateFormat = "YYYY/MM/DD";
 
-const ReportIncident = ({organizationId}) => {
-  const { currentOrganization, generateToken } = useAuth();
-  const authToken = localStorage.getItem("auth_token");
+const ReportIncident = ({ organizationId }) => {
+	const { currentOrganization, generateToken } = useAuth();
+	const authToken = localStorage.getItem("auth_token");
 
-  const [selectVictim, setSelectVictim] = useState([]);
-  const [selectSuspect, setSelectSuspect] = useState([]);
-  const [selectRespondent, setSelectRespondent] = useState([]);
+	const [form] = Form.useForm();
 
-  const [form] = Form.useForm();
+	useEffect(() => {
+		console.log("Current Organization ", currentOrganization)
+	}, []);
 
-  useEffect(() => {
-    console.log("Current Organization ", currentOrganization)
-  }, []);
+	const requestBlotter = (values) => {
+		axios
+			.post("/api/blotter_request/request-blotter", values, generateToken()[1])
+			.then((response) => {
+				message.destroy();
+				if (response.data == "Success") {
+					message.destroy();
+					return message.success("Create Request Blotter");
+				} else {
+					return message.error("Error, please try again.");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				message.destroy();
+				message.error("The action can't be completed, please try again.");
+			});
+	};
 
-  const requestBlotter = (values) => {
-    axios
-      .post("/api/blotter_request/request-blotter", values, generateToken()[1])
-      .then((response) => {
-        message.destroy();
-        if (response.data == "Success") {
-          return message.success("Create Request Blotter");
-        } else {
-          return message.error("Error, please try again.");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        message.destroy();
-        message.error("The action can't be completed, please try again.");
-      });
-  };
+	const onFinish = () => {
+		form
+			.validateFields()
+			.then((values) => {
+				message.loading("Requesting...")
 
-  const onFinish = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        values.organization_id = organizationId;
-        values.uuid = authToken;
-        values.settlement_status = "Unscheduled";
-        values.status = "Pending";
+				values.organization_id = organizationId;
+				values.uuid = authToken;
+				values.settlement_status = "Unscheduled";
+				values.status = "Pending";
 
-        values.reporters = [];
-        values.victims = [];
-        values.suspects = [];
-        values.respondents = [];
+				values.reporters = [];
+				values.victims = [];
+				values.suspects = [];
+				values.respondents = [];
 
-        values.victimsInvolve = selectVictim;
-        values.suspectsInvolve = selectSuspect;
-        values.respondentsInvolve = selectRespondent;
+				console.log(values)
+				requestBlotter(values);
+			})
+			.catch((info) => {
+				message.error("Please enter all required field ");
+			});
+	};
 
-        console.log(values)
+	const Involve = ({ title, itemName }) => {
+		return (
+			<Card title={title}>
+				<Form.List name={itemName}>
+					{(fields, { add, remove }) => (
+						<>
+							{fields.map(({ key, name, ...restField }) => (
+								<div
+									style={{ marginBottom: "2rem" }}
+									key={key}
+								>
 
-        requestBlotter(values);
-      })
-      .catch((info) => {
-        message.error("Please enter all required field ");
-      });
-  };
+									<Card title="Resident Information">
+										<Row gutter="16">
+											<Col xs={24} sm={24} md={12}>
+												<Form.Item
+													{...restField}
+													name={[name, 'lastname']}
+													rules={[
+														{
+															required: true,
+															message: 'Missing last name',
+														},
+													]}
+												>
+													<Input placeholder="Last Name" />
+												</Form.Item>
+											</Col>
 
-  const onChangeVictim = (value) => {
-    setSelectVictim(value);
-  };
+											<Col xs={24} sm={24} md={12}>
+												<Form.Item
+													{...restField}
+													name={[name, 'firstname']}
+													rules={[
+														{
+															required: true,
+															message: 'Missing first name',
+														},
+													]}
+												>
+													<Input placeholder="First Name" />
+												</Form.Item>
+											</Col>
 
-  const onChangeSuspect = (value) => {
-    setSelectSuspect(value);
-  };
+											<Col xs={24} sm={24} md={12}>
+												<Form.Item
+													{...restField}
+													name={[name, 'middlename']}
+													rules={[
+														{
+															required: true,
+															message: 'Missing middle name',
+														},
+													]}
+												>
+													<Input placeholder="Middle Name" />
+												</Form.Item>
+											</Col>
 
-  const onChangeRespondent = (value) => {
-    setSelectRespondent(value);
-  };
+											<Col xs={24} sm={24} md={12}>
+												<Form.Item
+													{...restField}
+													name={[name, 'alias']}
+													rules={[
+														{
+															required: true,
+															message: 'Missing alias',
+														},
+													]}
+												>
+													<Input placeholder="Alias" />
+												</Form.Item>
+											</Col>
 
-  const Involve = (name, data, onChangeData) => {
-    return (
-      <Card title={name}>
-        <div>
-          <span className="text-muted">
-            You can have multiple victim separated by coma (,) after the name of the victim.
-          </span>
-        </div>
+										</Row>
+									</Card>
 
-        <Col className="form-input-mb" xs={24} sm={24} md={13}>
-          <Select
-            defaultValue={data}
-            onChange={onChangeData}
-            tokenSeparators={[","]}
-            mode="tags"
-            className="mt-2 w-100"
-          >
-            {data.map((elm) => (
-              <Option key={elm} value={elm}>
-                {elm}
-              </Option>
-            ))}
-          </Select>
-        </Col>
-      </Card>)
-  }
+									<Card title="Address">
+										<Row>
+											<Col span="24">
+												<Form.Item
+													{...restField}
+													name={[name, 'address_1']}
+													rules={[
+														{
+															required: true,
+															message: 'Missing address_1',
+														},
+													]}
+												>
+													<Input placeholder="Address 1" />
+												</Form.Item>
+											</Col>
+										</Row>
 
-  return (
-    <Card>
-      <Form form={form}>
-        <Row gutter={16}>
-          <Col>
-            <div className="container">
-              <Tabs defaultActiveKey="1">
-                <TabPane tab="People Involve" key="1">
-                  {/* <Card title="Reporter Information">
-                    <Row gutter={16}>
-                      <Col xs={24} sm={24} md={12}>
-                        <Form.Item
-                          name="lastname"
-                          label="Last Name"
-                        >
-                          <Input placeholder="Last Name" />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={24} md={12}>
-                        <Form.Item
-                          name="firstname"
-                          label="First Name"
-                        >
-                          <Input placeholder="First Name" />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={24} md={12}>
-                        <Form.Item
-                          name="middlename"
-                          label="Middle Name"
-                        >
-                          <Input placeholder="Middle Name" />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} sm={24} md={12}>
-                        <Form.Item name="alias" label="Alias">
-                          <Input placeholder="Alias" />
-                        </Form.Item>
-                      </Col>
-                    </Row>
-                  </Card> */}
+										<Row>
+											<Col span="24">
+												<Form.Item
+													{...restField}
+													name={[name, 'address_2']}
+												// rules={[
+												// {
+												// required: true,
+												// message: 'Missing address_2',
+												// },
+												// ]}
+												>
+													<Input placeholder="Address 2" />
+												</Form.Item>
+											</Col>
+										</Row>
 
-                  <Card title="Victims">
-                    <div>
-                      <span className="text-muted">
-                        You can have multiple victim separated by coma (,) after the name of the victim.
-                      </span>
-                    </div>
+										<Row>
+											<Col span="24">
+												<Form.Item
+													{...restField}
+													name={[name, 'area']}
+													rules={[
+														{
+															required: true,
+															message: 'Missing area',
+														},
+													]}
+												>
+													<Select className="w-100" placeholder="Area/Purok">
+														<Option key="1" value="Purok 1">Purok 1</Option>
+														<Option key="2" value="Purok 2">Purok 2</Option>
+														<Option key="3" value="Purok 3">Purok 3</Option>
+													</Select>
+												</Form.Item>
+											</Col>
+										</Row>
+									</Card>
 
-                    <Col className="form-input-mb" xs={24} sm={24} md={13}>
-                      <Select
-                        defaultValue={selectVictim}
-                        onChange={onChangeVictim}
-                        tokenSeparators={[","]}
-                        mode="tags"
-                        className="mt-2 w-100"
-                      >
-                        {selectVictim.map((elm) => (
-                          <Option key={elm} value={elm}>
-                            {elm}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Col>
-                  </Card>
 
-                  <Card title="Suspects">
-                    <div>
-                      <span className="text-muted">
-                        You can have multiple suspect separated by coma (,) after the name of the suspect.
-                      </span>
-                    </div>
+									<Button type="primary" onClick={() => remove(name)} >Remove</Button>
+								</div>
+							))}
+							<Form.Item>
+								<Button onClick={() => add()} block icon={<PlusOutlined />}>
+									Add field
+								</Button>
+							</Form.Item>
+						</>
+					)}
+				</Form.List>
+			</Card>)
+	}
 
-                    <Col className="form-input-mb" xs={24} sm={24} md={13}>
-                      <Select
-                        defaultValue={selectSuspect}
-                        onChange={onChangeSuspect}
-                        tokenSeparators={[","]}
-                        mode="tags"
-                        className="mt-2 w-100"
-                      >
-                        {selectSuspect.map((elm) => (
-                          <Option key={elm} value={elm}>
-                            {elm}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Col>
-                  </Card>
+	return (
+		<Card>
+			<Form form={form}>
+				<Row gutter={16}>
+					<Col>
+						<div className="container">
+							<Tabs defaultActiveKey="1">
+								<TabPane tab="People Involve" key="1">
+									<Involve title="Victims" itemName="victimsInvolve" />
+									<Involve title="Suspects" itemName="suspectsInvolve" />
+									<Involve title="Respondents" itemName="respondentsInvolve" />
+								</TabPane>
 
-                  <Card title="Respondents">
-                    <div>
-                      <span className="text-muted">
-                        You can have multiple respondent separated by coma (,) after the name of the respondent.
-                      </span>
-                    </div>
+								<TabPane tab="Narrative Report" key="2">
+									<Card>
 
-                    <Col className="form-input-mb" xs={24} sm={24} md={13}>
-                      <Select
-                        defaultValue={selectRespondent}
-                        onChange={onChangeRespondent}
-                        tokenSeparators={[","]}
-                        mode="tags"
-                        className="mt-2 w-100"
-                      >
-                        {selectRespondent.map((elm) => (
-                          <Option key={elm} value={elm}>
-                            {elm}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Col>
-                  </Card>
+										<Row>
+											<div className="mb-2 text-justify text-justify-content-center">
+												<i>
+													{" "}
+													<label>
+														ENTER IN DETAIL THE NARRATIVE OF THE INCIDENT OR EVENT,
+														ANSWERING THE WHO, WHAT, WHEN, WHERE, WHY, AND HOW OF REPORTING.
+													</label>
+												</i>
+											</div>
+											<Col span="24">
+												<Form.Item
+													name="subject"
+												>
+													<TextArea placeholder="Subject (Optional)" />
+												</Form.Item>
+											</Col>
+										</Row>
 
-                  {/* <Involve name="Victims" data={selectVictim} onChangeData={onChangeVictim} /> */}
-                  {/* <Involve name="Suspects" data={selectSuspect} onChangeData={onChangeSuspect} />
-                  <Involve name="Respondents" data={selectRespondent} onChangeData={onChangeRespondent} /> */}
+										<Row>
+											<Col span="24">
+												<Form.Item
+													name="narrative"
+												>
+													<TextArea placeholder="Narrative" />
+												</Form.Item>
+											</Col>
+										</Row>
 
-                </TabPane>
-                <TabPane tab="Narrative Report" key="2">
-                  <Card>
-                    <Row>
-                      <div className="mb-2 text-justify text-justify-content-center">
-                        <i>
-                          {" "}
-                          <label>
-                            ENTER IN DETAIL THE NARRATIVE OF THE INCIDENT OR EVENT,
-                            ANSWERING THE WHO, WHAT, WHEN, WHERE, WHY, AND HOW OF REPORTING.
-                          </label>
-                        </i>
-                      </div>
-                      <Form.Item
-                        name="subject"
-                        labelCol={{ span: 24 }}
-                      >
-                        <Input placeholder="Subject (Optional)" />
-                      </Form.Item>
-                    </Row>
+										<Row>
+											<Col>
+												<Form.Item
+													name="incident_type"
+													label="Type of Incident"
+													rules={[{ required: true }]}
+												>
+													<Input placeholder="Incident Type" />
+												</Form.Item>
+											</Col>
 
-                    <Row>
-                      <Form.Item
-                        name="narrative"
-                      >
-                        <Input placeholder="Narrative" />
-                      </Form.Item>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <Form.Item
-                          name="incident_type"
-                          label="Type of Incident"
-                          rules={[{ required: true }]}
-                        >
-                          <Input placeholder="Incident Type" />
-                        </Form.Item>
-                      </Col>
+											<Col>
+												<Form.Item
+													name="time_of_incident"
+													label="Time occured"
+													rules={[{ required: true }]}
+												>
+													<TimePicker
+														className="w-100"
+														values={moment("12:08:23", "HH:mm:ss")}
 
-                      <Col>
-                        <Form.Item
-                          name="time_of_incident"
-                          label="Time occured"
-                          rules={[{ required: true }]}
-                        >
-                          <TimePicker
-                            className="w-100"
-                            values={moment("12:08:23", "HH:mm:ss")}
+													/>
+												</Form.Item>
+											</Col>
+										</Row>
 
-                          />
-                        </Form.Item>
-                      </Col>
-                    </Row>
+										<Row>
+											<Col>
+												<Form.Item
+													name="date_of_incident"
+													label="Date of Incident"
+													rules={[{ required: true }]}>
+													<DatePicker
+														className="w-100"
+														initialValues={moment(
+															`${current.getFullYear()}/${current.getMonth() + 1
+															}/${current.getDate()}`,
+															dateFormat
+														)}
+														format={dateFormat}
+													/>
+												</Form.Item>
+											</Col>
 
-                    <Row>
-                      <Col>
-                        <Form.Item
-                          name="date_of_incident"
-                          label="Date of Incident"
-                          rules={[{ required: true }]}>
-                          <DatePicker
-                            className="w-100"
-                            initialValues={moment(
-                              `${current.getFullYear()}/${current.getMonth() + 1
-                              }/${current.getDate()}`,
-                              dateFormat
-                            )}
-                            format={dateFormat}
-                          />
-                        </Form.Item>
-                      </Col>
+											<Col>
+												<Form.Item
+													name="place_incident"
+													label="Place of Incident"
+													rules={[{ required: true }]}>
+													<Input placeholder="Place of incident" />
+												</Form.Item>
+											</Col>
+										</Row>
+									</Card>
 
-                      <Col>
-                        <Form.Item
-                          name="place_incident"
-                          label="Place of Incident"
-                          rules={[{ required: true }]}>
-                          <Input placeholder="Place of incident" />
-                        </Form.Item>
-                      </Col>
-                    </Row>
-                  </Card>
-                </TabPane>
-              </Tabs>
-            </div>
-          </Col>
-        </Row>
+									<Button type="primary" onClick={() => onFinish()} htmlType="submit">
+										Request Blotter
+									</Button>
+								</TabPane>
+							</Tabs>
+						</div>
+					</Col>
+				</Row>
 
-        <Button type="primary" onClick={() => onFinish()} htmlType="submit">
-          Request Blotter
-        </Button>
-      </Form>
-    </Card>
-  );
+
+			</Form>
+		</Card>
+	);
 };
 
 export default ReportIncident;
