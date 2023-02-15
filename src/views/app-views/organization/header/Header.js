@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Avatar, Button, Menu, Dropdown, Space } from "antd";
+import { Row, Col, Card, Avatar, Button, Menu, Dropdown, Space, Typography } from "antd";
+const { Paragraph, Text } = Typography;
 import { Icon } from "components/util-components/Icon";
 import {
   GlobalOutlined,
@@ -22,6 +23,7 @@ import Flex from "components/shared-components/Flex";
 import { Link } from "react-router-dom";
 
 const Header = ({ organizationId, organization }) => {
+  const [ellipsis, setEllipsis] = useState(true);
   const [name, setName] = useState("")
   const [address, setAddress] = useState("")
 
@@ -154,7 +156,24 @@ const Header = ({ organizationId, organization }) => {
                         <span className="ml-2 text-muted">Email:</span>
                       </Col>
                       <Col xs={12} sm={12} md={15}>
-                        <span className="font-weight-semibold">	{organization.email}</span>
+                        <Text
+                          style={
+                            ellipsis
+                              ? {
+                                width: 100,
+                              }
+                              : undefined
+                          }
+                          ellipsis={
+                            ellipsis
+                              ? {
+                                tooltip: `${organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}`,
+                              }
+                              : false
+                          }
+                        >
+                          {organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}
+                        </Text>
                       </Col>
                     </Row>
                     <Row>
@@ -166,9 +185,24 @@ const Header = ({ organizationId, organization }) => {
                         <span className="ml-2 text-muted">Phone:</span>
                       </Col>
                       <Col xs={12} sm={12} md={15}>
-                        <span className="font-weight-semibold">
+                        <Text
+                          style={
+                            ellipsis
+                              ? {
+                                width: 100,
+                              }
+                              : undefined
+                          }
+                          ellipsis={
+                            ellipsis
+                              ? {
+                                tooltip: `${organization.phone_number}`,
+                              }
+                              : false
+                          }
+                        >
                           {organization.phone_number}
-                        </span>
+                        </Text>
                       </Col>
                     </Row>
                   </Col>
@@ -182,7 +216,24 @@ const Header = ({ organizationId, organization }) => {
                         <span className="ml-2 text-muted">Address:</span>
                       </Col>
                       <Col xs={12} sm={12} md={15}>
-                        <span className="font-weight-semibold">{address}</span>
+                        <Text
+                          style={
+                            ellipsis
+                              ? {
+                                width: 100,
+                              }
+                              : undefined
+                          }
+                          ellipsis={
+                            ellipsis
+                              ? {
+                                tooltip: `${address}`,
+                              }
+                              : false
+                          }
+                        >
+                          {address}
+                        </Text>
                       </Col>
                     </Row>
                     <Row className="mb-2">
@@ -194,7 +245,24 @@ const Header = ({ organizationId, organization }) => {
                         <span className="ml-2 text-muted">Website:</span>
                       </Col>
                       <Col xs={12} sm={12} md={15}>
-                        <span className="font-weight-semibold">{organization.website}</span>
+                        <Text
+                          style={
+                            ellipsis
+                              ? {
+                                width: 100,
+                              }
+                              : undefined
+                          }
+                          ellipsis={
+                            ellipsis
+                              ? {
+                                tooltip: `${organization.website}`,
+                              }
+                              : false
+                          }
+                        >
+                          {organization.website}
+                        </Text>
                       </Col>
                     </Row>
                   </Col>
