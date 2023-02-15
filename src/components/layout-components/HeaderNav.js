@@ -47,7 +47,7 @@ export const HeaderNav = (props) => {
   const onSearchClose = () => {
     setSearchActive(false);
   };
-  console.log(isMobile);
+  console.log(width);
   const onToggle = () => {
     if (!isMobile) {
       toggleCollapsedNav(!navCollapsed);
@@ -100,9 +100,9 @@ export const HeaderNav = (props) => {
         <Logo logoType={navMode} width={width} />
         <div className="nav" style={{ width: `calc(100% - ${getNavWidth()})` }}>
           <div className="nav-left">
-            <ul className="ant-menu ant-menu-root ant-menu-horizontal header-hide">
+            <ul className="ant-menu ant-menu-root ant-menu-horizontal ">
               <li
-                className="ant-menu-item ant-menu-item-only-child"
+                className="ant-menu-item ant-menu-item-only-child header-hide-2"
                 onClick={() => {
                   onSearchActive();
                 }}
@@ -114,16 +114,7 @@ export const HeaderNav = (props) => {
               </li>
 
               <li
-                className="ant-menu-item ant-menu-item-only-child"
-                onClick={() => {
-                  onSearchActive();
-                }}
-              >
-                <SearchOutlined />
-              </li>
-
-              <li
-                className="ant-menu-item ant-menu-item-only-child"
+                className="ant-menu-item ant-menu-item-only-child header-hide"
                 style={{ cursor: "auto" }}
               >
                 <SearchInput mode={mode} isMobile={true} />
@@ -137,9 +128,9 @@ export const HeaderNav = (props) => {
             <NavPanel direction={direction} />
             <NavProfile />
           </div>
-          <NavSearch active={searchActive} close={onSearchClose} />
         </div>
-      </div>
+      </div>{" "}
+      <NavSearch active={searchActive} close={onSearchClose} />
     </Header>
   );
 };

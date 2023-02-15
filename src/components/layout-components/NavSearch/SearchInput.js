@@ -77,12 +77,14 @@ const SearchInput = (props) => {
       options={options}
       onSelect={onSelect}
       onSearch={onSearch}
+      style={{ width: "100%" }}
       value={value}
       filterOption={(inputValue, option) =>
         option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
       }
     >
       <Input
+        style={{ width: "100%" }}
         placeholder="Search..."
         prefix={<SearchOutlined className="mr-0" />}
       />

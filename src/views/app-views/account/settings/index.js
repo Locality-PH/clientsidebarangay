@@ -17,7 +17,7 @@ const AccountSettings = ({ match, location }) => {
   const matchUrl = "/home/account/settings";
   return (
     <Row className="h-100 w-100" gutter={14} justify={"center"}>
-      <Col span={18}>
+      <Col span={22}>
         <Menu
           defaultSelectedKeys={`${matchUrl}/edit-profile`}
           className="mb-3 setting-menu "
@@ -60,7 +60,7 @@ const AccountSettings = ({ match, location }) => {
           </Menu.Item>
         </Menu>
       </Col>
-      <Col span={18}>
+      <Col span={22}>
         <Switch>
           <Redirect
             exact

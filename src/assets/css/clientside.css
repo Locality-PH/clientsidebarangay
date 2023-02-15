@@ -117,11 +117,17 @@ h5.ant-typography {
 .header-hide {
   display: flex;
 }
+.header-hide-2 {
+  display: none !important;
+}
 .avatar-top li {
   top: -2px !important;
 }
 .nav-profile-body-2 {
   border-top: 1px solid #e6ebf1;
+}
+.nav-search.nav-search-active {
+  padding: 40px 1.5rem;
 }
 @media screen and (max-width: 850px) {
   .nav-search-input:not(.is-mobile) {
@@ -135,7 +141,10 @@ h5.ant-typography {
     display: none !important;
   }
   .header-hide {
-    display: none;
+    display: none !important;
+  }
+  .header-hide-2 {
+    display: block !important;
   }
 }
 
@@ -527,9 +536,8 @@ div > button[data-direction="left"],
   padding: 5px;
   border-radius: 10px;
 }
-.half-black p{
+.half-black p {
   color: rgb(255, 255, 255) !important;
-
 }
 /* .ant-breadcrumb a,
 .ant-typography p,

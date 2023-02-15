@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Avatar, Button, Menu, Dropdown, Space, Typography } from "antd";
+import {
+  Row,
+  Col,
+  Card,
+  Avatar,
+  Button,
+  Menu,
+  Dropdown,
+  Space,
+  Typography,
+} from "antd";
 const { Paragraph, Text } = Typography;
 import { Icon } from "components/util-components/Icon";
 import {
@@ -15,7 +25,7 @@ import {
   FileOutlined,
   SendOutlined,
   InfoCircleOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 import utils from "utils";
 import { COLORS } from "constants/ChartConstant";
@@ -24,15 +34,15 @@ import { Link } from "react-router-dom";
 
 const Header = ({ organizationId, organization }) => {
   const [ellipsis, setEllipsis] = useState(true);
-  const [name, setName] = useState("")
-  const [address, setAddress] = useState("")
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     if (organization != null) {
-      setName(organization.organization_name)
-      setAddress(organization.address)
+      setName(organization.organization_name);
+      setAddress(organization.address);
     }
-  }, [organization])
+  }, [organization]);
   const menu = (
     <Menu>
       <Menu.Item key="1">
@@ -59,7 +69,7 @@ const Header = ({ organizationId, organization }) => {
   );
 
   const DropdownMenu = () => (
-    <Dropdown key="more" overlay={menu} trigger={['click']}>
+    <Dropdown key="more" overlay={menu} trigger={["click"]}>
       <Button shape="round" size="small">
         <EllipsisOutlined
           style={{
@@ -87,24 +97,27 @@ const Header = ({ organizationId, organization }) => {
                   textAlign: "center",
                 }}
               >
-                {
-                  organization.profile != null
-                    ?
-                    <Avatar
-                      icon={<UserOutlined />}
-                      size={150}
-                      src={organization.profile.fileUrl}
-                    >
-                      {utils.getNameInitial(organization.organization_name)}
-                    </Avatar>
-                    :
-                    <Avatar
-                      style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
-                      size={150}
-                    >
-                      {utils.getNameInitial(organization.organization_name)}
-                    </Avatar>
-                }
+                {organization.profile != null ? (
+                  <Avatar
+                    icon={<UserOutlined />}
+                    size={150}
+                    src={organization.profile.fileUrl}
+                    style={{ fontSize: "3rem" }}
+                  >
+                    {utils.getNameInitial(organization.organization_name)}
+                  </Avatar>
+                ) : (
+                  <Avatar
+                    style={{
+                      backgroundColor:
+                        COLORS[Math.floor(Math.random() * COLORS.length)],
+                      fontSize: "3rem",
+                    }}
+                    size={150}
+                  >
+                    {utils.getNameInitial(organization.organization_name)}
+                  </Avatar>
+                )}
               </div>
 
               <div className="ml-md-4 w-100">
@@ -117,13 +130,19 @@ const Header = ({ organizationId, organization }) => {
                   <div className="mt-3 ml-md-3 mt-md-0">
                     <Space>
                       <Link to={`/home/organization/${organizationId}`}>
-                        <Button size="small" style={{ backgroundColor: "#3e79f7", color: "white" }}>
+                        <Button
+                          size="small"
+                          style={{ backgroundColor: "#3e79f7", color: "white" }}
+                        >
                           <HomeFilled />
                           Home
                         </Button>
                       </Link>
 
-                      <Button size="small" style={{ backgroundColor: "#fc6c85", color: "white" }}>
+                      <Button
+                        size="small"
+                        style={{ backgroundColor: "#fc6c85", color: "white" }}
+                      >
                         <HeartFilled style={{ color: "white" }} />
                         Follow
                       </Button>
@@ -160,19 +179,27 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}`,
-                              }
+                                  tooltip: `${
+                                    organization.organization_member[0].email !=
+                                    null
+                                      ? organization.organization_member[0]
+                                          .email
+                                      : ""
+                                  }`,
+                                }
                               : false
                           }
                         >
-                          {organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}
+                          {organization.organization_member[0].email != null
+                            ? organization.organization_member[0].email
+                            : ""}
                         </Text>
                       </Col>
                     </Row>
@@ -189,15 +216,15 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization.phone_number}`,
-                              }
+                                  tooltip: `${organization.phone_number}`,
+                                }
                               : false
                           }
                         >
@@ -220,15 +247,15 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${address}`,
-                              }
+                                  tooltip: `${address}`,
+                                }
                               : false
                           }
                         >
@@ -249,15 +276,15 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization.website}`,
-                              }
+                                  tooltip: `${organization.website}`,
+                                }
                               : false
                           }
                         >

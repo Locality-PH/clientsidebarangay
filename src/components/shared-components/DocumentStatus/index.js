@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   Col,
@@ -9,13 +9,14 @@ import {
   Dropdown,
   Row,
   Carousel,
+  Modal,
 } from "antd";
 import {
   EllipsisOutlined,
   DeleteOutlined,
   CloudDownloadOutlined,
-  SendOutlined,
-  InfoCircleOutlined,
+  QuestionCircleOutlined,
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -41,19 +42,15 @@ const News = (props) => {
     img,
     content,
     margin,
-    isVisit,
     classData,
-    enableVisit,
-    enablePost,
-    href,
     createdAt,
     orgName,
     attachFile,
-    profileColor,
     subTitle,
+    certificate_requests_id,
+    organization_id,
+    deleteDocumetRequest,
   } = props;
-  console.log(content);
-
   const contentData = {
     entityMap: {},
     blocks: content != null ? content.blocks : [],
@@ -71,11 +68,9 @@ const News = (props) => {
   );
   const contentState = convertFromRaw(contentData);
   const editorState = EditorState.createWithContent(contentState);
-  console.log(editorState.getCurrentContent());
   const htmlPuri = draftToHtmlPuri(
     convertToRaw(editorState.getCurrentContent())
   );
-  console.log(htmlPuri);
   const htmlFinal =
     htmlPuri === htmlPuriValidate
       ? "<p>Please wait for the approval or instruction on this dialouge</p>"
@@ -93,12 +88,23 @@ const News = (props) => {
   ];
   const randomColor = Math.floor(Math.random() * color.length);
   const randomColorTag = Math.floor(Math.random() * colorTag.length);
-  console.log(attachFile);
 
   const handleClick = (e) => {
-    console.log(e);
+    if (e.key == 1) {
+      console.log("cert " + certificate_requests_id, "org " + organization_id);
+
+      Modal.confirm({
+        title: "Confirm",
+        icon: <ExclamationCircleOutlined />,
+        content: "Are you sure you want to delete?",
+        okText: "Delete",
+        cancelText: "Cancel",
+        centered: true,
+        onOk: showModal,
+      });
+    }
     if (e.key == 2)
-      attachFile.map((item, i) => {
+      attachFile.map((item) => {
         saveAs(item.url, item.name);
       });
   };
@@ -106,7 +112,8 @@ const News = (props) => {
     <Menu onClick={handleClick}>
       <Menu.Item key="1">
         <a to={`#`}>
-          <DeleteOutlined /> <span className="ml-2">Delete</span>
+          {" "}
+          <DeleteOutlined /> <span className="ml-2">Delete</span>{" "}
         </a>
       </Menu.Item>
 
@@ -117,6 +124,9 @@ const News = (props) => {
       </Menu.Item>
     </Menu>
   );
+  const showModal = () => {
+    deleteDocumetRequest(certificate_requests_id, organization_id);
+  };
 
   const DropdownMenu = () => (
     <Dropdown key="more" overlay={menu} trigger={["click"]} autoFocus={true}>
@@ -135,6 +145,7 @@ const News = (props) => {
       </Button>
     </Dropdown>
   );
+
   return (
     <>
       <Card
@@ -323,10 +334,15 @@ News.propTypes = {
   href: PropTypes.string,
   attachFile: PropTypes.array,
   subTitle: PropTypes.string,
+  certificate_request_id: PropTypes.string,
+  organization_id: PropTypes.string,
   createdAt: PropTypes.instanceOf(Date),
+  deleteDocumetRequest: PropTypes.elementType,
 };
 
 News.defaultProps = {
+  certificate_request_id: " ",
+  organization_id: " ",
   subTitle: " ",
   padding: "5",
   title: "",
