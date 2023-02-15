@@ -12,8 +12,8 @@ import {
 } from "antd";
 import {
   EllipsisOutlined,
-  FormOutlined,
-  FileOutlined,
+  DeleteOutlined,
+  CloudDownloadOutlined,
   SendOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
@@ -29,6 +29,8 @@ import draftToHtmlPuri from "draftjs-to-html";
 import { convertFromRaw, EditorState, convertToRaw } from "draft-js";
 import { toCapitalized } from "helper/Formula";
 import utils from "utils";
+import { saveAs } from "file-saver";
+
 const { Text } = Typography;
 const { Title } = Typography;
 
@@ -91,34 +93,33 @@ const News = (props) => {
   ];
   const randomColor = Math.floor(Math.random() * color.length);
   const randomColorTag = Math.floor(Math.random() * colorTag.length);
+  console.log(attachFile);
 
+  const handleClick = (e) => {
+    console.log(e);
+    if (e.key == 2)
+      attachFile.map((item, i) => {
+        saveAs(item.url, item.name);
+      });
+  };
   const menu = (
-    <Menu>
+    <Menu onClick={handleClick}>
       <Menu.Item key="1">
-        <Link to={`#`}>
-          <FormOutlined /> <span className="ml-2">Campaign</span>
-        </Link>
+        <a to={`#`}>
+          <DeleteOutlined /> <span className="ml-2">Delete</span>
+        </a>
       </Menu.Item>
-      <Menu.Item key="2">
-        <Link to={`#`}>
-          <FileOutlined /> <span className="ml-2">Certificate</span>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="3">
-        <Link to={`#`}>
-          <SendOutlined /> <span className="ml-2">Report Incident</span>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="4">
-        <Link to={`#`}>
-          <InfoCircleOutlined /> <span className="ml-2">About</span>
-        </Link>
+
+      <Menu.Item key={2}>
+        <a to={`#`}>
+          <CloudDownloadOutlined /> <span className="ml-2">Download </span>
+        </a>
       </Menu.Item>
     </Menu>
   );
 
   const DropdownMenu = () => (
-    <Dropdown key="more" overlay={menu}>
+    <Dropdown key="more" overlay={menu} trigger={["click"]} autoFocus={true}>
       <Button
         style={{
           border: "none",
@@ -291,7 +292,7 @@ const News = (props) => {
                   expanded={false}
                   truncatedEndingComponent={"... "}
                 >
-                  {/* {content} */}{" "}
+                  {/* {content} */}
                   <div className="">
                     <div
                       dangerouslySetInnerHTML={{

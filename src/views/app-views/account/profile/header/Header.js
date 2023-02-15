@@ -4,8 +4,10 @@ import Flex from "components/shared-components/Flex";
 import { CloudDownloadOutlined, ToolOutlined } from "@ant-design/icons";
 import { AUTH_TOKEN } from "redux/constants/Auth";
 import { useAuth } from "contexts/AuthContext";
-
+import { useHistory } from "react-router-dom";
+import { saveAs } from "file-saver";
 const Header = () => {
+  let history = useHistory();
   const { currentUser } = useAuth();
   console.log(currentUser);
   const [width, setWidth] = useState(0);
@@ -41,11 +43,7 @@ const Header = () => {
                   textAlign: "center",
                 }}
               >
-                <Avatar
-                  shape="round"
-                  size={150}
-                  src={currentUser?.photoURL}
-                />
+                <Avatar shape="round" size={150} src={currentUser?.photoURL} />
               </div>
               <div className="ml-md-4 w-100">
                 <Flex
@@ -90,12 +88,19 @@ const Header = () => {
                     >
                       <span className="pl-0 pr-0 ml-0 mr-0 ">
                         <Button
+                          onClick={() => {
+                            console.log;
+                            history.push(`/home/account/settings/edit-profile`);
+                          }}
                           icon={<ToolOutlined style={{ fontSize: 20 }} />}
                           type="text"
                         ></Button>
                       </span>
                       <span className="font-weight-semibold">
                         <Button
+                          onClick={() => {
+                            saveAs(currentUser?.photoURL, "profile");
+                          }}
                           icon={
                             <CloudDownloadOutlined style={{ fontSize: 20 }} />
                           }
