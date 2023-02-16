@@ -6,7 +6,7 @@ import {
   FileTextOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AutoComplete, Input } from "antd";
 import IntlMessage from "components/util-components/IntlMessage";
 
@@ -41,11 +41,19 @@ const searchResult = () =>
   });
 
 const SearchInput = (props) => {
-  const { active, close, isMobile, mode } = props;
+  const { active, close, mode, searchItem, handleSearchItem } = props;
   const [value, setValue] = useState("");
   const [options, setOptions] = useState([]);
   const inputRef = useRef(null);
-
+  let history = useHistory();
+  const handleKeyUp = (event) => {
+    // Enter
+    if (event.keyCode === 13) {
+      console.log("Enter");
+      console.log(`/home/posts/search/result/${searchItem || "%20"}`);
+      history.push(`/home/posts/search/result/${searchItem || "%20"}`);
+    }
+  };
   const onSelect = () => {
     setValue("");
     setOptions([]);
@@ -84,6 +92,11 @@ const SearchInput = (props) => {
       }
     >
       <Input
+        onKeyUp={handleKeyUp}
+        value={searchItem}
+        onChange={(e) => {
+          handleSearchItem(e.target.value);
+        }}
         style={{ width: "100%" }}
         placeholder="Search..."
         prefix={<SearchOutlined className="mr-0" />}

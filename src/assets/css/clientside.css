@@ -129,6 +129,17 @@ h5.ant-typography {
 .nav-search.nav-search-active {
   padding: 40px 1.5rem;
 }
+.no-border .ant-card-body {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.no-border {
+  border: 0px solid white !important;
+  margin: 0px !important;
+}
+.divider-margin {
+  margin: 0px;
+}
 @media screen and (max-width: 850px) {
   .nav-search-input:not(.is-mobile) {
     min-width: auto !important;

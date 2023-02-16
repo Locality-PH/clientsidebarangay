@@ -5,31 +5,24 @@ import Loading from "components/shared-components/Loading";
 const Pages = ({ match }) => (
   <Suspense fallback={<Loading cover="content" />}>
     <Switch>
-      <Redirect exact from={`${match.url}`} to={`${match.url}/profile`} />
+      <Redirect
+        exact
+        from={`${match.url}`}
+        to={`${match.url}/search/result/%20`}
+      />
       <Route
-        path={`${match.url}/:id/:commentID`}
+        path={`${match.url}/search/result/:id`}
+        component={lazy(() => import(`./search`))}
+      />
+      <Route
+        path={`${match.url}/search/result`}
+        component={lazy(() => import(`./search`))}
+      />
+      <Route
+        path={`${match.url}/:id/:commentID/single/data`}
         component={lazy(() => import(`./comments`))}
       />
-      <Route
-        path={`${match.url}/invoice`}
-        component={lazy(() => import(`./invoice`))}
-      />
-      <Route
-        path={`${match.url}/pricing`}
-        component={lazy(() => import(`./pricing`))}
-      />
-      <Route
-        path={`${match.url}/faq`}
-        component={lazy(() => import(`./faq`))}
-      />
-      <Route
-        path={`${match.url}/setting`}
-        component={lazy(() => import(`./setting`))}
-      />
-      <Route
-        path={`${match.url}/user-list`}
-        component={lazy(() => import(`./user-list`))}
-      />
+      {console.log(`${match.url}/`)}
     </Switch>
   </Suspense>
 );

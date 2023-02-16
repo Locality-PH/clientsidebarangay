@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Typography,
   Col,
@@ -15,13 +14,10 @@ import {
   EllipsisOutlined,
   DeleteOutlined,
   CloudDownloadOutlined,
-  QuestionCircleOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import ShowMoreText from "react-show-more-text";
-import CommentSection from "components/shared-components/CommentSection";
 import moment from "moment";
 import PDFTemplate from "components/shared-components/Documents";
 import Rejected from "assets/file/rejected.pdf";
@@ -35,7 +31,7 @@ import { saveAs } from "file-saver";
 const { Text } = Typography;
 const { Title } = Typography;
 
-const News = (props) => {
+const DocumentStatus = (props) => {
   const {
     title,
     type,
@@ -320,7 +316,7 @@ const News = (props) => {
     </>
   );
 };
-News.propTypes = {
+DocumentStatus.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string,
   img: PropTypes.string,
@@ -340,7 +336,7 @@ News.propTypes = {
   deleteDocumetRequest: PropTypes.elementType,
 };
 
-News.defaultProps = {
+DocumentStatus.defaultProps = {
   certificate_request_id: " ",
   organization_id: " ",
   subTitle: " ",
@@ -358,4 +354,4 @@ News.defaultProps = {
   attachFile: [],
   createdAt: moment().format(`LL`),
 };
-export default News;
+export default DocumentStatus;

@@ -38,12 +38,17 @@ export const HeaderNav = (props) => {
     direction,
   } = props;
   const [searchActive, setSearchActive] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
+
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const onSearchActive = () => {
     setSearchActive(true);
   };
 
+  const handleSearchItem = (item) => {
+    setSearchItem(item);
+  };
   const onSearchClose = () => {
     setSearchActive(false);
   };
@@ -117,7 +122,12 @@ export const HeaderNav = (props) => {
                 className="ant-menu-item ant-menu-item-only-child header-hide"
                 style={{ cursor: "auto" }}
               >
-                <SearchInput mode={mode} isMobile={true} />
+                <SearchInput
+                  mode={mode}
+                  isMobile={true}
+                  searchItem={searchItem}
+                  handleSearchItem={handleSearchItem}
+                />
               </li>
             </ul>
           </div>
@@ -130,7 +140,12 @@ export const HeaderNav = (props) => {
           </div>
         </div>
       </div>{" "}
-      <NavSearch active={searchActive} close={onSearchClose} />
+      <NavSearch
+        active={searchActive}
+        searchItem={searchItem}
+        handleSearchItem={handleSearchItem}
+        close={onSearchClose}
+      />
     </Header>
   );
 };
