@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Menu, Dropdown, Badge, Avatar, List, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import { Menu, Dropdown, Badge, Avatar, List, Button, Skeleton } from "antd";
 import {
   MailOutlined,
   BellOutlined,
@@ -8,7 +8,10 @@ import {
 } from "@ant-design/icons";
 import notificationData from "assets/data/notification.data.json";
 import Flex from "components/shared-components/Flex";
-
+import axios from "axios";
+import InfinitScroll from "react-infinite-scroll-component";
+import { useAuth } from "contexts/AuthContext";
+import moment from "moment";
 const getIcon = (icon) => {
   switch (icon) {
     case "mail":
@@ -22,52 +25,182 @@ const getIcon = (icon) => {
   }
 };
 
-const getNotificationBody = (list) => {
-  return list.length > 0 ? (
-    <List
-      size="small"
-      itemLayout="horizontal"
-      dataSource={list}
-      renderItem={(item) => (
-        <List.Item className="list-clickable">
-          <Flex alignItems="center">
-            <div className="pr-3">
-              {item.img ? (
-                <Avatar src={`/img/avatars/${item.img}`} />
-              ) : (
-                <Avatar
-                  className={`ant-avatar-${item.type}`}
-                  icon={getIcon(item.icon)}
-                />
-              )}
-            </div>
-            <div className="mr-3">
-              <span className="font-weight-bold text-dark">{item.name} </span>
-              <span className="text-gray-light">{item.desc}</span>
-            </div>
-            <small className="ml-auto">{item.time}</small>
-          </Flex>
-        </List.Item>
-      )}
-    />
-  ) : (
-    <div className="empty-notification">
-      <img
-        src="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
-        alt="empty"
-      />
-      <p className="mt-3">You have viewed all notifications</p>
-    </div>
-  );
-};
-
 export const NavNotification = () => {
+  const { generateToken } = useAuth();
+
+  // notification State
+  const [notification, setNotification] = useState([]);
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  // Page State
+  const count = 5;
+  const [start, setStart] = useState(0);
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState(notificationData);
+  //Loading State
+  const [drawer, setDrawer] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [refresh, setRefresh] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [landingLoading, setlandingLoading] = useState(true);
 
   const handleVisibleChange = (flag) => {
     setVisible(flag);
+    let readData = [];
+    if (notification.length > 0) {
+      notification.map((item) => readData.push(item.notification_id));
+      const data = {
+        notification_id: readData,
+      };
+      console.log("clicked");
+      setNotificationCount([]);
+      updateNotification(data, generateToken()[1]);
+    }
   };
+  const handleCallBackNext = (res) => {
+    setNotification((oldArray) => [...oldArray, ...res.data]);
+    setLoading(false);
+
+    setHasMore(res.data.length > 0);
+  };
+  const getNotification = async (result, token) => {
+    try {
+      return axios.get(
+        `/api/app/notification?start=${0}&result=${result}`,
+        token
+      );
+    } catch (error) {
+      return console.log(error);
+    }
+  };
+
+  const getNotificationNext = async (start, result, token, callback) => {
+    try {
+      await axios
+        .get(`/api/app/notification?start=${start}&result=${result}`, token)
+        .then((res) => {
+          callback(res);
+        });
+    } catch (error) {
+      return console.log(error);
+    }
+  };
+  const updateNotification = async (data, token) => {
+    try {
+      await axios
+        .post(`/api/app/notification/update`, data, token)
+        .then((res) => {
+          console.log(res.data);
+        });
+    } catch (error) {
+      return console.log(error);
+    }
+  };
+
+  const loadMore =
+    !landingLoading && !loading ? (
+      <div
+        className="mb-2"
+        style={{
+          textAlign: "center",
+          marginTop: 12,
+          height: 32,
+          lineHeight: "32px",
+        }}
+      >
+        {hasMore ? (
+          <div className="">
+            <a
+              className="d-block"
+              href="#/"
+              onClick={() => {
+                setLoading(true);
+                setStart(count + start);
+                getNotificationNext(
+                  start,
+                  count,
+                  generateToken()[1],
+                  handleCallBackNext
+                );
+              }}
+            >
+              Load More
+            </a>
+          </div>
+        ) : null}
+      </div>
+    ) : null;
+  const getNotificationBody = (list) => {
+    return list.length > 0 ? (
+      <List
+        size="small"
+        loading={landingLoading}
+        itemLayout="horizontal"
+        loadMore={loadMore}
+        dataSource={list}
+        renderItem={(item) => {
+          return (
+            <>
+              {item.is_read ? null : (
+                <Skeleton avatar title={false} loading={loading} active>
+                  <List.Item className="list-clickable">
+                    <Flex alignItems="center">
+                      <div className="pr-3">
+                        {item.organization_id[0].profile.fileUrl ? (
+                          <Avatar
+                            src={item.organization_id[0].profile.fileUrl}
+                          />
+                        ) : (
+                          <Avatar
+                            className={`ant-avatar-${item.type}`}
+                            icon={getIcon(item.icon)}
+                          />
+                        )}
+                      </div>
+                      <div className="mr-3">
+                        <span className="font-weight-bold text-dark">
+                          {item.organization_id[0].organization_name}{" "}
+                        </span>
+                        <span className="text-gray-light">{item.message}</span>
+                      </div>
+                      <small className="ml-auto">
+                        {moment(item.updatedAt).format("LT")}
+                      </small>
+                    </Flex>
+                  </List.Item>{" "}
+                </Skeleton>
+              )}
+            </>
+          );
+        }}
+      />
+    ) : (
+      <div className="empty-notification">
+        <img
+          src="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg"
+          alt="empty"
+        />
+        <p className="mt-3">You have viewed all notifications</p>
+      </div>
+    );
+  };
+  useEffect(() => {
+    let isMounted = true;
+    const token = generateToken()[1];
+    setlandingLoading(true);
+    getNotification(count, token).then((response) => {
+      if (isMounted) {
+        setNotification(response.data);
+        setlandingLoading(false);
+
+        setNotificationCount(response.headers["x-total-count"]);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const notificationList = (
     <div className="nav-dropdown nav-notification">
@@ -76,13 +209,18 @@ export const NavNotification = () => {
         <Button
           className="text-primary"
           type="text"
-          onClick={() => setData([])}
+          onClick={() => {
+            setNotification([]);
+            setNotificationCount(0);
+          }}
           size="small"
         >
           Clear{" "}
         </Button>
       </div>
-      <div className="nav-notification-body">{getNotificationBody(data)}</div>
+      <div className="nav-notification-body">
+        {getNotificationBody(notification)}
+      </div>
       {data.length > 0 ? (
         <div className="nav-notification-footer">
           <a className="d-block" href="#/">
@@ -103,7 +241,7 @@ export const NavNotification = () => {
     >
       <Menu mode="horizontal">
         <Menu.Item key="notification">
-          <Badge count={data.length}>
+          <Badge count={notificationCount}>
             <BellOutlined
               className="mx-auto nav-icon"
               type="bell"
