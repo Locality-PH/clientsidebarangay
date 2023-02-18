@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { message, Tabs, Card } from "antd";
 import Likes from "./Likes";
 import Document from "./Document";
+import Blotter from "./Blotter";
 const { TabPane } = Tabs;
 
 const ContentBody = () => {
@@ -21,11 +22,7 @@ const ContentBody = () => {
         </TabPane>
         <TabPane tab="Follows" key="3"></TabPane>
         <TabPane tab="Blotter" key="4">
-          <h1>Deactivate Account</h1>
-          <p>
-            Your account will be temporarly deleted. You can activate your
-            account again by loggging in.
-          </p>
+          <Blotter />
         </TabPane>
         {/* <TabPane tab="Supply" key="4">
           <h1>Deactivate Account</h1>

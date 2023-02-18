@@ -35,7 +35,7 @@ const Organizations = () => {
 
   const getAllOrganizations = async () => {
     await axios
-      .get("/api/organization/get-all-organizations", generateToken()[1])
+      .get("/api/organization/get-all-organizations-client", generateToken()[1])
       .then((response) => {
         setBarangayList(response.data);
         setIsLoading(false);
