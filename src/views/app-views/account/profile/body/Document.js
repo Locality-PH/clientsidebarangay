@@ -42,7 +42,8 @@ const Document = (props) => {
   // CallBack handleCertificateNext
   const handleCertificateNext = (data) => {
     setDocument((oldArray) => [...oldArray, ...data]);
-    if (data.length > 0) setHasMore(false);
+
+    setHasMore(data.length > 0);
   };
 
   const getDocumentData = async (callback, token) => {

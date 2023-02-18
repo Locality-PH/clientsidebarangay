@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Card, Form, Input, Button, message, Col, Row, Tabs, Select, TimePicker, DatePicker, Space } from "antd";
+import { Card, Form, Input, Button, message, Col, Row, Tabs, Select, TimePicker, DatePicker, Space, Typography } from "antd";
 const { Option } = Select;
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
+const { Text } = Typography;
 import Flex from "components/shared-components/Flex";
 import { Editor } from "react-draft-wysiwyg";
 const { TabPane } = Tabs;
@@ -50,20 +51,42 @@ const ReportIncident = ({ organizationId }) => {
 		form
 			.validateFields()
 			.then((values) => {
-				message.loading("Requesting...")
+				if (values.victimsInvolve == "undefined" || values.victimsInvolve.length == 0 ||
+					values.suspectsInvolve == "undefined" || values.suspectsInvolve.length == 0 ||
+					values.respondentsInvolve == "undefined" || values.respondentsInvolve.length == 0) {
+					message.error("Please enter all required field ");
+				} else {
+					message.loading("Requesting...")
 
-				values.organization_id = organizationId;
-				values.uuid = authToken;
-				values.settlement_status = "Unscheduled";
-				values.status = "Pending";
+					values.organization_id = organizationId;
+					values.uuid = authToken;
+					values.settlement_status = "Unscheduled";
+					values.status = "Pending";
 
-				values.reporters = [];
-				values.victims = [];
-				values.suspects = [];
-				values.respondents = [];
+					values.reporters = [];
+					values.victims = [];
+					values.suspects = [];
+					values.respondents = [];
 
-				console.log(values)
-				requestBlotter(values);
+					const narrativeRef = values.narrative
+					values.narrative = {
+						blocks: [
+							{
+								key: "9rupp",
+								text: narrativeRef,
+								type: "unstyled",
+								depth: 0,
+								inlineStyleRanges: [],
+								entityRanges: []
+							}
+						]
+					}
+
+					console.log(values)
+					requestBlotter(values);
+
+				}
+
 			})
 			.catch((info) => {
 				message.error("Please enter all required field ");
@@ -72,7 +95,7 @@ const ReportIncident = ({ organizationId }) => {
 
 	const Involve = ({ title, itemName }) => {
 		return (
-			<Card title={title}>
+			<Card title={<Text type="danger">{title}</Text>}>
 				<Form.List name={itemName}>
 					{(fields, { add, remove }) => (
 						<>
@@ -182,7 +205,9 @@ const ReportIncident = ({ organizationId }) => {
 											</Col>
 										</Row>
 
-										<Row>
+										{
+											/* 
+											<Row>
 											<Col span="24">
 												<Form.Item
 													{...restField}
@@ -202,6 +227,10 @@ const ReportIncident = ({ organizationId }) => {
 												</Form.Item>
 											</Col>
 										</Row>
+											*/
+										}
+
+
 									</Card>
 
 
