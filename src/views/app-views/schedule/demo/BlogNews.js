@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Carousel } from "@trendyol-js/react-carousel";
 import { Row, Col, Card } from "antd";
 import News from "views/app-views/home/announcement";
@@ -7,12 +7,18 @@ import CommentSection from "components/shared-components/CommentSection";
 const BlogComponent = () => {
   const [data, setData] = useState(false);
   const newsReportData = NewsReportData;
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       setData(!data);
-  //     }, 1000);
-  //   }, []);
+  const updateWindowDimensions = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+  useEffect(() => {
+    const listener = window.addEventListener("resize", updateWindowDimensions);
+    updateWindowDimensions();
+    return () => window.removeEventListener("resize", listener);
+  }, []);
   return (
     <div>
       <section id="blog" className="blog-area ptb-80">
@@ -34,8 +40,8 @@ const BlogComponent = () => {
           <>
             <Col lg={24} md={24}>
               <Carousel
-                show={3}
-                slide={3}
+                show={width <= 590 ? 1 : width <= 768 ? 2 : 3}
+                slide={width <= 590 ? 1 : width <= 768 ? 2 : 3}
                 transition={0.5}
                 swiping={true}
                 className="blog-carousel"

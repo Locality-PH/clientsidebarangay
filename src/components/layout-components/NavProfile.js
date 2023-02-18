@@ -41,21 +41,21 @@ const menuItem = [
   },
 ];
 const menuItem2 = [
-  {
-    title: "FAQ & Support",
-    icon: QuestionCircleOutlined,
-    path: "/",
-  },
+  // {
+  //   title: "FAQ & Support",
+  //   icon: QuestionCircleOutlined,
+  //   path: "/",
+  // },
   {
     title: "Create Organization",
     icon: QuestionCircleOutlined,
     path: "/home/schedule/demo",
   },
-  {
-    title: "Help Center",
-    icon: QuestionCircleOutlined,
-    path: "/#",
-  },
+  // {
+  //   title: "Help Center",
+  //   icon: QuestionCircleOutlined,
+  //   path: "/#",
+  // },
 ];
 export const NavProfile = ({ signOut }) => {
   let history = useHistory();
