@@ -11,6 +11,7 @@ const Organizations = () => {
   const [searchItem, setSearchItem] = useState(id || "");
   const [barangayList, setBarangayList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [landingLoading, setLandingLoading] = useState(false);
 
   const [hasMore, setHasMore] = useState(true);
   // Page State
@@ -20,6 +21,7 @@ const Organizations = () => {
   const handleGetAll = (data) => {
     setBarangayList(data);
     setIsLoading(false);
+    setLandingLoading(false);
   };
   const handleNextGetAll = (data) => {
     setBarangayList((oldArray) => [...oldArray, ...data]);
@@ -53,6 +55,7 @@ const Organizations = () => {
   };
   console.log(isLoading, hasMore);
   useEffect(() => {
+    setLandingLoading(true);
     setIsLoading(true);
     Promise.all([
       getAllOrganizations(handleGetAll, generateToken()[1], searchItem),
@@ -62,7 +65,7 @@ const Organizations = () => {
     <>
       <Row justify="center">
         <Col xs={24} sm={24} md={15} lg={15}>
-          <Card title={"Pages"}>
+          <Card lading={landingLoading} title={"Pages"}>
             {barangayList.map((item, i) => {
               return (
                 <div key={i}>
@@ -122,13 +125,6 @@ const Organizations = () => {
           </Card>
         </Col>
       </Row>
-      {isLoading && (
-        <Card>
-          <Skeleton loading={isLoading} avatar active></Skeleton>
-          <Skeleton loading={isLoading} avatar active></Skeleton>
-          <Skeleton loading={isLoading} avatar active></Skeleton>
-        </Card>
-      )}
     </>
   );
 };

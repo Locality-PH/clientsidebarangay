@@ -10,6 +10,7 @@ import moment from "moment";
 
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const current = new Date();
 const dateFormat = "YYYY/MM/DD";
@@ -19,6 +20,7 @@ const ReportIncident = ({ organizationId }) => {
 	const authToken = localStorage.getItem("auth_token");
 
 	const [form] = Form.useForm();
+	const history = useHistory();
 
 	useEffect(() => {
 		console.log("Current Organization ", currentOrganization)
@@ -31,7 +33,8 @@ const ReportIncident = ({ organizationId }) => {
 				message.destroy();
 				if (response.data == "Success") {
 					message.destroy();
-					return message.success("Create Request Blotter");
+					message.success("Create Request Blotter");
+					history.push(`/home/organization/${organizationId}`);
 				} else {
 					return message.error("Error, please try again.");
 				}
@@ -236,7 +239,7 @@ const ReportIncident = ({ organizationId }) => {
 											<div className="mb-2 text-justify text-justify-content-center">
 												<i>
 													{" "}
-													<label>
+													<label style={{ color: "red" }}>
 														ENTER IN DETAIL THE NARRATIVE OF THE INCIDENT OR EVENT,
 														ANSWERING THE WHO, WHAT, WHEN, WHERE, WHY, AND HOW OF REPORTING.
 													</label>
@@ -255,6 +258,7 @@ const ReportIncident = ({ organizationId }) => {
 											<Col span="24">
 												<Form.Item
 													name="narrative"
+													rules={[{ required: true }]}
 												>
 													<TextArea placeholder="Narrative" />
 												</Form.Item>
@@ -262,16 +266,25 @@ const ReportIncident = ({ organizationId }) => {
 										</Row>
 
 										<Row>
-											<Col>
+											<Col span="24">
 												<Form.Item
 													name="incident_type"
 													label="Type of Incident"
 													rules={[{ required: true }]}
 												>
-													<Input placeholder="Incident Type" />
+													<Select className="w-100" placeholder="Incident">
+														<Option key="1" value="Positive Observations">Positive Observations</Option>
+														<Option key="2" value="Unsafe Acts">Unsafe Acts</Option>
+														<Option key="3" value="Near Misses">Near Misses</Option>
+														<Option key="4" value="Minor Injuries">Minor Injuries</Option>
+														<Option key="5" value="Lost Time Accidents">Lost Time Accidents</Option>
+														<Option key="6" value="Fatalities">Fatalities</Option>
+													</Select>
 												</Form.Item>
 											</Col>
+										</Row>
 
+										<Row>
 											<Col>
 												<Form.Item
 													name="time_of_incident"

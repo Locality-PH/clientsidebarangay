@@ -14,8 +14,11 @@ const Invoice = (props) => {
   };
   return (
     <div className="container">
-      <Card>
-        <div className="mt-4">
+      <Card title="Invoice">
+        <div className="">
+          <i style={{ color: "red" }}>
+            This thing is still testing since billing is not fully functional
+          </i>
           <Table dataSource={invoiceData} pagination={false} className="mb-5">
             <Column title="Date" dataIndex="date" key="date" />
             <Column

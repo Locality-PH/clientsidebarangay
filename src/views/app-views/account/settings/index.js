@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //Components
 import EditProfile from "./EditProfile";
@@ -14,6 +14,18 @@ import { Row, Col, Menu } from "antd";
 import { Link, Redirect, Route, Switch } from "react-router-dom";
 
 const AccountSettings = ({ match, location }) => {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  const updateWindowDimensions = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+  useEffect(() => {
+    const listener = window.addEventListener("resize", updateWindowDimensions);
+    updateWindowDimensions();
+    return () => window.removeEventListener("resize", listener);
+  }, []);
   const matchUrl = "/home/account/settings";
   return (
     <Row className="h-100 w-100" gutter={14} justify={"center"}>
@@ -22,7 +34,7 @@ const AccountSettings = ({ match, location }) => {
           defaultSelectedKeys={`${matchUrl}/edit-profile`}
           className="mb-3 setting-menu "
           title={"sad"}
-          mode="horizontal"
+          mode={width <= 722 ? "plain" : "horizontal"}
           selectedKeys={[location.pathname]}
         >
           <Menu.Item className="setting-center" key={"#"}>

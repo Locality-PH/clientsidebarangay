@@ -102,16 +102,14 @@ const Header = ({ organizationId, organization }) => {
                     icon={<UserOutlined />}
                     size={150}
                     src={organization.profile.fileUrl}
-                    style={{ fontSize: "3rem" }}
                   >
                     {utils.getNameInitial(organization.organization_name)}
                   </Avatar>
                 ) : (
                   <Avatar
                     style={{
-                      backgroundColor:
-                        COLORS[Math.floor(Math.random() * COLORS.length)],
-                      fontSize: "3rem",
+                      backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)],
+                      fontSize: "3rem"
                     }}
                     size={150}
                   >
@@ -179,21 +177,20 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                  width: 100,
-                                }
+                                width: 100,
+                              }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                  tooltip: `${
-                                    organization.organization_member[0].email !=
-                                    null
-                                      ? organization.organization_member[0]
-                                          .email
-                                      : ""
+                                tooltip: `${organization.organization_member[0].email !=
+                                  null
+                                  ? organization.organization_member[0]
+                                    .email
+                                  : ""
                                   }`,
-                                }
+                              }
                               : false
                           }
                         >
@@ -216,15 +213,15 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                  width: 100,
-                                }
+                                width: 100,
+                              }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                  tooltip: `${organization.phone_number}`,
-                                }
+                                tooltip: `${organization.phone_number}`,
+                              }
                               : false
                           }
                         >
@@ -247,15 +244,15 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                  width: 100,
-                                }
+                                width: 100,
+                              }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                  tooltip: `${address}`,
-                                }
+                                tooltip: `${address}`,
+                              }
                               : false
                           }
                         >
@@ -276,15 +273,15 @@ const Header = ({ organizationId, organization }) => {
                           style={
                             ellipsis
                               ? {
-                                  width: 100,
-                                }
+                                width: 100,
+                              }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                  tooltip: `${organization.website}`,
-                                }
+                                tooltip: `${organization.website}`,
+                              }
                               : false
                           }
                         >
