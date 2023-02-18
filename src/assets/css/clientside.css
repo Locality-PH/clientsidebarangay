@@ -138,7 +138,7 @@ h5.ant-typography {
   margin: 0px !important;
 }
 .divider-margin {
-  margin: 0px;
+  margin: 0px !important;
 }
 @media screen and (max-width: 850px) {
   .nav-search-input:not(.is-mobile) {
