@@ -22,12 +22,14 @@ import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
 const Index = ({ match }) => {
-  const { generateToken } = useAuth();
+  const { currentUser, generateToken } = useAuth();
+  const [alreadyFollow, setAlreadyFollow] = useState(false)
   const [organization, setOrganization] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getOrganization();
+    getOrganizationClient()
   }, []);
 
   const getOrganization = async () => {
@@ -39,7 +41,24 @@ const Index = ({ match }) => {
       .then((response) => {
         setOrganization(response.data);
         console.log(response.data);
+
+      })
+      .catch((err) => {
+        message.error("Could not fetch the data in the server!");
+        console.log(err);
+      });
+  };
+
+  const getOrganizationClient = async () => {
+    await axios
+      .get(
+        `/api/organization/get-organization-client/${match.params.organization_id}/${currentUser.uid}`,
+        generateToken()[1]
+      )
+      .then((response) => {
+        setAlreadyFollow(response.data)
         setIsLoading(false);
+
       })
       .catch((err) => {
         message.error("Could not fetch the data in the server!");
@@ -56,6 +75,7 @@ const Index = ({ match }) => {
             <Header
               organizationId={match.params.organization_id}
               organization={organization}
+              alreadyFollow={alreadyFollow}
             />
             <Switch>
               <Route
