@@ -34,7 +34,7 @@ const OrganizationList = () => {
 
   const getLatestOrganizations = async () => {
     await axios
-      .get("/api/organization/get-latest-organizations", generateToken()[1])
+      .get("/api/organization/get-latest-organizations?length=5", generateToken()[1])
       .then((response) => {
         setOrganizationList(response.data);
         setIsLoading(false);
