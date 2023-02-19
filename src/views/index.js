@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import AppLayout from "layouts/app-layout";
 import AuthLayout from "layouts/auth-layout";
 import PreLayout from "layouts/pre-layout";
-
+import PageNotFound from "views/auth-views/errors/error-page-1";
 import AppLocale from "lang";
 import { IntlProvider } from "react-intl";
 import { ConfigProvider } from "antd";
@@ -92,12 +92,15 @@ export const Views = (props) => {
           <Route exact path="/">
             <Redirect to={APP_PREFIX_PATH} />
           </Route>
+
           <Route path={AUTH_PREFIX_PATH}>
             <AuthLayout direction={direction} />
           </Route>
           <RouteInterceptor path={APP_PREFIX_PATH} isAuthenticated={token}>
             <AppLayout direction={direction} location={location} />
           </RouteInterceptor>
+          <Route path="*" component={PageNotFound} />
+
           <PreLayout />
         </Switch>
       </ConfigProvider>

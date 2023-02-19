@@ -65,7 +65,7 @@ const Organizations = () => {
     <>
       <Row justify="center">
         <Col xs={24} sm={24} md={15} lg={15}>
-          <Card lading={landingLoading} title={"Pages"}>
+          <Card loading={landingLoading} title={"Pages"}>
             {barangayList.map((item, i) => {
               return (
                 <div key={i}>
