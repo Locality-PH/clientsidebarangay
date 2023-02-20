@@ -18,11 +18,12 @@ const CampaignCard = (props) => {
     title,
     category,
     orgName,
+    orgProfile,
     startingDate,
-    name,
-    profile,
     images,
     content,
+    publisherName,
+    suggestorName,
     margin,
     isVisit,
     classData,
@@ -31,8 +32,7 @@ const CampaignCard = (props) => {
     href,
     loading
   } = props;
-  const color = ["#E1F8DC", "#FEF8DD", "#FFE7C7", "#B7E9F7", "#ADF7B6"];
-  const randomColor = Math.floor(Math.random() * color.length);
+
   const [visible, setVisible] = useState(false);
 
   const menuItems = [{
@@ -40,6 +40,32 @@ const CampaignCard = (props) => {
     icon: <EyeOutlined />,
     onClick: () => setVisible(true)
   }]
+
+  const getColor = (category) => {
+    switch (category) {
+      case "Health":
+        return "#E1F8DC"
+        //light green
+      case "Sport":
+        return "#FEF8DD"
+        //yellow
+      case "Environment":
+        return "#FFE7C7"
+        //melon
+      case "Technology":
+        return "#B7E9F7"
+        //blue
+      case "Seminar":
+        return "#ADF7B6"
+        //green
+      case "Event":
+        return "#c6a7eb"
+      case "Others":
+        return "#f2aa8a"
+      default:
+      // code block
+    }
+  }
 
   return (
     <>
@@ -49,10 +75,11 @@ const CampaignCard = (props) => {
         title={
           <div className="d-flex">
             <CustomAvatar
-              icon={utils.getNameInitial(name)}
-              image={profile.data}
-              color={randomColor}
+              icon={utils.getNameInitial(orgName)}
+              image={orgProfile.fileUrl}
+              color="#003151"
               size={60}
+              style={{fontSize: 20}}
             />
 
             <div>
@@ -77,7 +104,7 @@ const CampaignCard = (props) => {
         extra={<CustomDropdown menuItems={menuItems} />}
         className={`${classData}`}
       >
-        <div className="custom-carousel-div" style={{ background: color[randomColor], borderRadius: "1rem" }}>
+        <div className="custom-carousel-div" style={{ background: getColor(category), borderRadius: "1rem" }}>
           {images != null &&
             <>
               <Carousel adaptiveHeight autoplay draggable
@@ -199,8 +226,9 @@ CampaignCard.propTypes = {
   enableVisit: PropTypes.bool,
   enablePost: PropTypes.bool,
   href: PropTypes.string,
-  name: PropTypes.string,
-  profile: PropTypes.object,
+  orgName: PropTypes.string,
+  publisherName: PropTypes.string,
+  orgProfile: PropTypes.object,
   loading: PropTypes.bool
 };
 
@@ -214,10 +242,12 @@ CampaignCard.defaultProps = {
   isVisit: true,
   enableVisit: true,
   enablePost: false,
+  orgName: "",
   classData: "",
   href: "",
-  name: "",
-  profile: {},
+  publisherName: "",
+  suggestorName: "",
+  orgProfile: {},
   loading: false
 };
 export default CampaignCard;

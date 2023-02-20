@@ -1,13 +1,47 @@
-import React from 'react'
-import { Form, Input, Select, Button, Card, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { React, useState, useEffect, createRef } from 'react'
+import { Form, Input, Select, Button, Card, Upload, message, DatePicker } from 'antd';
 import { list as campaignType } from "../../../../constants/CampaignType"
+import { useAuth } from "contexts/AuthContext";
+import axios from 'axios'
 const { Option } = Select;
 
-const CampaignForm = () => {
-    console.log("campaignType", campaignType)
-    const onFinish = values => {
+const CampaignForm = ({ organizationId }) => {
+    //for api
+    const source = axios.CancelToken.source();
+    const cancelToken = source.token;
+    const { generateToken } = useAuth();
+
+    //axios
+    const addSuggestedCampaign = async (values) => {
+
+        await axios.post(
+            `/api/campaign/add-suggestion`,
+            { values },
+            generateToken()[1],
+            { cancelToken })
+            .then(
+                (res) => {
+                    var data = res.data
+                    console.log("data", data)
+                })
+            .catch((error) => {
+                handleError(error)
+            })
+    }
+
+
+
+    const handleError = (error) => {
+        message.error("There is a problem with uploading the data!!!")
+        console.log("error", error)
+    }
+
+    const onFinish = async (values) => {
+        values.organization_id = organizationId
+        values.status = "Pending"
         console.log('Received values of form: ', values);
+        await addSuggestedCampaign(values)
+        message.success("Your campaign suggestion has been recorded!!")
     };
 
     return (
@@ -15,13 +49,13 @@ const CampaignForm = () => {
             <Card title="Suggestions Form">
                 <Form name="complex-form" onFinish={onFinish}>
                     <Form.Item>
-                        <h4>Campaign Name</h4>
+                        <h4>Campaign Title</h4>
                         <Form.Item
-                            name="name"
+                            name="title"
                             noStyle
-                            rules={[{ required: true, message: 'Name is required' }]}
+                            rules={[{ required: true, message: 'Title is required' }]}
                         >
-                            <Input placeholder="Enter Campaign Name" />
+                            <Input placeholder="Enter Campaign title" />
                         </Form.Item>
                     </Form.Item>
 
@@ -29,7 +63,7 @@ const CampaignForm = () => {
                         <h4>Campaign Type</h4>
                         <Input.Group compact>
                             <Form.Item
-                                name="type"
+                                name="category"
                                 noStyle
                                 rules={[{ required: true, message: 'Campaign Type is required' }]}
                             >
@@ -38,6 +72,20 @@ const CampaignForm = () => {
                                         return <Option value={type} key={i}>{type}</Option>
                                     })}
                                 </Select>
+                            </Form.Item>
+                        </Input.Group>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <h4>Staring Date</h4>
+                        <Input.Group compact>
+                            <Form.Item
+                                name="starting_date"
+                                noStyle
+                                rules={[{ required: true, message: 'Staring Date is required' }]}
+                            >
+                                <DatePicker className="w-100"
+                                    format={"YYYY/MM/DD"} />
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
