@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
-import { Col, Row, Skeleton, Card, Modal, Button, message, Dropdown, Menu, Typography } from "antd";
+import { Col, Row, Skeleton, Card, Modal, Button, message, Dropdown, Menu, Typography, Avatar, Space } from "antd";
 const { Meta } = Card;
-const { Text } = Typography;
+const { Text, Title } = Typography;
+import { COLORS } from "constants/ChartConstant";
+const color = ["#E1F8DC", "#FEF8DD", "#FFE7C7", "#B7E9F7", "#ADF7B6"];
+import ShowMoreText from "react-show-more-text";
 
 import {
 	EllipsisOutlined,
@@ -11,7 +14,9 @@ import {
 	CloudDownloadOutlined,
 	QuestionCircleOutlined,
 	ExclamationCircleOutlined,
+	HeartOutlined, MessageOutlined, UserOutlined
 } from "@ant-design/icons";
+import utils from "utils";
 
 const Blotter = () => {
 	const [blotterRequest, setBlotterRequest] = useState([])
@@ -124,22 +129,103 @@ const Blotter = () => {
 					blotterRequest.map((val, i) =>
 
 						<Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8} key={i}>
-							<Card title={
-								<>
-									<Text type="secondary">{val.incident_type}</Text>
-									<br></br>
-									<Text mark>{val.status}</Text>
-								</>
-							}
-								style={{ margin: "5px 5px", height: "40rem" }} extra={<DropdownMenu _id={val._id} />}>
-								<h4>Blotter report from {val.organization_id.organization_name}</h4>
-								<p>Date of incident: {new Date(val.date_of_incident).toDateString()}</p>
-								<p>Date of reported: {new Date(val.createdAt).toDateString()}</p>
-								<br></br>
-								<p>Narrative Report: </p>
-								<div style={{ height: "22rem", overflow: "hidden", padding: "0.5rem" }}>
-									{val.narrative != null ? val.narrative.blocks[0].text : ""}
+							<Card
+								style={{ margin: "5px 5px" }}
+								title={
+									<>
+										<div className="d-flex">
+											{
+												val.organization_id.profile != null
+													?
+													<Avatar
+														className="font-size-sm"
+														icon={<UserOutlined />}
+														src={val.organization_id.profile.fileUrl}
+													>
+														{utils.getNameInitial(val.organization_id.organization_name)}
+													</Avatar>
+													:
+													<Avatar
+														className="font-size-sm"
+														style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
+													>
+														{utils.getNameInitial(val.organization_id.organization_name)}
+													</Avatar>
+											}
+
+											<div>
+												<div className="ml-1">
+													{/* <Text type="Primary">{moment(createdAt).format("LL")} </Text> */}
+													<Text type="Primary">{val.incident_type} </Text>
+												</div>
+												<div className="ml-1" type="Primary">
+													<Title level={5}>
+														<div
+															style={{
+																color: "rgb(69, 85, 96) !important",
+																marginTop: -5,
+															}}
+														>
+															{val.status}
+														</div>
+													</Title>
+												</div>
+											</div>
+										</div>
+									</>
+								}
+								extra={<DropdownMenu _id={val._id} />}
+							>
+								<div style={{ background: color[Math.floor(Math.random() * color.length)], borderRadius: "1rem" }}>
+									<img
+										width="100%"
+										alt="logo"
+										src={
+											`/img/blotter/${val.incident_type.replace(/\s/g, '').toLowerCase()}.png`
+										}
+
+										style={{ borderRadius: "1rem 1rem 0 0" }}
+									/>
+
+									<div style={{ padding: "1rem" }}>
+
+										<h3>Blotter report from {val.organization_id.organization_name}</h3>
+										<h5>Date of incident: {new Date(val.date_of_incident).toDateString()}</h5>
+										<h5>Date reported: {new Date(val.createdAt).toDateString()}</h5>
+										<h5>Place of incident: {val.place_incident}</h5>
+
+										<h4>
+											<ShowMoreText
+												/* Default options */
+												lines={1}
+												more="Show more"
+												less="Show less"
+												className="content-css"
+												anchorClass="my-anchor-css-className"
+												expanded={false}
+												truncatedEndingComponent={"... "}
+											>
+												Subject: {val.subject}
+											</ShowMoreText>
+										</h4>
+
+										<h4>
+											<ShowMoreText
+												/* Default options */
+												lines={3}
+												more="Show more"
+												less="Show less"
+												className="content-css"
+												anchorClass="my-anchor-css-className"
+												expanded={false}
+												truncatedEndingComponent={"... "}
+											>
+												Narrative: {val.narrative != null ? val.narrative.blocks[0].text : ""}{" "}
+											</ShowMoreText>
+										</h4>
+									</div>
 								</div>
+
 							</Card>
 						</Col>
 
