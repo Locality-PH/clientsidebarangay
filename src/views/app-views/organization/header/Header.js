@@ -8,7 +8,7 @@ import {
   Menu,
   Dropdown,
   Space,
-  Typography,
+  Typography, message
 } from "antd";
 const { Paragraph, Text } = Typography;
 import { Icon } from "components/util-components/Icon";
@@ -31,11 +31,20 @@ import utils from "utils";
 import { COLORS } from "constants/ChartConstant";
 import Flex from "components/shared-components/Flex";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "contexts/AuthContext";
 
-const Header = ({ organizationId, organization }) => {
+const Header = ({ organizationId, organization, alreadyFollow }) => {
+  const { currentUser, generateToken } = useAuth();
   const [ellipsis, setEllipsis] = useState(true);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+
+
+  const [isFollow, setIsFollow] = useState(alreadyFollow);
+
+  const [followLoading, setFollowLoading] = useState(false);
+  const [unFollowLoading, setUnFollowLoading] = useState(false);
 
   useEffect(() => {
     if (organization != null) {
@@ -43,6 +52,61 @@ const Header = ({ organizationId, organization }) => {
       setAddress(organization.address);
     }
   }, [organization]);
+
+  const follow = () => {
+    setFollowLoading(true)
+
+    setTimeout(() => {
+      axios
+        .post("/api/organization/follow", {
+          organization_id: organizationId,
+          uuid: currentUser.uid
+        }, generateToken()[1])
+        .then((response) => {
+          message.destroy();
+          if (response.data == "Success") {
+            setIsFollow(true)
+            setFollowLoading(false)
+
+          } else {
+            message.error("The action can't be completed, please try again.");
+          }
+        })
+        .catch((error) => {
+          message.error("The action can't be completed, please try again.");
+        });
+
+    }, 1000)
+
+  }
+
+  const unFollow = () => {
+    setUnFollowLoading(true)
+
+    setTimeout(() => {
+      axios
+        .post("/api/organization/unfollow", {
+          organization_id: organizationId,
+          uuid: currentUser.uid
+        }, generateToken()[1])
+        .then((response) => {
+          message.destroy();
+          if (response.data == "Success") {
+            setIsFollow(false)
+            setUnFollowLoading(false)
+
+          } else {
+            message.error("The action can't be completed, please try again.");
+          }
+        })
+        .catch((error) => {
+          message.error("The action can't be completed, please try again.");
+        });
+
+    }, 1000)
+
+  }
+
   const menu = (
     <Menu>
       <Menu.Item key="1">
@@ -137,13 +201,28 @@ const Header = ({ organizationId, organization }) => {
                         </Button>
                       </Link>
 
-                      <Button
-                        size="small"
-                        style={{ backgroundColor: "#fc6c85", color: "white" }}
-                      >
-                        <HeartFilled style={{ color: "white" }} />
-                        Follow
-                      </Button>
+                      {
+                        !isFollow ? <Button
+                          size="small"
+                          style={{ backgroundColor: "#fc6c85", color: "white" }}
+                          onClick={() => follow()}
+                          loading={followLoading}
+                        >
+                          <HeartFilled style={{ color: "white" }} />
+                          Follow
+                        </Button> :
+
+                          <Button
+                            size="small"
+                            style={{ backgroundColor: "#D70040", color: "white" }}
+                            onClick={() => unFollow()}
+                            loading={unFollowLoading}
+                          >
+                            <CloseOutlined style={{ color: "white" }} />
+                            Unfollow
+                          </Button>
+                      }
+
 
                       {/* <Button size="small" style={{backgroundColor: "	#D70040", color: "white"}}>
                         <CloseOutlined />

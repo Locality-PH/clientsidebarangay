@@ -3,6 +3,7 @@ import { message, Tabs, Card } from "antd";
 import Likes from "./Likes";
 import Document from "./Document";
 import Blotter from "./Blotter";
+import Follows from "./Follows";
 const { TabPane } = Tabs;
 
 const ContentBody = () => {
@@ -20,7 +21,9 @@ const ContentBody = () => {
         <TabPane tab="Likes" key="1">
           <Likes />
         </TabPane>
-        <TabPane tab="Follows" key="3"></TabPane>
+        <TabPane tab="Follows" key="3">
+          <Follows />
+        </TabPane>
         <TabPane tab="Blotter" key="4">
           <Blotter />
         </TabPane>

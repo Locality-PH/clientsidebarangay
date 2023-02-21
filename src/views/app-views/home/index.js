@@ -6,7 +6,7 @@ import { CausesData } from "./DefaultDashboardData";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import moment from "moment"
+import moment from "moment";
 import { useAuth } from "contexts/AuthContext";
 import CampaignCard from "components/shared-components/CampaignCard";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -52,10 +52,13 @@ export const DefaultDashboard = () => {
         message.error("There is a problem with uploading the data!!!")
         console.log("error", error)
       })
+      .catch((error) => {
+        message.error("There is a problem with uploading the data!!!");
+        console.log("error", error);
+      });
 
-    setLoading(false)
-  }
-
+    setLoading(false);
+  };
 
   return (
     <>
@@ -63,19 +66,20 @@ export const DefaultDashboard = () => {
         dataLength={campaigns.length - 1} //This is important field to render the next data
         next={() => setPageSetup({ ...pageSetup, page: pageSetup.page + 1 })}
         hasMore={hasMore}
-        loader={
-          <h1>Loading...</h1>
-        }
+        loader={<h1>Loading...</h1>}
         endMessage={
-          <p style={{ textAlign: 'center' }}>
+          <p style={{ textAlign: "center" }}>
             <b>Yay! You have seen it all</b>
           </p>
         }
       >
-
         <Row gutter={16} align="center" className="w-100">
           {/* OrganizationList */}
-          <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+        </Row>
+
+        {/* Post */}
+        <Row gutter={16} align={"center"} className="w-100">
+          <Col xs={24} sm={24} md={22} lg={12} xl={12} xxl={12}>
             <OrganizationList />
           </Col>
 
@@ -84,10 +88,14 @@ export const DefaultDashboard = () => {
 
         <Row gutter={16} align="center" className="w-100">
           {/* Trending Campaign */}
-          <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
             <Card
               title="Trending Campaign"
-              extra={<Link to="feeds/campaigns" style={{ fontSize: "1rem" }}>More</Link>}
+              extra={
+                <Link to="feeds/campaigns" style={{ fontSize: "1rem" }}>
+                  More
+                </Link>
+              }
             >
               <div className="mt-3">
                 {causesData.map((result, i) => (
@@ -106,30 +114,38 @@ export const DefaultDashboard = () => {
               </div>
             </Card>
           </Col>
-        </Row>
-
-        {/* Post */}
-        <Row gutter={16} align={"center"} className="w-100">
           {campaigns.length > 0 &&
             campaigns.map((campaign, id) => (
-              <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14} key={id} className="mb-2">
+              <Col
+                xs={24}
+                sm={24}
+                md={22}
+                lg={18}
+                xl={18}
+                xxl={14}
+                key={id}
+                className="mb-4"
+              >
                 <CampaignCard
-                  title={campaign.title}
-                  category={campaign.category}
+                  title={campaign?.title}
+                  category={campaign?.category}
                   orgName={campaign?.organization?.organization_name}
-                  startingDate={campaign.starting_date}
+                  startingDate={campaign?.starting_date}
+                  name={
+                    campaign?.publisher?.first_name +
+                    " " +
+                    campaign?.publisher?.last_name
+                  }
                   content={campaign.description}
-                  orgProfile={campaign?.organization?.profile}
-                  images={campaign.images}
-                  // isVisit={false}
+                  profile={campaign?.publisher?.profileUrl}
+                  images={campaign?.images}
+                  isVisit={false}
                   enableVisit={false}
                   enablePost={false}
                 />
               </Col>
             ))}
         </Row>
-
-
       </InfiniteScroll>
     </>
   );

@@ -22,14 +22,38 @@ import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
 const Index = ({ match }) => {
-  const { generateToken } = useAuth();
+  const { currentUser, generateToken } = useAuth();
+  const [alreadyFollow, setAlreadyFollow] = useState(false)
   const [organization, setOrganization] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getOrganization();
+    getOrganizationClient()
   }, []);
 
+  useEffect(() => {
+    const startTime = Date.now();
+
+    return () => {
+      const secondsOnPage = Math.round((Date.now() - startTime) / 1000);
+      console.log("Seconds on page:", secondsOnPage);
+      createAnalytic(generateToken()[1], {
+        organization_id: match.params.organization_id,
+        duration: secondsOnPage,
+      });
+    };
+  }, []);
+
+  const createAnalytic = async (token, data) => {
+    try {
+      await axios.post(`/api/analytic/create`, data, token).then((res) => {
+        return console.log(res.data);
+      });
+    } catch (error) {
+      return console.log(error.message);
+    }
+  };
   const getOrganization = async () => {
     await axios
       .get(
@@ -39,7 +63,24 @@ const Index = ({ match }) => {
       .then((response) => {
         setOrganization(response.data);
         console.log(response.data);
+
+      })
+      .catch((err) => {
+        message.error("Could not fetch the data in the server!");
+        console.log(err);
+      });
+  };
+
+  const getOrganizationClient = async () => {
+    await axios
+      .get(
+        `/api/organization/get-organization-client/${match.params.organization_id}/${currentUser.uid}`,
+        generateToken()[1]
+      )
+      .then((response) => {
+        setAlreadyFollow(response.data)
         setIsLoading(false);
+
       })
       .catch((err) => {
         message.error("Could not fetch the data in the server!");
@@ -56,13 +97,15 @@ const Index = ({ match }) => {
             <Header
               organizationId={match.params.organization_id}
               organization={organization}
+              alreadyFollow={alreadyFollow}
             />
             <Switch>
               <Route
                 path={`${match.url}`}
                 render={() => (
                   <Barangay
-                    organizationId={match.params.organization_id} organization={organization}
+                    organizationId={match.params.organization_id}
+                    organization={organization}
                   ></Barangay>
                 )}
                 exact
@@ -125,13 +168,13 @@ const Index = ({ match }) => {
                 )}
                 exact
               ></Route>
-              <Route path={`${match.url}/about`}
+              <Route
+                path={`${match.url}/about`}
                 render={() => (
-                  <AboutPage
-                    organization={organization}
-                  ></AboutPage>
+                  <AboutPage organization={organization}></AboutPage>
                 )}
-                exact />
+                exact
+              />
 
               <Route
                 path={`${match.url}/event`}
