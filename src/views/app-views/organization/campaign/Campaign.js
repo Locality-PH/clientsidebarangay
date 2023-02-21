@@ -49,7 +49,12 @@ const Campaign = ({ organizationId }) => {
         handleError(error)
       })
 
-      setLoading(false)
+    setLoading(false)
+  }
+
+  const handleError = (error) => {
+    message.error("There is a problem with uploading the data!!!")
+    console.log("error", error)
   }
 
   return (

@@ -192,7 +192,7 @@ const Organizations = () => {
                   <Col sm={24} md={24}>
                     <SearchCampaign
                       startDate={
-                        new Date(moment(item?.starting_date).format("LL"))
+                        new Date(item?.starting_date)
                       }
                       profile={
                         item && item.images && item.images[0]

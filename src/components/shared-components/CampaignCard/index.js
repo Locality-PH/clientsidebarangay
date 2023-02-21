@@ -50,17 +50,29 @@ const CampaignCard = (props) => {
 
   //useState
   const [visible, setVisible] = useState(false);
-  const [campaignStatusState, setCampaignsStatusState] = useState(campaignStatus);
+
+  const [likeStatus, setLikeStatus] =
+    useState({
+      likeCounter: campaignStatus.likeCounter,
+      isLike: campaignStatus.isLike,
+      likes: campaignStatus.likes
+    });
+
+  const [participantStatus, setParticipantStatus] =
+    useState({
+      participantCounter: campaignStatus.participantCounter,
+      isParticipant: campaignStatus.isParticipant,
+      participants: campaignStatus.participants
+    });
 
   //useEffect
-  useEffect(() => {
-    // console.log("campaignStatusState", campaignStatusState)
-  }, [campaignStatusState])
+  // useEffect(() => {
+  //   // console.log("campaignStatusState", campaignStatusState)
+  // }, [campaignStatusState])
 
 
   //axios
   const updateCampaignStatus = async (values, type, operation) => {
-    console.log("userId", userId)
 
     if (type == "participant") {
       var newCampaignData = {
@@ -76,7 +88,7 @@ const CampaignCard = (props) => {
 
     await axios.post(
       `/api/campaign/update-status`,
-      { values: newCampaignData, operation, type, userId, campaignId},
+      { values: newCampaignData, operation, type, userId, campaignId },
       generateToken()[1],
       { cancelToken }
     ).catch((error) => {
@@ -86,27 +98,27 @@ const CampaignCard = (props) => {
   }
 
   const likeDecrement = async () => {
-    var newStatus = { ...campaignStatusState, isLike: false, likeCounter: campaignStatusState.likeCounter - 1 }
+    var newStatus = { ...likeStatus, isLike: false, likeCounter: likeStatus.likeCounter - 1 }
     await updateCampaignStatus(newStatus, "like", "decrement")
-    setCampaignsStatusState(newStatus)
+    setLikeStatus(newStatus)
   }
 
   const likeIncrement = async () => {
-    var newStatus = { ...campaignStatusState, isLike: true, likeCounter: campaignStatusState.likeCounter + 1 }
+    var newStatus = { ...likeStatus, isLike: true, likeCounter: likeStatus.likeCounter + 1 }
     await updateCampaignStatus(newStatus, "like", "increment")
-    setCampaignsStatusState(newStatus)
+    setLikeStatus(newStatus)
   }
 
   const participantDecrement = async () => {
-    var newStatus = { ...campaignStatusState, isParticipant: false, participantCounter: campaignStatusState.participantCounter - 1 }
+    var newStatus = { ...participantStatus, isParticipant: false, participantStatus: participantStatus.participantCounter - 1 }
     await updateCampaignStatus(newStatus, "participant", "decrement")
-    setCampaignsStatusState(newStatus)
+    setParticipantStatus(newStatus)
   }
 
   const participantIncrement = async () => {
-    var newStatus = { ...campaignStatusState, isParticipant: true, participantCounter: campaignStatusState.participantCounter + 1 }
+    var newStatus = { ...participantStatus, isParticipant: true, participantCounter: participantStatus.participantCounter + 1 }
     await updateCampaignStatus(newStatus, "participant", "increment")
-    setCampaignsStatusState(newStatus)
+    setParticipantStatus(newStatus)
   }
 
   const menuItems = [{
@@ -248,7 +260,7 @@ const CampaignCard = (props) => {
           <div className="mt-3">
             <div className="mb-0 d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center">
-                {campaignStatusState.isLike != true ?
+                {likeStatus.isLike != true ?
                   <>
                     <HeartOutlined
                       style={{
@@ -258,7 +270,7 @@ const CampaignCard = (props) => {
                       }}
                       onClick={() => likeIncrement()}
                     />
-                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10, marginLeft: 3 }}>{campaignStatusState.likeCounter}</p>
+                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10, marginLeft: 3 }}>{likeStatus.likeCounter}</p>
 
                   </>
                   :
@@ -271,10 +283,10 @@ const CampaignCard = (props) => {
                       }}
                       onClick={() => likeDecrement()}
                     />
-                    <p style={{ color: "rgb(252, 108, 133)", marginTop: 10, marginLeft: 3 }}>{campaignStatusState.likeCounter}</p></>
+                    <p style={{ color: "rgb(252, 108, 133)", marginTop: 10, marginLeft: 3 }}>{likeStatus.likeCounter}</p></>
                 }
 
-                {campaignStatusState.isParticipant != true ?
+                {participantStatus.isParticipant != true ?
                   <>
                     <BsPeopleFill
                       style={{
@@ -283,7 +295,7 @@ const CampaignCard = (props) => {
                         marginLeft: 5
                       }} />
 
-                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{campaignStatusState.participantCounter}</p>
+                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{participantStatus.participantCounter}</p>
                   </>
 
                   :
@@ -295,13 +307,13 @@ const CampaignCard = (props) => {
                         color: "	#0080FE"
                       }} />
 
-                    <p style={{ color: "#0080FE", marginTop: 10 }}>{campaignStatusState.participantCounter}</p>
+                    <p style={{ color: "#0080FE", marginTop: 10 }}>{participantStatus.participantCounter}</p>
                   </>
                 }
 
               </div>
               <div className="d-flex align-items-center">
-                {campaignStatusState.isParticipant != true ?
+                {participantStatus.isParticipant != true ?
                   <Button
                     style={{
                       color: "rgb(0, 49, 81)",
@@ -369,6 +381,8 @@ CampaignCard.propTypes = {
   publisherName: PropTypes.string,
   orgProfile: PropTypes.object,
   campaignStatus: PropTypes.object,
+  likeStatus: PropTypes.object,
+  participantStatus: PropTypes.object,
   loading: PropTypes.bool
 };
 
@@ -388,6 +402,8 @@ CampaignCard.defaultProps = {
   publisherName: "",
   suggestorName: "",
   orgProfile: {},
+  participantStatus: { participantCounter: 69, isParticipant: false, participants: [] },
+  likeStatus: { likeCounter: 420, isLike: false, participants: [], likes: [] },
   campaignStatus: { likeCounter: 420, isLike: false, participantCounter: 69, isParticipant: false, participants: [], likes: [] },
   loading: false
 };

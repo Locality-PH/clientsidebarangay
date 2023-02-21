@@ -20,6 +20,7 @@ import EventPage from "./events/EventPage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
+import CampaignPreview from "./campaign/CampaignPreview";
 
 const Index = ({ match }) => {
   const { currentUser, generateToken } = useAuth();
@@ -130,16 +131,16 @@ const Index = ({ match }) => {
                 exact
               ></Route>
               <Route
-                path={`${match.url}/campaign/:id`}
+                path={`${match.url}/campaign/:campaignId`}
                 render={(result) => (
-                  <CampaignPage
+                  <CampaignPreview
                     match={result.match}
                     organizationId={match.params.organization_id}
-                  ></CampaignPage>
+                  />
                 )}
                 exact
               ></Route>
-              <Route
+              {/* <Route
                 path={`${match.url}/campaign/edit/:id`}
                 render={() => (
                   <EditCampaign
@@ -147,7 +148,7 @@ const Index = ({ match }) => {
                   ></EditCampaign>
                 )}
                 exact
-              ></Route>
+              ></Route> */}
 
               <Route
                 path={`${match.url}/certificate-request`}
