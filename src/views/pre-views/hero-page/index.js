@@ -6,14 +6,20 @@ import Schedule from "./Schedule";
 import BlogNews from "./BlogNews";
 import { withRouter, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-
+import { signOutSuccess2 } from "redux/actions/Auth";
+import store from "redux/store";
+import redux, { createStore } from "redux";
 const DemoComponent = (props) => {
   const { redirect } = props;
   let history = useHistory();
+  console.log(redirect);
+  console.log();
   useEffect(() => {
     if (redirect === "/auth/login") {
       history.push(redirect);
     }
+    store.dispatch(signOutSuccess2());
+    console.log(redirect);
   }, []);
   return (
     <>
