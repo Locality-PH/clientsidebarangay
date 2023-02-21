@@ -2,15 +2,16 @@ import { React, useState, useEffect } from "react";
 import { Typography, Col, Avatar, Card, Button, Space, Carousel, Image } from "antd";
 import { HeartOutlined, MessageOutlined, EyeOutlined, HeartFilled, HeartTwoTone, TeamOutlined } from "@ant-design/icons";
 import { BsPeopleFill, BsPeople } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import ShowMoreText from "react-show-more-text";
 import CommentSection from "components/shared-components/CommentSection";
 import CustomAvatar from "../CustomAvatar";
-import moment from "moment";
+import { useAuth } from "contexts/AuthContext";
+import moment from 'moment';
+import axios from 'axios'
 import utils from "utils";
 import CustomDropdown from "../CustomDropdown";
-import Flex from "../Flex";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -21,12 +22,15 @@ const CampaignCard = (props) => {
     category,
     orgName,
     orgProfile,
+    orgId,
     startingDate,
     images,
     content,
     publisherName,
     suggestorName,
+    userId,
     campaignStatus,
+    campaignId,
     margin,
     isVisit,
     classData,
@@ -36,20 +40,80 @@ const CampaignCard = (props) => {
     loading
   } = props;
 
+  //Initialize
+  const history = useHistory();
+
+  //for api
+  const source = axios.CancelToken.source();
+  const cancelToken = source.token;
+  const { generateToken, currentUser } = useAuth();
+
+  //useState
   const [visible, setVisible] = useState(false);
   const [campaignStatusState, setCampaignsStatusState] = useState(campaignStatus);
 
+  //useEffect
   useEffect(() => {
-    console.log("campaignStatusState", campaignStatusState)
-
+    // console.log("campaignStatusState", campaignStatusState)
   }, [campaignStatusState])
 
+
+  //axios
+  const updateCampaignStatus = async (values, type, operation) => {
+
+    if (type == "participant") {
+      var newCampaignData = {
+        participantCounter: values.participantCounter,
+      }
+    }
+
+    if (type == "like") {
+      var newCampaignData = {
+        likeCounter: values.likeCounter,
+      }
+    }
+
+    await axios.post(
+      `/api/campaign/update-status`,
+      { values: newCampaignData, operation, type, userId, campaignId},
+      generateToken()[1],
+      { cancelToken }
+    ).catch((error) => {
+      throw error
+    })
+
+  }
+
+  const likeDecrement = async () => {
+    var newStatus = { ...campaignStatusState, isLike: false, likeCounter: campaignStatusState.likeCounter - 1 }
+    await updateCampaignStatus(newStatus, "like", "decrement")
+    setCampaignsStatusState(newStatus)
+  }
+
+  const likeIncrement = async () => {
+    var newStatus = { ...campaignStatusState, isLike: true, likeCounter: campaignStatusState.likeCounter + 1 }
+    await updateCampaignStatus(newStatus, "like", "increment")
+    setCampaignsStatusState(newStatus)
+  }
+
+  const participantDecrement = async () => {
+    var newStatus = { ...campaignStatusState, isParticipant: false, participantCounter: campaignStatusState.participantCounter - 1 }
+    await updateCampaignStatus(newStatus, "participant", "decrement")
+    setCampaignsStatusState(newStatus)
+  }
+
+  const participantIncrement = async () => {
+    var newStatus = { ...campaignStatusState, isParticipant: true, participantCounter: campaignStatusState.participantCounter + 1 }
+    await updateCampaignStatus(newStatus, "participant", "increment")
+    setCampaignsStatusState(newStatus)
+  }
 
   const menuItems = [{
     text: "View all images",
     icon: <EyeOutlined />,
     onClick: () => setVisible(true)
   }]
+
 
   const getColor = (category) => {
     switch (category) {
@@ -76,23 +140,6 @@ const CampaignCard = (props) => {
       // code block
     }
   }
-
-  const likeDecrement = () => {
-    setCampaignsStatusState({ ...campaignStatusState, isLike: false, likes: campaignStatusState.likes - 1 })
-  }
-
-  const likeIncrement = () => {
-    setCampaignsStatusState({ ...campaignStatusState, isLike: true, likes: campaignStatusState.likes + 1 })
-  }
-
-  const participantDecrement = () => {
-    setCampaignsStatusState({ ...campaignStatusState, isParticipant: false, participants: campaignStatusState.participants - 1 })
-  }
-
-  const participantIncrement = () => {
-    setCampaignsStatusState({ ...campaignStatusState, isParticipant: true, participants: campaignStatusState.participants + 1 })
-  }
-
 
   return (
     <>
@@ -210,7 +257,7 @@ const CampaignCard = (props) => {
                       }}
                       onClick={() => likeIncrement()}
                     />
-                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{campaignStatusState.likes}</p>
+                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{campaignStatusState.likeCounter}</p>
 
                   </>
                   :
@@ -223,7 +270,7 @@ const CampaignCard = (props) => {
                       }}
                       onClick={() => likeDecrement()}
                     />
-                    <p style={{ color: "rgb(252, 108, 133)", marginTop: 10 }}>{campaignStatusState.likes}</p></>
+                    <p style={{ color: "rgb(252, 108, 133)", marginTop: 10 }}>{campaignStatusState.likeCounter}</p></>
                 }
 
                 {campaignStatusState.isParticipant != true ?
@@ -235,7 +282,7 @@ const CampaignCard = (props) => {
                         marginLeft: 5
                       }} />
 
-                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{campaignStatusState.participants}</p>
+                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{campaignStatusState.participantCounter}</p>
                   </>
 
                   :
@@ -247,7 +294,7 @@ const CampaignCard = (props) => {
                         color: "	#0080FE"
                       }} />
 
-                    <p style={{ color: "#0080FE", marginTop: 10 }}>{campaignStatusState.participants}</p>
+                    <p style={{ color: "#0080FE", marginTop: 10 }}>{campaignStatusState.participantCounter}</p>
                   </>
                 }
 
@@ -340,7 +387,7 @@ CampaignCard.defaultProps = {
   publisherName: "",
   suggestorName: "",
   orgProfile: {},
-  campaignStatus: { likes: 420, isLike: false, participants: 69, isParticipant: false },
+  campaignStatus: { likeCounter: 420, isLike: false, participantCounter: 69, isParticipant: false, participants: [], likes: [] },
   loading: false
 };
 export default CampaignCard;
