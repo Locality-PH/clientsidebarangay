@@ -1,78 +1,13 @@
-import { React, useState, useEffect, createRef } from 'react'
-import { Row, Col, Tag, message, Card, Empty } from 'antd';
-import { CampaignListData } from '.././BarangayData';
+import { React } from 'react'
+import { Row, Col, Tag, Card, Empty } from 'antd';
 import ShowMoreText from "react-show-more-text";
 import { ClockCircleOutlined } from '@ant-design/icons';
-import { useAuth } from "contexts/AuthContext";
-import axios from 'axios'
-import moment from 'moment'
-import utils from 'utils';
 import Flex from 'components/shared-components/Flex';
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const ItemHeader = ({ name, type }) => (
-	<div>
-		<h4 className="mb-0">{name}</h4>
-		<span className="text-muted">{type} - Pending</span>
-	</div>
-)
+const CampaignRequested = (props) => {
+	const { campaigns, loading, pageSetup, setPageSetup, hasMore} = props
 
-const ItemInfo = ({ starting_date }) => {
-	return <Flex alignItems="center">
-		<div className="mr-1">
-			<span className="text-muted">Starting at</span>
-		</div>
-
-		<div>
-			<ClockCircleOutlined />
-			<span className="ml-2 font-weight-semibold">{new Date(starting_date).toLocaleDateString('en-US')}</span>
-		</div>
-	</Flex>
-}
-
-
-const CampaignRequested = ({ organizationId }) => {
-	//for api
-	const source = axios.CancelToken.source();
-	const cancelToken = source.token;
-	const { generateToken } = useAuth();
-
-
-	//useState
-	const [campaigns, setCampaigns] = useState([])
-	const [loading, setLoading] = useState({})
-	const [pageSetup, setPageSetup] = useState({ page: 1, pageSize: 2, landingPage: "suggestion", })
-	const [list, setList] = useState(CampaignListData);
-
-	//useEffect
-	useEffect(() => {
-		getLatestCampaign()
-	}, [pageSetup])
-
-	//axios
-	const getLatestCampaign = async () => {
-		const { page, pageSize, landingPage } = pageSetup
-
-		await axios.get(
-			`/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&orgId=${organizationId}`,
-			generateToken()[1],
-			{ cancelToken })
-			.then(
-				(res) => {
-					var data = res.data
-					data.map((data) => data.starting_date = moment(new Date(data.starting_date)))
-					setCampaigns([...campaigns, ...data])
-					console.log("data", data)
-					// if (data.length == 0) setHasMore(false)
-				})
-			.catch((error) => {
-				handleError(error)
-			})
-	}
-
-	const handleError = (error) => {
-		message.error("There is a problem with uploading the data!!!")
-		console.log("error", error)
-	}
 	const getColor = (status) => {
 		switch (status) {
 			case "Approved":
@@ -86,13 +21,47 @@ const CampaignRequested = ({ organizationId }) => {
 		}
 	}
 
+	const ItemInfo = ({ starting_date }) => {
+		return <Flex alignItems="center">
+			<div className="mr-1">
+				<span className="text-muted">Starting at</span>
+			</div>
+
+			<div>
+				<ClockCircleOutlined />
+				<span className="ml-2 font-weight-semibold">{new Date(starting_date).toLocaleDateString('en-US')}</span>
+			</div>
+		</Flex>
+	}
+	
+	const handleLoadMore = () => {
+		setPageSetup({ ...pageSetup, page: pageSetup.page + 1 })
+	  }
+
 	return (
-		<>
-			<Row gutter={16}>
+		<InfiniteScroll
+			dataLength={campaigns.length - 1} 
+			next={() => handleLoadMore()}
+			hasMore={hasMore}
+			loader={
+				<Row gutter={16} align="center" className="w-100">
+					<Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+						<Card loading={true} />
+					</Col>
+				</Row>
+
+			}
+			endMessage={
+				<p style={{ textAlign: 'center' }}>
+					<b>Yay! You have seen it all</b>
+				</p>
+			}
+		>
+			<Row gutter={16} className="w-100">
 				{campaigns.length <= 0 &&
 
 					<Col xs={24} sm={24} md={24}>
-						<Card>
+						<Card loading={loading}>
 							<Empty description="You currenlty don't have any suggestion" />
 						</Card>
 					</Col>
@@ -103,7 +72,7 @@ const CampaignRequested = ({ organizationId }) => {
 						<Card>
 							<Flex alignItems="center" justifyContent="between">
 								<div>
-									<h1>Title: {campaign.title}</h1>
+									<h1>{campaign.title}</h1>
 									<ItemInfo
 										starting_date={campaign.starting_date}
 									/>
@@ -111,9 +80,9 @@ const CampaignRequested = ({ organizationId }) => {
 
 								</div>
 								<div>
-									<Tag color={getColor(campaign.status)} style={{fontSize: 15}}>{campaign.status}</Tag>
+									<Tag color={getColor(campaign.status)} style={{ fontSize: 15 }}>{campaign.status}</Tag>
 								</div>
-								
+
 							</Flex>
 							<div className="mt-2">
 								<p style={{ fontWeight: "bolder" }}>
@@ -135,7 +104,7 @@ const CampaignRequested = ({ organizationId }) => {
 					</Col>
 				))}
 			</Row>
-		</>
+		</InfiniteScroll>
 	)
 }
 

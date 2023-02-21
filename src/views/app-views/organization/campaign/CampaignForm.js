@@ -5,7 +5,8 @@ import { useAuth } from "contexts/AuthContext";
 import axios from 'axios'
 const { Option } = Select;
 
-const CampaignForm = ({ organizationId }) => {
+const CampaignForm = (props) => {
+    const {organizationId, getLatestCampaign, loading} = props
     //for api
     const source = axios.CancelToken.source();
     const cancelToken = source.token;
@@ -23,13 +24,12 @@ const CampaignForm = ({ organizationId }) => {
                 (res) => {
                     var data = res.data
                     console.log("data", data)
+                    getLatestCampaign()
                 })
             .catch((error) => {
                 handleError(error)
             })
     }
-
-
 
     const handleError = (error) => {
         message.error("There is a problem with uploading the data!!!")
@@ -54,8 +54,9 @@ const CampaignForm = ({ organizationId }) => {
                             name="title"
                             noStyle
                             rules={[{ required: true, message: 'Title is required' }]}
+                            
                         >
-                            <Input placeholder="Enter Campaign title" />
+                            <Input placeholder="Enter Campaign title" disabled={loading} />
                         </Form.Item>
                     </Form.Item>
 
@@ -67,7 +68,9 @@ const CampaignForm = ({ organizationId }) => {
                                 noStyle
                                 rules={[{ required: true, message: 'Campaign Type is required' }]}
                             >
-                                <Select placeholder="Select Campaign Type" style={{ width: "100%" }}>
+                                <Select placeholder="Select Campaign Type" style={{ width: "100%" }}
+                                disabled={loading}
+                                >
                                     {campaignType.map((type, i) => {
                                         return <Option value={type} key={i}>{type}</Option>
                                     })}
@@ -85,7 +88,9 @@ const CampaignForm = ({ organizationId }) => {
                                 rules={[{ required: true, message: 'Staring Date is required' }]}
                             >
                                 <DatePicker className="w-100"
-                                    format={"YYYY/MM/DD"} />
+                                    format={"YYYY/MM/DD"} 
+                                    disabled={loading}
+                                    />
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
@@ -97,7 +102,7 @@ const CampaignForm = ({ organizationId }) => {
                             noStyle
                             rules={[{ required: true }]}
                         >
-                            <Input.TextArea placeholder="Write Description" />
+                            <Input.TextArea placeholder="Write Description" disabled={loading}/>
                         </Form.Item>
                     </Form.Item>
 
