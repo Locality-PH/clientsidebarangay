@@ -147,7 +147,7 @@ const Blotter = () => {
 													:
 													<Avatar
 														className="font-size-sm"
-														style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
+														style={{ backgroundColor: val.profile_color }}
 													>
 														{utils.getNameInitial(val.organization_id.organization_name)}
 													</Avatar>

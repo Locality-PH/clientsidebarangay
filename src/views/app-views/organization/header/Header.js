@@ -172,7 +172,7 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                 ) : (
                   <Avatar
                     style={{
-                      backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)],
+                      backgroundColor: organization.profile_color,
                       fontSize: "3rem"
                     }}
                     size={150}
