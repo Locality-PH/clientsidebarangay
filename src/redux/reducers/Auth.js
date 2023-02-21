@@ -44,7 +44,7 @@ const auth = (state = initState, action) => {
       return {
         ...state,
         token: null,
-        redirect: "/auth",
+        redirect: "/auth/login",
         loading: false,
       };
     }

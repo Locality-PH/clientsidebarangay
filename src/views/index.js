@@ -26,6 +26,7 @@ function RouteInterceptor({
   children,
   isAuthenticated,
   isAccessToken,
+  redirect,
   ...rest
 }) {
   return (
@@ -48,7 +49,8 @@ function RouteInterceptor({
 }
 
 export const Views = (props) => {
-  const { locale, token, location, direction } = props;
+  const { locale, token, location, direction, redirect } = props;
+  console.log(redirect);
   const currentAppLocale = AppLocale[locale];
   const {
     setOrganization,
@@ -96,13 +98,21 @@ export const Views = (props) => {
           <Route path={AUTH_PREFIX_PATH}>
             <AuthLayout direction={direction} />
           </Route>
-          <RouteInterceptor path={APP_PREFIX_PATH} isAuthenticated={token}>
+          <RouteInterceptor
+            path={APP_PREFIX_PATH}
+            isAuthenticated={token}
+            redirect={redirect}
+          >
             <AppLayout direction={direction} location={location} />
           </RouteInterceptor>
           {/* <RouteInterceptor path={APP_PREFIX_PATH} isAuthenticated={token}>
             <AppLayout direction={direction} location={location} />
           </RouteInterceptor> */}
-          <RouteInterceptor path={PRE_PREFIX_PATH} isAuthenticated={!token}>
+          <RouteInterceptor
+            path={PRE_PREFIX_PATH}
+            isAuthenticated={!token}
+            redirect={redirect}
+          >
             <PreLayout direction={direction} />
           </RouteInterceptor>
           {/* <Route path={PRE_PREFIX_PATH}>
@@ -118,8 +128,8 @@ export const Views = (props) => {
 
 const mapStateToProps = ({ theme, auth }) => {
   const { locale, direction } = theme;
-  const { token } = auth;
-  return { locale, direction, token };
+  const { token, redirect } = auth;
+  return { locale, direction, token, redirect };
 };
 
 export default withRouter(connect(mapStateToProps)(Views));
