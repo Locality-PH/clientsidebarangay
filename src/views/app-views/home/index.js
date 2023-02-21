@@ -121,7 +121,7 @@ export const DefaultDashboard = () => {
                   content={campaign.description}
                   orgProfile={campaign?.organization?.profile}
                   images={campaign.images}
-                  isVisit={false}
+                  // isVisit={false}
                   enableVisit={false}
                   enablePost={false}
                 />
