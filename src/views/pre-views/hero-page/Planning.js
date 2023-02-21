@@ -1,10 +1,16 @@
 import React from "react";
 import { Row, Col } from "antd";
+import { useAuth } from "contexts/AuthContext";
 
 const Planning = () => {
+  const { welcome } = useAuth();
   return (
     <>
-      <section id="welcome" className="welcome-area ptb-80 bg-gradient-2">
+      <section
+        ref={welcome}
+        id="welcome"
+        className="welcome-area ptb-80 bg-gradient-2"
+      >
         <div className="container">
           <div className="section-title ">
             <h2>

@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Layout } from "antd";
+import { Layout, Button } from "antd";
 import Logo from "./Logo";
 import { toggleCollapsedNav, onMobileNavToggle } from "redux/actions/Theme";
 import NavProfileRegister from "./NavProfileRegister";
 import utils from "utils";
+import { LoginOutlined } from "@ant-design/icons";
+import { useAuth } from "contexts/AuthContext";
 
 const { Header } = Layout;
 
 export const HeaderNavRegister = (props) => {
+  const { about, welcome, campaign, schedule, ref } = useAuth();
+
+  console.log(ref);
   const { headerNavColor, isMobile, currentTheme } = props;
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -16,6 +21,19 @@ export const HeaderNavRegister = (props) => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
+  const handleClick1 = () => {
+    schedule.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const handleClick2 = () => {
+    about.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const handleClick3 = () => {
+    campaign.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  const handleClick4 = () => {
+    welcome.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(
     () => {
       const listener = window.addEventListener(
@@ -47,11 +65,42 @@ export const HeaderNavRegister = (props) => {
         <div className={`app-header-wrapper  layout-top-nav`}>
           <Logo logoType={navMode} width={width} />
 
-          <div className="nav-left"></div>
           <div className="nav-right">
-            {/* <MessageOutlined style={{color: "white", fontSize: "1.35em"}}/> */}
             {/* <NavMessage /> */}
-
+            <ul className="ant-menu ant-menu-root ant-menu-horizontal ">
+              <li
+                onClick={handleClick2}
+                className="ant-menu-item ant-menu-item-only-child home-tag "
+              >
+                <span className="home-tag " style={{ color: "white" }}>
+                  About
+                </span>
+              </li>
+              <li
+                onClick={handleClick4}
+                className="ant-menu-item ant-menu-item-only-child home-tag "
+              >
+                <span className="home-tag " style={{ color: "white" }}>
+                  Welcome
+                </span>
+              </li>
+              <li
+                onClick={handleClick3}
+                className="ant-menu-item ant-menu-item-only-child home-tag "
+              >
+                <span className="home-tag " style={{ color: "white" }}>
+                  Campaign
+                </span>
+              </li>
+              <li
+                onClick={handleClick1}
+                className="ant-menu-item ant-menu-item-only-child home-tag "
+              >
+                <span className="home-tag " style={{ color: "white" }}>
+                  Schedule
+                </span>
+              </li>
+            </ul>
             <NavProfileRegister />
           </div>
         </div>

@@ -2,15 +2,15 @@
   top: 100px !important;
 }
 
-.ant-image-preview-switch-left{
+.ant-image-preview-switch-left {
   background-color: white !important;
 }
 
-.ant-image-preview-switch-right{
+.ant-image-preview-switch-right {
   background-color: white !important;
 }
 
-.ant-image-preview-operations{
+.ant-image-preview-operations {
   background-color: white !important;
 }
 
@@ -18,6 +18,12 @@
   background-color: hsl(0, 0%, 95%);
 }
 
+.home-tag a {
+  color: rgb(243, 3, 3) !important;
+}
+.home-tag:hover {
+  color: rgb(142, 187, 255) !important;
+}
 .app-content.layout-top-nav {
   margin-top: 80px !important;
   min-height: calc(100vh - 130px - 55px);
@@ -361,13 +367,14 @@ ul li {
   width: 40%;
 }
 
-.blog-carousel div>button[data-direction="right"] {
+.blog-carousel div > button[data-direction="right"] {
   right: -16px;
 }
 
-.blog-carousel div>button[data-direction="left"],
-.blog-carousel div>button[data-direction="right"] {
-  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50% no-repeat;
+.blog-carousel div > button[data-direction="left"],
+.blog-carousel div > button[data-direction="right"] {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50%
+    no-repeat;
   border: none;
   cursor: pointer;
   height: 180px;
@@ -376,9 +383,10 @@ ul li {
   top: 180px;
 }
 
-div>button[data-direction="left"],
-.blog-carousel div>button[data-direction="right"] {
-  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50% no-repeat;
+div > button[data-direction="left"],
+.blog-carousel div > button[data-direction="right"] {
+  background: url(https://cdn.dsmcdn.com/web/production/slick-arrow.svg) 50%
+    no-repeat;
   border: none;
   cursor: pointer;
   height: 180px;
@@ -387,13 +395,13 @@ div>button[data-direction="left"],
   top: 180px;
 }
 
-.blog-carousel div>button[data-direction="left"] {
+.blog-carousel div > button[data-direction="left"] {
   left: -16px;
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 
-.blog-carousel>div:nth-child(2) {
+.blog-carousel > div:nth-child(2) {
   padding: 15px 0;
 }
 
