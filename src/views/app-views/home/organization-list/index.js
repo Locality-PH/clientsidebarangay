@@ -78,7 +78,7 @@ const OrganizationList = () => {
                     :
                     <Avatar
                       className="font-size-sm"
-                      style={{ backgroundColor: COLORS[Math.floor(Math.random() * COLORS.length)] }}
+                      style={{ backgroundColor: result.profile_color }}
                     >
                       {utils.getNameInitial(result.organization_name)}
                     </Avatar>
