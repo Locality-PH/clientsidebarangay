@@ -4,6 +4,7 @@ export const SIGNOUT = "SIGNOUT";
 export const SIGNOUT_SUCCESS = "SIGNOUT_SUCCESS";
 export const SIGNUP = "SIGNUP";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNOUT_SUCCESS_2 = "SIGNUP_SUCCESS_2";
 export const SHOW_AUTH_MESSAGE = "SHOW_AUTH_MESSAGE";
 export const HIDE_AUTH_MESSAGE = "HIDE_AUTH_MESSAGE";
 export const SHOW_LOADING = "SHOW_LOADING";

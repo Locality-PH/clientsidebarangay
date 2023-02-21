@@ -4,6 +4,7 @@ import {
   SHOW_AUTH_MESSAGE,
   HIDE_AUTH_MESSAGE,
   SIGNOUT_SUCCESS,
+  SIGNOUT_SUCCESS_2,
   SIGNUP_SUCCESS,
   SHOW_LOADING,
   SIGNIN_WITH_GOOGLE_AUTHENTICATED,
@@ -45,6 +46,14 @@ const auth = (state = initState, action) => {
         ...state,
         token: null,
         redirect: "/auth/login",
+        loading: false,
+      };
+    }
+    case SIGNOUT_SUCCESS_2: {
+      return {
+        ...state,
+        token: null,
+        redirect: "/",
         loading: false,
       };
     }
