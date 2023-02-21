@@ -132,7 +132,7 @@ export const NavProfile = (props) => {
         trigger={["click"]}
       >
         <Menu
-          className="d-flex align-item-center avatar-top home-tag"
+          className="d-flex align-item-center avatar-top home-tag-2"
           mode="horizontal"
         >
           <Menu.Item key="profile">
@@ -140,7 +140,7 @@ export const NavProfile = (props) => {
               size={45}
               icon={
                 <UserOutlined
-                  className="home-tag"
+                  className="home-tag-2"
                   style={{ fontSize: "25px", marginRight: "0px" }}
                 />
               }

@@ -78,7 +78,7 @@ export const HeaderNavRegister = (props) => {
                     onClick={handleClick2}
                     className="ant-menu-item ant-menu-item-only-child home-tag "
                   >
-                    <span className="home-tag " style={{ color: "white" }}>
+                    <span className="home-tag" style={{ color: "white" }}>
                       About
                     </span>
                   </li>
