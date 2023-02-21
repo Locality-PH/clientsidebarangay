@@ -11,6 +11,7 @@ import {
 import Icon from "components/util-components/Icon";
 import { signOut } from "redux/actions/Auth";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "contexts/AuthContext";
 
 import { Link } from "react-router-dom";
 const menuItem = [
@@ -32,9 +33,24 @@ const menuItem = [
 ];
 const menuItem2 = [
   {
-    title: "Create Organization",
+    title: "About",
     icon: QuestionCircleOutlined,
-    path: "/home/schedule/demo",
+    path: "about",
+  },
+  {
+    title: "Welcome",
+    icon: QuestionCircleOutlined,
+    path: "welcome",
+  },
+  {
+    title: "Campaign",
+    icon: QuestionCircleOutlined,
+    path: "campaign",
+  },
+  {
+    title: "Schedule",
+    icon: QuestionCircleOutlined,
+    path: "schedule",
   },
 ];
 let colorTag = [
@@ -48,17 +64,29 @@ let colorTag = [
   "#AA47BC",
 ];
 const randomColor = Math.floor(Math.random() * colorTag.length);
-export const NavProfile = ({ signOut }) => {
+export const NavProfile = (props) => {
+  const { width } = props;
+  const { about, welcome, campaign, schedule } = useAuth();
+  console.log(props);
   let history = useHistory();
   const [current, setCurrent] = useState();
 
   const handleClick = (e) => {
     setCurrent(e.key);
-
-    history.push(e.key);
     setCurrent(null);
-  };
 
+    return history.push(e.key);
+  };
+  const handleClickWelcome = (e) => {
+    if (e.key == "about")
+      return about.current?.scrollIntoView({ behavior: "smooth" });
+    if (e.key == "welcome")
+      return welcome.current?.scrollIntoView({ behavior: "smooth" });
+    if (e.key == "campaign")
+      return campaign.current?.scrollIntoView({ behavior: "smooth" });
+    if (e.key == "schedule")
+      return schedule.current?.scrollIntoView({ behavior: "smooth" });
+  };
   const profileMenu = (
     <div className="nav-profile nav-dropdown">
       <div className="nav-profile-header" />
@@ -76,6 +104,24 @@ export const NavProfile = ({ signOut }) => {
           })}
         </Menu>
       </div>
+      {width < 643 ? (
+        <>
+          <div className="nav-profile-body-2">
+            <Menu onClick={handleClickWelcome} selectedKeys={[current]}>
+              {menuItem2.map((el, _) => {
+                return (
+                  <Menu.Item key={el.path}>
+                    <Link to={el.path}>
+                      <Icon className="mr-3" type={el.icon} />
+                      <span className="font-weight-normal">{el.title}</span>
+                    </Link>
+                  </Menu.Item>
+                );
+              })}
+            </Menu>
+          </div>
+        </>
+      ) : null}
     </div>
   );
   return (
@@ -85,12 +131,16 @@ export const NavProfile = ({ signOut }) => {
         overlay={profileMenu}
         trigger={["click"]}
       >
-        <Menu className="d-flex align-item-center avatar-top" mode="horizontal">
+        <Menu
+          className="d-flex align-item-center avatar-top home-tag-2"
+          mode="horizontal"
+        >
           <Menu.Item key="profile">
             <Avatar
               size={45}
               icon={
                 <UserOutlined
+                  className="home-tag-2"
                   style={{ fontSize: "25px", marginRight: "0px" }}
                 />
               }

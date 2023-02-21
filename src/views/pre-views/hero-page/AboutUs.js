@@ -1,7 +1,11 @@
 import React from "react";
 import { Row, Col, Carousel } from "antd";
 import Campaign from "assets/img/campaign2.png";
+import { useAuth } from "contexts/AuthContext";
+
 const AboutUs = () => {
+  const { about } = useAuth();
+
   const contentStyle = {
     height: "300px",
     color: "#fff",
@@ -14,7 +18,7 @@ const AboutUs = () => {
   };
   return (
     <>
-      <section id="about" className="about-area ptb-80 bg-f6f6f6">
+      <section ref={about} id="about" className="about-area ptb-80 bg-f6f6f6">
         <div className="container">
           <div className="section-title">
             <h2>

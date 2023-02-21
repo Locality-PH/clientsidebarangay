@@ -5,6 +5,7 @@ import {
   SIGNOUT_SUCCESS,
   SHOW_AUTH_MESSAGE,
   HIDE_AUTH_MESSAGE,
+  SIGNOUT_SUCCESS_2,
   SIGNUP,
   SIGNUP_SUCCESS,
   SHOW_LOADING,
@@ -39,7 +40,11 @@ export const signOutSuccess = () => {
     type: SIGNOUT_SUCCESS,
   };
 };
-
+export const signOutSuccess2 = () => {
+  return {
+    type: SIGNOUT_SUCCESS_2,
+  };
+};
 export const signUp = (user) => {
   return {
     type: SIGNUP,

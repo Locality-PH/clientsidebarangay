@@ -1,10 +1,13 @@
 import React from "react";
 import { Row, Col, Button } from "antd";
+import { useAuth } from "contexts/AuthContext";
 
 const Schedule = () => {
+  const { schedule } = useAuth();
+
   return (
     <>
-      <section className="ctr-area ptb-80">
+      <section ref={schedule} id="footer" className="ctr-area ptb-80">
         <div className="container">
           <Row justify={"center"} className="row">
             <Col lg={12} md={12}>

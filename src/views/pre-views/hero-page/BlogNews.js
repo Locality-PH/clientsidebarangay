@@ -4,11 +4,14 @@ import { Row, Col, Card } from "antd";
 import News from "views/app-views/home/announcement";
 import { NewsReportData } from "./DefaultDashboardData";
 import CommentSection from "components/shared-components/CommentSection";
+import { useAuth } from "contexts/AuthContext";
+
 const BlogComponent = () => {
   const [data, setData] = useState(false);
   const newsReportData = NewsReportData;
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+  const { campaign } = useAuth();
 
   const updateWindowDimensions = () => {
     setWidth(window.innerWidth);
@@ -21,7 +24,7 @@ const BlogComponent = () => {
   }, []);
   return (
     <div>
-      <section id="blog" className="blog-area ptb-80">
+      <section ref={campaign} id="blog" className="blog-area ptb-80">
         <div className="container">
           <div className="section-title">
             <h2>

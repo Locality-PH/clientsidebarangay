@@ -111,9 +111,6 @@ export async function authOrganization(token, authType, history, redirect) {
         } else {
           localStorage.setItem(AUTH_ORGANIZATION_LIST, null);
           localStorage.setItem(AUTH_ORGANIZATION, null);
-          // setOrganizationMemberList(null);
-          // setOrganization(null);
-          //  return history.push(AUTH_PREFIX_PATH);
           return history.push(redirect);
         }
       })
