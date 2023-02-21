@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Layout } from "antd";
 import Logo from "./Logo";
 import { toggleCollapsedNav, onMobileNavToggle } from "redux/actions/Theme";
-
+import NavProfileRegister from "./NavProfileRegister";
 import utils from "utils";
 
 const { Header } = Layout;
@@ -46,6 +46,14 @@ export const HeaderNavRegister = (props) => {
       <div className="nav" style={{ width: `calc(100%)` }}>
         <div className={`app-header-wrapper  layout-top-nav`}>
           <Logo logoType={navMode} width={width} />
+
+          <div className="nav-left"></div>
+          <div className="nav-right">
+            {/* <MessageOutlined style={{color: "white", fontSize: "1.35em"}}/> */}
+            {/* <NavMessage /> */}
+
+            <NavProfileRegister />
+          </div>
         </div>
       </div>
     </Header>

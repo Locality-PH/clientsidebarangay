@@ -37,7 +37,7 @@ function RouteInterceptor({
         ) : (
           <Redirect
             to={{
-              pathname: AUTH_PREFIX_PATH,
+              pathname: `${PRE_PREFIX_PATH}/`,
               state: { from: location },
             }}
           />
@@ -99,9 +99,17 @@ export const Views = (props) => {
           <RouteInterceptor path={APP_PREFIX_PATH} isAuthenticated={token}>
             <AppLayout direction={direction} location={location} />
           </RouteInterceptor>
-          <Route path="*" component={PageNotFound} />
+          {/* <RouteInterceptor path={APP_PREFIX_PATH} isAuthenticated={token}>
+            <AppLayout direction={direction} location={location} />
+          </RouteInterceptor> */}
+          <RouteInterceptor path={PRE_PREFIX_PATH} isAuthenticated={!token}>
+            <PreLayout direction={direction} />
+          </RouteInterceptor>
+          {/* <Route path={PRE_PREFIX_PATH}>
+            <PreLayout direction={direction} />
+          </Route> */}
 
-          <PreLayout />
+          <Route path="*" component={PageNotFound} />
         </Switch>
       </ConfigProvider>
     </IntlProvider>

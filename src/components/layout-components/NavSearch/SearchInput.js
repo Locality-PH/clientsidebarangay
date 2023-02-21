@@ -50,8 +50,9 @@ const SearchInput = (props) => {
     // Enter
     if (event.keyCode === 13) {
       console.log("Enter");
-      console.log(`/home/posts/search/result/${searchItem || "%20"}`);
-      history.push(`/home/posts/search/result/${searchItem || "%20"}`);
+
+      console.log(`/home/posts/search/result/${encodeURI(searchItem)}`);
+      history.push(`/home/posts/search/result/${encodeURI(searchItem)}`);
     }
   };
   const onSelect = () => {

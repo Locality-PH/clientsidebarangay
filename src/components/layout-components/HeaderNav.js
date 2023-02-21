@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Layout, Menu } from "antd";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  SearchOutlined,
-  MessageFilled,
-} from "@ant-design/icons";
+import { Layout } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import Logo from "./Logo";
 import NavNotification from "./NavNotification";
 import NavProfile from "./NavProfile";
@@ -14,7 +9,6 @@ import NavLanguage from "./NavLanguage";
 import NavPanel from "./NavPanel";
 import NavSearch from "./NavSearch";
 import SearchInput from "./NavSearch/SearchInput.js";
-import { NavMessage } from "./NavMessage";
 import { toggleCollapsedNav, onMobileNavToggle } from "redux/actions/Theme";
 import {
   NAV_TYPE_TOP,

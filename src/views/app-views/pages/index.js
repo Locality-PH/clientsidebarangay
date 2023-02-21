@@ -19,8 +19,8 @@ const Pages = ({ match }) => (
         component={lazy(() => import(`./search`))}
       />
       <Route
-        path={`${match.url}/:id/:commentID/single/data`}
-        component={lazy(() => import(`./comments`))}
+        path={`${match.url}/:organization_id/:campaign_id/single/data`}
+        component={lazy(() => import(`./campaign-preview`))}
       />
       {console.log(`${match.url}/`)}
     </Switch>

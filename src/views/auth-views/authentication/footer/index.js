@@ -29,8 +29,8 @@ const Footer = () => {
             wrap="true"
             style={{ justifyContent: "center" }}
           >
-            <a>About Us</a>
-            <a>Contact Us</a>
+            <a href="/support/demo">About Us</a>
+            <a href="/support/demo">Contact Us</a>
             <a href="/support/term-condition">Terms &#38; Condition</a>
             <a href="/support/privacy-policy"> Privacy Policy</a>
             <a>Cookie Policy</a>
