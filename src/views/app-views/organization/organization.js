@@ -11,7 +11,8 @@ import axios from 'axios'
 import moment from 'moment'
 
 
-const Organization = ({ organizationId, organization }) => {
+const Organization = ({ organizationId, organization, match }) => {
+  console.log("match", match)
   //for api
   const source = axios.CancelToken.source();
   const cancelToken = source.token;
@@ -91,6 +92,7 @@ const Organization = ({ organizationId, organization }) => {
                       name={item?.organization?.organization_name}
                       id={item?.organization?.organization_id} 
                       campaign_id={item?._id}
+                      link={`${match.url}/campaign/${item?._id}`}
                     />
                   </Col>
                 </div>

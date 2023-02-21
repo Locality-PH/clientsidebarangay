@@ -107,6 +107,7 @@ const Index = ({ match }) => {
                   <Barangay
                     organizationId={match.params.organization_id}
                     organization={organization}
+                    match={match}
                   ></Barangay>
                 )}
                 exact
