@@ -4,6 +4,7 @@ import { Drawer, Menu } from "antd";
 import ThemeConfigurator from "./ThemeConfigurator";
 import { connect } from "react-redux";
 import { DIR_RTL } from "constants/ThemeConstant";
+import { Link } from "react-router-dom";
 
 export class NavPanel extends Component {
   state = { visible: false };
@@ -24,13 +25,13 @@ export class NavPanel extends Component {
     return (
       <>
         <Menu mode="horizontal">
-          <Menu.Item key="panel" onClick={this.showDrawer}>
-            <a href={void 0}>
+          <Menu.Item key="panel">
+            <Link to={"/home/account/settings/security"}>
               <SettingOutlined
-                className="nav-icon mr-0"
+                className="mr-0 nav-icon"
                 style={{ color: "white" }}
               />
-            </a>
+            </Link>
           </Menu.Item>
         </Menu>
         <Drawer

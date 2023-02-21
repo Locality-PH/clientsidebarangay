@@ -1,6 +1,22 @@
 import { React, useState, useEffect } from "react";
-import { Typography, Col, Avatar, Card, Button, Space, Carousel, Image } from "antd";
-import { HeartOutlined, MessageOutlined, EyeOutlined, HeartFilled, HeartTwoTone, TeamOutlined } from "@ant-design/icons";
+import {
+  Typography,
+  Col,
+  Avatar,
+  Card,
+  Button,
+  Space,
+  Carousel,
+  Image,
+} from "antd";
+import {
+  HeartOutlined,
+  MessageOutlined,
+  EyeOutlined,
+  HeartFilled,
+  HeartTwoTone,
+  TeamOutlined,
+} from "@ant-design/icons";
 import { BsPeopleFill, BsPeople } from "react-icons/bs";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -37,7 +53,7 @@ const CampaignCard = (props) => {
     enableVisit,
     enablePost,
     href,
-    loading
+    loading,
   } = props;
 
   //Initialize
@@ -50,7 +66,9 @@ const CampaignCard = (props) => {
 
   //useState
   const [visible, setVisible] = useState(false);
-  const [campaignStatusState, setCampaignsStatusState] = useState(campaignStatus);
+  const [campaignStatusState, setCampaignsStatusState] = useState(
+    campaignStatus
+  );
 
   //useEffect
   useEffect(() => {
@@ -119,28 +137,28 @@ const CampaignCard = (props) => {
   const getColor = (category) => {
     switch (category) {
       case "Health":
-        return "#E1F8DC"
+        return "#E1F8DC";
       //light green
       case "Sport":
-        return "#FEF8DD"
+        return "#FEF8DD";
       //yellow
       case "Environment":
-        return "#FFE7C7"
+        return "#FFE7C7";
       //melon
       case "Technology":
-        return "#B7E9F7"
+        return "#B7E9F7";
       //blue
       case "Seminar":
-        return "#ADF7B6"
+        return "#ADF7B6";
       //green
       case "Event":
-        return "#c6a7eb"
+        return "#c6a7eb";
       case "Others":
-        return "#f2aa8a"
+        return "#f2aa8a";
       default:
       // code block
     }
-  }
+  };
 
   return (
     <>
@@ -158,7 +176,7 @@ const CampaignCard = (props) => {
             />
 
             <div>
-              <div className="ml-2 mt-2">
+              <div className="mt-2 ml-2">
                 <Text type="Primary">{orgName} </Text>
               </div>
               <div className="ml-1" type="Primary">
@@ -179,38 +197,48 @@ const CampaignCard = (props) => {
         extra={<CustomDropdown menuItems={menuItems} />}
         className={`${classData}`}
       >
-        <div className="custom-carousel-div" style={{ background: getColor(category), borderRadius: "1rem" }}>
-          {images != null &&
+        <div
+          className="custom-carousel-div"
+          style={{ background: getColor(category), borderRadius: "1rem" }}
+        >
+          {images != null && (
             <>
-              <Carousel adaptiveHeight autoplay draggable
-              >
+              <Carousel adaptiveHeight autoplay draggable>
                 {images.map((img, i) => {
-                  return <img
-                    key={i}
-                    width="100%"
-                    alt="picture"
-                    src={img.data}
-                    style={{ borderRadius: "1rem 1rem 0 0" }}
-
-                  />
-                })}
-              </Carousel>
-
-              <div style={{ display: 'none' }}>
-                <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}>
-                  {images.map((img, i) => {
-                    return <Image
+                  return (
+                    <img
                       key={i}
                       width="100%"
                       alt="picture"
                       src={img.data}
                       style={{ borderRadius: "1rem 1rem 0 0" }}
                     />
+                  );
+                })}
+              </Carousel>
+
+              <div style={{ display: "none" }}>
+                <Image.PreviewGroup
+                  preview={{
+                    visible,
+                    onVisibleChange: (vis) => setVisible(vis),
+                  }}
+                >
+                  {images.map((img, i) => {
+                    return (
+                      <Image
+                        key={i}
+                        width="100%"
+                        alt="picture"
+                        src={img.data}
+                        style={{ borderRadius: "1rem 1rem 0 0" }}
+                      />
+                    );
                   })}
                 </Image.PreviewGroup>
               </div>
             </>
-          }
+          )}
 
           <div style={{ padding: "1rem" }}>
             <h2 style={{ fontWeight: "bolder" }}>
@@ -227,7 +255,9 @@ const CampaignCard = (props) => {
                 {title}
               </ShowMoreText>
             </h2>
-            <h3 className="text-muted" style={{ fontWeight: "bolder" }}>{category}</h3>
+            <h3 className="text-muted" style={{ fontWeight: "bolder" }}>
+              {category}
+            </h3>
             <h4>
               <ShowMoreText
                 /* Default options */
@@ -248,7 +278,7 @@ const CampaignCard = (props) => {
           <div className="mt-3">
             <div className="mb-0 d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center">
-                {campaignStatusState.isLike != true ?
+                {campaignStatusState.isLike != true ? (
                   <>
                     <HeartOutlined
                       style={{
@@ -261,7 +291,7 @@ const CampaignCard = (props) => {
                     <p style={{ color: "rgb(0, 49, 81)", marginTop: 10, marginLeft: 3 }}>{campaignStatusState.likeCounter}</p>
 
                   </>
-                  :
+                ) : (
                   <>
                     <HeartFilled
                       style={{
@@ -274,34 +304,34 @@ const CampaignCard = (props) => {
                     <p style={{ color: "rgb(252, 108, 133)", marginTop: 10, marginLeft: 3 }}>{campaignStatusState.likeCounter}</p></>
                 }
 
-                {campaignStatusState.isParticipant != true ?
+                {campaignStatusState.isParticipant != true ? (
                   <>
                     <BsPeopleFill
                       style={{
                         fontSize: "2rem",
                         color: "rgb(0, 49, 81)",
-                        marginLeft: 5
-                      }} />
+                        marginLeft: 5,
+                      }}
+                    />
 
                     <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{campaignStatusState.participantCounter}</p>
                   </>
-
-                  :
+                ) : (
                   <>
                     <BsPeopleFill
                       style={{
                         fontSize: "2rem",
                         marginLeft: 5,
-                        color: "	#0080FE"
-                      }} />
+                        color: "	#0080FE",
+                      }}
+                    />
 
                     <p style={{ color: "#0080FE", marginTop: 10 }}>{campaignStatusState.participantCounter}</p>
                   </>
-                }
-
+                )}
               </div>
               <div className="d-flex align-items-center">
-                {campaignStatusState.isParticipant != true ?
+                {campaignStatusState.isParticipant != true ? (
                   <Button
                     style={{
                       color: "rgb(0, 49, 81)",
@@ -312,16 +342,15 @@ const CampaignCard = (props) => {
                   >
                     Participate
                   </Button>
-
-
-                  :
+                ) : (
                   <Button
-                    type="primary" shape="round"
+                    type="primary"
+                    shape="round"
                     onClick={() => participantDecrement()}
                   >
                     Don't participate
                   </Button>
-                }
+                )}
 
                 {enableVisit ? (
                   <Link to={href}>
@@ -330,7 +359,6 @@ const CampaignCard = (props) => {
                     </Button>
                   </Link>
                 ) : null}
-
               </div>
               {/* <MessageOutlined
                     style={{
@@ -369,7 +397,7 @@ CampaignCard.propTypes = {
   publisherName: PropTypes.string,
   orgProfile: PropTypes.object,
   campaignStatus: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
 };
 
 CampaignCard.defaultProps = {

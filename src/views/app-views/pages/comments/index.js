@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Row, Col } from "antd";
 import News from "views/app-views/home/announcement";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 export const CommentPage = () => {
+  console.log(useParams());
+
   const [newsReportData] = useState({
     img: "/img/avatars/thumb-9.jpg",
     href: `${window.location.hostname}:3000/home/feeds/100001/101111`,

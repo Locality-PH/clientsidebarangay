@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import firebase from "firebase/app";
 import { AUTH_ORGANIZATION, ACCESS_TOKEN } from "redux/constants/Auth";
 import jwt_decode from "jwt-decode";
@@ -15,6 +15,11 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentuser] = useState();
   const [currentOrganization, setCurrentOrganization] = useState();
   const [currentPhoto, setCurrentPhoto] = useState();
+  const ref = useRef(null);
+  const welcome = useRef(null);
+  const about = useRef(null);
+  const campaign = useRef(null);
+  const schedule = useRef(null);
 
   const [
     currentOrganizationMemberList,
@@ -128,6 +133,11 @@ export function AuthProvider({ children }) {
     generateToken,
     resetEmailPassword,
     sendEmailVerification,
+    ref,
+    welcome,
+    about,
+    campaign,
+    schedule,
   };
   return (
     <AuthContext.Provider value={value}>

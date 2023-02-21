@@ -7,7 +7,8 @@ import { useParams } from "react-router-dom";
 import SearchCampaign from "components/shared-components/SearchCampaign";
 import moment from "moment";
 const Organizations = () => {
-  const { currentOrganization, generateToken } = useAuth();
+  // Context State
+  const { generateToken } = useAuth();
   let { id } = useParams();
   const searchItem = id || "";
   // Barangay Search State
@@ -18,7 +19,6 @@ const Organizations = () => {
   // Page State
   const count = 6;
   const [start, setStart] = useState(7);
-
   // Campaign Search State
   const [campaignList, setCampaignList] = useState([]);
   const [isLoadingCampaign, setIsLoadingCampaign] = useState(false);
@@ -98,7 +98,7 @@ const Organizations = () => {
   ) => {
     await axios
       .get(
-        `/api/organization/get-all-organizations?q=${data.trim()}&result=${count}&start=${start}`,
+        `/api/campaign/search?q=${data.trim()}&result=${count}&start=${start}`,
         token
       )
       .then((res) => {
@@ -180,7 +180,7 @@ const Organizations = () => {
           </Card>
         </Col>
         <Col xs={24} sm={24} md={15} lg={15}>
-          <Card loading={landingLoadingCampaign} title={"Pages"}>
+          <Card loading={landingLoadingCampaign} title={"Events"}>
             {campaignList.map((item, i) => {
               return (
                 <div key={i}>
@@ -200,8 +200,10 @@ const Organizations = () => {
                           : undefined
                       }
                       title={item?.title}
-                      address={item?.address}
+                      address={item?.organization?.address}
                       name={item?.organization?.organization_name}
+                      id={item?.organization?._id}
+                      campaign_id={item?.campaign_id}
                     />
                   </Col>
                 </div>

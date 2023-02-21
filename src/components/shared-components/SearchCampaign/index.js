@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { UserOutlined } from "@ant-design/icons";
 import moment from "moment";
 const SearchCampaign = (props) => {
-  const { id, profile, name, address, startDate, title } = props;
+  const { id, campaign_id, profile, name, address, startDate, title } = props;
   return (
     <>
       <Card className="no-border">
@@ -51,7 +51,7 @@ const SearchCampaign = (props) => {
             </div>
           </div>
           <div>
-            <Link to={`/home/organization/${id}`}>
+            <Link to={`/home/posts/${id}/${campaign_id}/single/data`}>
               <Button type="primary" shape="round">
                 View
               </Button>
@@ -64,6 +64,7 @@ const SearchCampaign = (props) => {
 };
 SearchCampaign.propTypes = {
   id: PropTypes.string,
+  campaign_id: PropTypes.string,
   profile: PropTypes.string,
   name: PropTypes.string,
   title: PropTypes.string,
@@ -73,6 +74,7 @@ SearchCampaign.propTypes = {
 
 SearchCampaign.defaultProps = {
   id: "",
+  campaign_id: "",
   profile: null,
   name: "",
   title: "",

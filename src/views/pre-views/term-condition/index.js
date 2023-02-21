@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Form, Button, Input } from "antd";
-import { HeaderNavRegister } from "components/layout-components/HeaderNavRegister";
 import Footer from "components/layout-components/Footer";
 
 const PrivacyPolicy = () => {
   return (
     <>
       <div className=" w-100">
-        <HeaderNavRegister />
         <Row
           align="middle"
           justify="center"

@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import PreViews from "views/pre-views";
 import Loading from "components/shared-components/Loading";
 import { useThemeSwitcher } from "react-css-theme-switcher";
+import { HeaderNavRegister } from "components/layout-components/HeaderNavRegister";
 
 export const AuthLayout = () => {
   const { status } = useThemeSwitcher();
@@ -13,9 +14,11 @@ export const AuthLayout = () => {
 
   return (
     <div className="auth-container">
+      {" "}
+      <HeaderNavRegister />
       <Switch>
         <Route path="" component={PreViews} />
-        <Redirect from="/support" to="/support/help-center" />
+        <Redirect from="/support" to="/support/demo" />
       </Switch>
     </div>
   );
