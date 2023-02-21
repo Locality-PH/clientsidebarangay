@@ -21,46 +21,32 @@ export const DefaultDashboard = () => {
   //useState
   const [causesData] = useState(CausesData);
   const [campaigns, setCampaigns] = useState([])
-  const [userId, setUserId] = useState("")
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
-  const [pageSetup, setPageSetup] = useState({ page: 0, pageSize: 2, landingPage: "homepage" })
+  const [pageSetup, setPageSetup] = useState({ page: 1, pageSize: 2, landingPage: "homepage" })
 
   //useEffect
-  useEffect(async () => {
-    await getCampaignUserId()
+  useEffect(() => {
   }, [])
 
-  useEffect(async () => {
-    await getLatestCampaign()
-    console.log("pageSetup", pageSetup)
-    console.log("campaigns", campaigns)
+  useEffect(() => {
+    getLatestCampaign()
   }, [pageSetup])
 
   //axios
   const getLatestCampaign = async () => {
-    if (userId == "") return
-
     setLoading(true)
-
     const { page, pageSize, landingPage } = pageSetup
 
     await axios.get(
-      `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&userId=${userId}`,
+      `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}`,
       generateToken()[1],
       { cancelToken })
-      .then(
-        (res) => {
-          var data = res.data
-          data.map(
-            (data) => {
-              data.starting_date = moment(new Date(data.starting_date))
-              data.isLike = data.likes.includes(userId)
-              data.isParticipant = data.participants.includes(userId)
-            })
-          setCampaigns([...campaigns, ...data])
-          if (data.length == 0) setHasMore(false)
-        })
+      .then((res) => {
+        var data = res.data
+        setCampaigns([...campaigns, ...data])
+        if (data.length == 0) setHasMore(false)
+      })
       .catch((error) => {
         message.error("There is a problem with uploading the data!!!")
         console.log("error", error)
@@ -69,32 +55,12 @@ export const DefaultDashboard = () => {
     setLoading(false)
   }
 
-  const getCampaignUserId = async () => {
-    await axios.get(
-      `/api/campaign/get-user`,
-      generateToken()[1],
-      { cancelToken })
-      .then(
-        (res) => {
-          var data = res.data
-          console.log("user id", data)
-          setUserId(data)
-        })
-      .catch((error) => {
-        message.error("There is a problem with uploading the data!!!")
-        console.log("error", error)
-      })
-  }
-
   const handleLoadMore = () => {
-    if (userId != "") {
-      setPageSetup({ ...pageSetup, page: pageSetup.page + 1 })
-    }
+    setPageSetup({ ...pageSetup, page: pageSetup.page + 1 })
   }
 
   return (
     <>
-      {userId != "" &&
         <InfiniteScroll
           dataLength={campaigns.length - 1} //This is important field to render the next data
           next={() => handleLoadMore()}
@@ -164,7 +130,7 @@ export const DefaultDashboard = () => {
                     images={campaign.images}
                     campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
                     // isVisit={false}
-                    userId={userId}
+                    userId={campaign.userId}
                     campaignId={campaign.campaign_id}
                     enableVisit={false}
                     enablePost={false}
@@ -175,7 +141,6 @@ export const DefaultDashboard = () => {
 
 
         </InfiniteScroll>
-      }
     </>
   );
 };

@@ -60,6 +60,7 @@ const CampaignCard = (props) => {
 
   //axios
   const updateCampaignStatus = async (values, type, operation) => {
+    console.log("userId", userId)
 
     if (type == "participant") {
       var newCampaignData = {
@@ -257,7 +258,7 @@ const CampaignCard = (props) => {
                       }}
                       onClick={() => likeIncrement()}
                     />
-                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>{campaignStatusState.likeCounter}</p>
+                    <p style={{ color: "rgb(0, 49, 81)", marginTop: 10, marginLeft: 3 }}>{campaignStatusState.likeCounter}</p>
 
                   </>
                   :
@@ -270,7 +271,7 @@ const CampaignCard = (props) => {
                       }}
                       onClick={() => likeDecrement()}
                     />
-                    <p style={{ color: "rgb(252, 108, 133)", marginTop: 10 }}>{campaignStatusState.likeCounter}</p></>
+                    <p style={{ color: "rgb(252, 108, 133)", marginTop: 10, marginLeft: 3 }}>{campaignStatusState.likeCounter}</p></>
                 }
 
                 {campaignStatusState.isParticipant != true ?
