@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Menu, Dropdown, Avatar } from "antd";
 import { connect } from "react-redux";
 import {
-  HomeOutlined,
   SettingOutlined,
-  ShopOutlined,
   QuestionCircleOutlined,
-  LogoutOutlined,
   EditOutlined,
   UserOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
 import Icon from "components/util-components/Icon";
 import { signOut } from "redux/actions/Auth";
-import { PROFILE_URL } from "redux/constants/Auth";
 import { useHistory } from "react-router-dom";
-import utils from "utils";
-import { useAuth } from "contexts/AuthContext";
-import { logOut } from "api/ComponentController/NavProfileController";
+
 import { Link } from "react-router-dom";
-import { AUTH_TOKEN } from "redux/constants/Auth";
 const menuItem = [
   {
     title: "Sign up",
