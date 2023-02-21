@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, message, Button } from "antd";
+import { Row, Col, Card, message, Button, Avatar } from "antd";
 import OrganizationList from "./organization-list";
 import Campaign from "components/shared-components/Campaign";
 import { CausesData } from "./DefaultDashboardData";
@@ -10,6 +10,8 @@ import moment from "moment"
 import { useAuth } from "contexts/AuthContext";
 import CampaignCard from "components/shared-components/CampaignCard";
 import InfiniteScroll from "react-infinite-scroll-component";
+import utils from "utils";
+import { UserAddOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 
 export const DefaultDashboard = () => {
   const { currentOrganization, generateToken } = useAuth();
@@ -24,11 +26,20 @@ export const DefaultDashboard = () => {
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
   const [pageSetup, setPageSetup] = useState({ page: 1, pageSize: 2, landingPage:"homepage"})
+  
+  
+  const [trendingCampaign, setTrendingCampaign] = useState([])
+   const [trendingLoading, setTrendingLoading] = useState(true)
 
   //useEffect
   useEffect(() => {
     getLatestCampaign()
   }, [pageSetup])
+  
+  useEffect(() => {
+	  getTrendingCampaigns()
+	  
+  }, [])
 
   //axios
   const getLatestCampaign = async () => {
@@ -54,6 +65,20 @@ export const DefaultDashboard = () => {
       })
 
     setLoading(false)
+  }
+  
+  const getTrendingCampaigns = async() => {
+	  await axios
+      .get("/api/campaign/trending?length=5", generateToken()[1])
+      .then((response) => {
+		  setTrendingCampaign(response.data)
+        setTrendingLoading(false)
+      })
+      .catch((err) => {
+        message.error("Could not fetch the data in the server!");
+        console.log(err);
+      });
+	  
   }
 
 
@@ -87,22 +112,53 @@ export const DefaultDashboard = () => {
           <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
             <Card
               title="Trending Campaign"
-              extra={<Link to="feeds/campaigns" style={{ fontSize: "1rem" }}>More</Link>}
+              extra={<Link to="feeds/list/campaigns" style={{ fontSize: "1rem" }}>More</Link>}
+			  loading={trendingLoading}
             >
               <div className="mt-3">
-                {causesData.map((result, i) => (
-                  <div
-                    key={i}
-                    className={`d-flex align-items-center justify-content-between mb-4`}
-                  >
-                    <Campaign
-                      id={i}
-                      src={result.img}
-                      name={result.title}
-                      subTitle={result.supporters}
-                    />
+                {trendingCampaign.map((result, i) => (
+            <div
+              key={i}
+              className={`d-flex align-items-center justify-content-between mb-4`}
+            >
+              <div className="avatar-status d-flex align-items-center">
+
+                {
+                  result.publisher.profileUrl != null
+                    ?
+                    <Avatar
+                      className="font-size-sm"
+                      icon={<UserOutlined />}
+                      src={result.publisher.profileUrl.data}
+                    >
+                      {utils.getNameInitial(result.publisher.full_name)}
+                    </Avatar>
+                    :
+                    <Avatar
+                      className="font-size-sm"
+                      style={{ backgroundColor: result.publisher.profileLogo }}
+                    >
+                      {utils.getNameInitial(result.publisher.full_name)}
+                    </Avatar>
+                }
+
+                <div className="ml-2">
+                  <div>
+                    <div className="avatar-status-name h4">{result.title}</div>
+                    <span>{ }</span>
                   </div>
-                ))}
+                  <div className="text-muted avatar-status-subtitle h5">{result.participants.length} Participants</div>
+                </div>
+              </div>
+              <div>
+                <Link to={`/home/organization/${result.campaign_id}`}>
+                  <Button type="primary" shape="round">
+                    View
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
               </div>
             </Card>
           </Col>
