@@ -44,6 +44,7 @@ export const DefaultDashboard = () => {
       { cancelToken })
       .then((res) => {
         var data = res.data
+        console.log("data", data)
         setCampaigns([...campaigns, ...data])
         if (data.length == 0) setHasMore(false)
       })
@@ -131,7 +132,7 @@ export const DefaultDashboard = () => {
                     campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
                     // isVisit={false}
                     userId={campaign.userId}
-                    campaignId={campaign.campaign_id}
+                    campaignId={campaign._id}
                     enableVisit={false}
                     enablePost={false}
                   />
