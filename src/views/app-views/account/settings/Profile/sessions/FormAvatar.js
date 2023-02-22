@@ -62,7 +62,7 @@ const FormAvatar = (props) => {
   const checkFileSize = (f) => {
     try {
       // 2.5 kilobye
-      if (f?.size > 25000) {
+      if (f?.size > 500000) {
         // To be added
         // notification({
         //   message: "Warning",
