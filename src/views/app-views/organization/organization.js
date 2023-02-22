@@ -35,20 +35,21 @@ const Organization = ({ organizationId, organization, match }) => {
 
     setLoading(true)
 
-    await axios.get(
-      `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&orgId=${organizationId}`,
-      generateToken()[1],
-      { cancelToken })
-      .then(
-        (res) => {
-          var data = res.data
-          console.log("data", data)
-          setCampaignList([...campaignList, ...data])
-          if (data.length == 0) setHasMore(false)
-        })
-      .catch((error) => {
-        handleError(error)
-      })
+    try {
+      await axios.get(
+        `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&orgId=${organizationId}`,
+        generateToken()[1],
+        { cancelToken })
+        .then(
+          (res) => {
+            var data = res.data
+            console.log("data", data)
+            setCampaignList([...campaignList, ...data])
+            if (data.length == 0) setHasMore(false)
+          })
+    } catch (error) {
+      handleError(error)
+    }
 
     setLoading(false)
   }
@@ -90,7 +91,7 @@ const Organization = ({ organizationId, organization, match }) => {
                       title={item?.title}
                       address={item?.organization?.address}
                       name={item?.organization?.organization_name}
-                      id={item?.organization?.organization_id} 
+                      id={item?.organization?.organization_id}
                       campaign_id={item?._id}
                       link={`${match.url}/campaign/${item?._id}`}
                     />
