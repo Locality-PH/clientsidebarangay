@@ -24,13 +24,13 @@ import CampaignPreview from "./campaign/CampaignPreview";
 
 const Index = ({ match }) => {
   const { currentUser, generateToken } = useAuth();
-  const [alreadyFollow, setAlreadyFollow] = useState(false)
+  const [alreadyFollow, setAlreadyFollow] = useState(false);
   const [organization, setOrganization] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getOrganization();
-    getOrganizationClient()
+    getOrganizationClient();
   }, []);
 
   useEffect(() => {
@@ -65,13 +65,11 @@ const Index = ({ match }) => {
         .then((response) => {
           setOrganization(response.data);
           console.log(response.data);
-        })
-        
+        });
     } catch (error) {
       message.error("Could not fetch the data in the server!");
-      console.log(err);
+      console.log(error);
     }
-
   };
 
   const getOrganizationClient = async () => {
@@ -82,10 +80,9 @@ const Index = ({ match }) => {
           generateToken()[1]
         )
         .then((response) => {
-          setAlreadyFollow(response.data)
+          setAlreadyFollow(response.data);
           setIsLoading(false);
-
-        })
+        });
     } catch (error) {
       message.error("Could not fetch the data in the server!");
       console.log(err);

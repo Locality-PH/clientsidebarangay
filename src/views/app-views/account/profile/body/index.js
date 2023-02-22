@@ -37,13 +37,6 @@ const ContentBody = () => {
         <TabPane tab="Documents" key="6">
           <Document active={active} />
         </TabPane>{" "}
-        <TabPane tab="Joins" key="2">
-          <h1>Deactivate Account</h1>
-          <p>
-            Your account will be temporarly deleted. You can activate your
-            account again by loggging in.
-          </p>
-        </TabPane>
       </Tabs>
     </div>
   );

@@ -26,7 +26,7 @@ const Document = (props) => {
 
   //Loading State
   const [drawer, setDrawer] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(false);
   const [landingLoading, setlandingLoading] = useState(true);
@@ -42,7 +42,7 @@ const Document = (props) => {
   // CallBack handleCertificateNext
   const handleCertificateNext = (data) => {
     setDocument((oldArray) => [...oldArray, ...data]);
-
+    console.log(data.length > 0);
     setHasMore(data.length > 0);
   };
 

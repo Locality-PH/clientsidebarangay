@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Avatar, Button } from "antd";
+import { Row, Col, Card, Avatar, Button, message } from "antd";
 import Flex from "components/shared-components/Flex";
 import { CloudDownloadOutlined, ToolOutlined } from "@ant-design/icons";
 import { AUTH_TOKEN } from "redux/constants/Auth";
@@ -132,7 +132,11 @@ const Header = () => {
                       <span className="font-weight-semibold">
                         <Button
                           onClick={() => {
-                            saveAs(currentUser?.photoURL, "profile");
+                            if (currentUser?.photoURL) {
+                              saveAs(currentUser?.photoURL, "profile");
+                            } else {
+                              message.error("No profile picture");
+                            }
                           }}
                           icon={
                             <CloudDownloadOutlined style={{ fontSize: 20 }} />
