@@ -38,10 +38,7 @@ export const LoginForm = (props) => {
     message,
   } = props;
 
-  const initialCredential = {
-    email: "testuser@gmail.com",
-    password: "123456",
-  };
+ 
 
   const onLogin = (values) => {
     setCounter(counter + 1);
@@ -135,7 +132,6 @@ export const LoginForm = (props) => {
 
           <Form
             name="login-form"
-            initialValues={initialCredential}
             onFinish={onLogin}
           >
             <Form.Item
