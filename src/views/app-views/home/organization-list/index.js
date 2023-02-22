@@ -49,7 +49,7 @@ const OrganizationList = () => {
     <>
       <Card
         title="List of Organization"
-        style={{ height: "33.3rem", overflow: "auto" }}
+        style={{ height: "33.3rem", overflow: "hidden" }}
         loading={isLoading}
         extra={
           <Link to="feeds/list/organizations" style={{ fontSize: "1rem" }}>
