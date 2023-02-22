@@ -56,20 +56,22 @@ const Index = ({ match }) => {
     }
   };
   const getOrganization = async () => {
-    await axios
-      .get(
-        "/api/organization/get-organization/" + match.params.organization_id,
-        generateToken()[1]
-      )
-      .then((response) => {
-        setOrganization(response.data);
-        console.log(response.data);
+    try {
+      await axios
+        .get(
+          "/api/organization/get-organization/" + match.params.organization_id,
+          generateToken()[1]
+        )
+        .then((response) => {
+          setOrganization(response.data);
+          console.log(response.data);
+        })
+        
+    } catch (error) {
+      message.error("Could not fetch the data in the server!");
+      console.log(err);
+    }
 
-      })
-      .catch((err) => {
-        message.error("Could not fetch the data in the server!");
-        console.log(err);
-      });
   };
 
   const getOrganizationClient = async () => {

@@ -27,6 +27,10 @@ const Organization = ({ organizationId, organization, match }) => {
   //useEffect
   useEffect(() => {
     getLatestCampaign()
+  }, [])
+
+  useEffect(() => {
+    getLatestCampaign()
   }, [pageSetup])
 
   //axios
@@ -63,7 +67,7 @@ const Organization = ({ organizationId, organization, match }) => {
     <>
       <Row gutter="16">
         <Col xs={24} sm={24} md={8}>
-          <Officials organizationMembers={organization.organization_member} />
+          <Officials organizationMembers={organization?.organization_member} />
           <About about={organization.about} />
         </Col>
 

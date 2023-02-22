@@ -33,21 +33,22 @@ const Campaign = ({ organizationId }) => {
 
     setLoading(true)
 
-    await axios.get(
-      `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&orgId=${organizationId}`,
-      generateToken()[1],
-      { cancelToken })
-      .then(
-        (res) => {
-          var data = res.data
-          data.map((data) => data.starting_date = moment(new Date(data.starting_date)))
-          setCampaigns([...campaigns, ...data])
-          console.log("data", data)
-          if (data.length == 0) setHasMore(false)
-        })
-      .catch((error) => {
-        handleError(error)
-      })
+    try {
+      await axios.get(
+        `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&orgId=${organizationId}`,
+        generateToken()[1],
+        { cancelToken })
+        .then(
+          (res) => {
+            var data = res.data
+            data.map((data) => data.starting_date = moment(new Date(data.starting_date)))
+            setCampaigns([...campaigns, ...data])
+            console.log("data", data)
+            if (data.length == 0) setHasMore(false)
+          })
+    } catch (error) {
+      handleError(error)
+    }
 
     setLoading(false)
   }

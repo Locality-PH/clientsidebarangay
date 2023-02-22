@@ -161,18 +161,18 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                   textAlign: "center",
                 }}
               >
-                {organization.profile != null ? (
+                {organization?.profile != null ? (
                   <Avatar
                     icon={<UserOutlined />}
                     size={150}
-                    src={organization.profile.fileUrl}
+                    src={organization?.profile.fileUrl}
                   >
                     {utils.getNameInitial(organization.organization_name)}
                   </Avatar>
                 ) : (
                   <Avatar
                     style={{
-                      backgroundColor: organization.profile_color,
+                      backgroundColor: organization?.profile_color,
                       fontSize: "3rem"
                     }}
                     size={150}
