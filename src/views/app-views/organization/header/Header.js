@@ -167,7 +167,7 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                     size={150}
                     src={organization?.profile.fileUrl}
                   >
-                    {utils.getNameInitial(organization.organization_name)}
+                    {utils.getNameInitial(organization?.organization_name)}
                   </Avatar>
                 ) : (
                   <Avatar
@@ -177,7 +177,7 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                     }}
                     size={150}
                   >
-                    {utils.getNameInitial(organization.organization_name)}
+                    {utils.getNameInitial(organization?.organization_name)}
                   </Avatar>
                 )}
               </div>
@@ -263,9 +263,9 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization.organization_member[0].email !=
+                                tooltip: `${organization?.organization_member[0].email !=
                                   null
-                                  ? organization.organization_member[0]
+                                  ? organization?.organization_member[0]
                                     .email
                                   : ""
                                   }`,
@@ -273,8 +273,8 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                               : false
                           }
                         >
-                          {organization.organization_member[0].email != null
-                            ? organization.organization_member[0].email
+                          {organization?.organization_member[0].email != null
+                            ? organization?.organization_member[0].email
                             : ""}
                         </Text>
                       </Col>
@@ -299,12 +299,12 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization.phone_number}`,
+                                tooltip: `${organization?.phone_number}`,
                               }
                               : false
                           }
                         >
-                          {organization.phone_number}
+                          {organization?.phone_number}
                         </Text>
                       </Col>
                     </Row>
@@ -359,12 +359,12 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization.website}`,
+                                tooltip: `${organization?.website}`,
                               }
                               : false
                           }
                         >
-                          {organization.website}
+                          {organization?.website}
                         </Text>
                       </Col>
                     </Row>
