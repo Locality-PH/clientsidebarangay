@@ -21,8 +21,8 @@ const CampaignCard = (props) => {
     title,
     category,
     orgName,
-    orgProfile,
     orgId,
+    orgProfile,
     startingDate,
     images,
     content,
@@ -55,14 +55,14 @@ const CampaignCard = (props) => {
     useState({
       likeCounter: campaignStatus.likeCounter,
       isLike: campaignStatus.isLike,
-      likes: campaignStatus.likes
+      // likes: campaignStatus.likes
     });
 
   const [participantStatus, setParticipantStatus] =
     useState({
       participantCounter: campaignStatus.participantCounter,
       isParticipant: campaignStatus.isParticipant,
-      participants: campaignStatus.participants
+      // participants: campaignStatus.participants
     });
 
   //useEffect
@@ -121,11 +121,28 @@ const CampaignCard = (props) => {
     setParticipantStatus(newStatus)
   }
 
-  const menuItems = [{
-    text: "View all images",
-    icon: <EyeOutlined />,
-    onClick: () => setVisible(true)
-  }]
+  if (orgId != "") {
+    var menuItems = [{
+      text: "View all images",
+      icon: <EyeOutlined />,
+      onClick: () => setVisible(true)
+    },
+    {
+      text: "Visit Organization",
+      icon: <EyeOutlined />,
+      onClick: () => history.replace(`/home/organization/${orgId}`)
+    },
+    ]
+  } else {
+    var menuItems = [{
+      text: "View all images",
+      icon: <EyeOutlined />,
+      onClick: () => setVisible(true)
+    }]
+  }
+
+
+
 
 
   const getColor = (category) => {
@@ -378,6 +395,7 @@ CampaignCard.propTypes = {
   enablePost: PropTypes.bool,
   href: PropTypes.string,
   orgName: PropTypes.string,
+  orgId: PropTypes.string,
   publisherName: PropTypes.string,
   orgProfile: PropTypes.object,
   campaignStatus: PropTypes.object,
@@ -397,13 +415,14 @@ CampaignCard.defaultProps = {
   enableVisit: true,
   enablePost: false,
   orgName: "",
+  orgId: "",
   classData: "",
   href: "",
   publisherName: "",
   suggestorName: "",
   orgProfile: {},
   participantStatus: { participantCounter: 69, isParticipant: false, participants: [] },
-  likeStatus: { likeCounter: 420, isLike: false, participants: [], likes: [] },
+  likeStatus: { likeCounter: 420, isLike: false, likes: [] },
   campaignStatus: { likeCounter: 420, isLike: false, participantCounter: 69, isParticipant: false, participants: [], likes: [] },
   loading: false
 };

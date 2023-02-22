@@ -70,6 +70,7 @@ export const DefaultDashboard = () => {
       .get("/api/campaign/trending?length=5", generateToken()[1])
       .then((response) => {
         setTrendingCampaign(response.data)
+        console.log("response.data", response.data)
         setTrendingLoading(false)
       })
       .catch((err) => {
@@ -85,119 +86,118 @@ export const DefaultDashboard = () => {
 
   return (
     <>
-  <InfiniteScroll
-    dataLength={campaigns.length - 1} //This is important field to render the next data
-    next={() => handleLoadMore()}
-    hasMore={hasMore}
-    loader={
-      <Row gutter={16} align="center" className="w-100">
-        <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
-          <Card loading={true} />
-                  </Col>
-            </Row>
+      <InfiniteScroll
+        dataLength={campaigns.length - 1} //This is important field to render the next data
+        next={() => handleLoadMore()}
+        hasMore={hasMore}
+        loader={
+          <Row gutter={16} align="center" className="w-100">
+            <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+              <Card loading={true} />
+            </Col>
+          </Row>
 
-          }
-            endMessage={
-              <p style={{ textAlign: 'center' }}>
-                <b>Yay! You have seen it all</b>
-              </p>
-            }
-        >
+        }
+        endMessage={
+          <p style={{ textAlign: 'center' }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
 
-            <Row gutter={16} align="center" className="w-100">
-              {/* OrganizationList */}
-              <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
-                <OrganizationList />
-              </Col>
+        <Row gutter={16} align="center" className="w-100">
+          {/* OrganizationList */}
+          <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+            <OrganizationList />
+          </Col>
 
-            </Row>
+        </Row>
 
 
-            <Row gutter={16} align="center" className="w-100">
-              {/* Trending Campaign */}
-              <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
-                <Card
-                  title="Trending Campaign"
-                  extra={<Link to="feeds/list/campaigns" style={{ fontSize: "1rem" }}>More</Link>}
-                  loading={trendingLoading}
-                >
-                  <div className="mt-3">
-                    {trendingCampaign.map((result, i) => (
-                      <div
-                        key={i}
-                        className={`d-flex align-items-center justify-content-between mb-4`}
-                      >
-                        <div className="avatar-status d-flex align-items-center">
+        <Row gutter={16} align="center" className="w-100">
+          {/* Trending Campaign */}
+          <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+            <Card
+              title="Trending Campaign"
+              extra={<Link to="feeds/list/campaigns" style={{ fontSize: "1rem" }}>More</Link>}
+              loading={trendingLoading}
+            >
+              <div className="mt-3">
+                {trendingCampaign.map((result, i) => (
+                  <div
+                    key={i}
+                    className={`d-flex align-items-center justify-content-between mb-4`}
+                  >
+                    <div className="avatar-status d-flex align-items-center">
 
-                          {
-                            result.publisher.profileUrl != null
-                              ?
-                              <Avatar
-                                className="font-size-sm"
-                                icon={<UserOutlined />}
-                                src={result.publisher.profileUrl.data}
-                              >
-                                {utils.getNameInitial(result.publisher.full_name)}
-                              </Avatar>
-                              :
-                              <Avatar
-                                className="font-size-sm"
-                                style={{ backgroundColor: result.publisher.profileLogo }}
-                              >
-                                {utils.getNameInitial(result.publisher.full_name)}
-                              </Avatar>
-                          }
+                      {
+                        result && result.images && result.images[0] != null
+                          ?
+                          <Avatar
+                            className="mb-2 mr-1 rounded"
+                            icon={<UserOutlined />}
+                            size={55}
+                            src={result.images[0].data}
+                          />
+                          :
+                          <Avatar
+                            className="font-size-sm"
+                            style={{ backgroundColor: result.publisher.profileLogo }}
+                          >
+                            {utils.getNameInitial(result.title)}
+                          </Avatar>
+                      }
 
-                          <div className="ml-2">
-                            <div>
-                              <div className="avatar-status-name h4">{result.title}</div>
-                              <span>{ }</span>
-                            </div>
-                            <div className="text-muted avatar-status-subtitle h5">{result.participants.length} Participants</div>
-                          </div>
-                        </div>
+                      <div className="ml-2">
                         <div>
-                          <Link to={`/home/posts/${result.organization.organization_id}/${result.campaign_id}/single/data`}>
-                            <Button type="primary" shape="round">
-                              View
-                            </Button>
-                          </Link>
+                          <div className="avatar-status-name h4">{result.title}</div>
+                          <span>{ }</span>
                         </div>
+                        <div className="text-muted avatar-status-subtitle h5">{result.participants.length} Participants</div>
                       </div>
-                    ))}
+                    </div>
+                    <div>
+                      <Link to={`/home/posts/${result.organization}/${result.campaign_id}/single/data`}>
+                        <Button type="primary" shape="round">
+                          View
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
-                </Card>
-              </Col>
-            </Row>
-
-            {/* Post */}
-            <Row gutter={16} align={"center"} className="w-100">
-              {campaigns.length > 0 &&
-                campaigns.map((campaign, id) => (
-                  <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14} key={id} className="mb-2">
-                    <CampaignCard
-                      title={campaign.title}
-                      category={campaign.category}
-                      orgName={campaign?.organization?.organization_name}
-                      startingDate={campaign.starting_date}
-                      content={campaign.description}
-                      orgProfile={campaign?.organization?.profile}
-                      images={campaign.images}
-                      campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
-                      // isVisit={false}
-                      userId={campaign.userId}
-                      campaignId={campaign._id}
-                      enableVisit={false}
-                      enablePost={false}
-                    />
-                  </Col>
                 ))}
-            </Row>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Post */}
+        <Row gutter={16} align={"center"} className="w-100">
+          {campaigns.length > 0 &&
+            campaigns.map((campaign, id) => (
+              <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14} key={id} className="mb-2">
+                <CampaignCard
+                  title={campaign.title}
+                  category={campaign.category}
+                  orgName={campaign?.organization?.organization_name}
+                  orgId={campaign?.organization?.organization_id}
+                  startingDate={campaign.starting_date}
+                  content={campaign.description}
+                  orgProfile={campaign?.organization?.profile}
+                  images={campaign.images}
+                  campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
+                  // isVisit={false}
+                  campaignId={campaign._id}
+                  enableVisit={false}
+                  enablePost={false}
+                />
+              </Col>
+            ))}
+        </Row>
 
 
-          </InfiniteScroll>
-        </>
-        );
+      </InfiniteScroll>
+    </>
+  );
 };
 
-        export default withRouter(DefaultDashboard);
+export default withRouter(DefaultDashboard);

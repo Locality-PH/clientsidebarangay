@@ -5,7 +5,7 @@ import moment from "moment";
 import axios from "axios";
 import CampaignCard from "components/shared-components/CampaignCard";
 
-import { Col, Row } from "antd";
+import { Col, Row, message } from "antd";
 
 const CampaignView = () => {
   //Initialize
@@ -45,7 +45,6 @@ const CampaignView = () => {
         var data = res.data;
         console.log("data", data);
         data.starting_date = moment(new Date(data.starting_date));
-
         setCampaign(data);
       })
       .catch((error) => {
@@ -58,26 +57,30 @@ const CampaignView = () => {
 
   return (
     <>
-      {" "}
-      <Row gutter={16} justify="center">
-        <Col xs={24} sm={21} md={22} lg={12} xl={12} xxl={12}>
-          <div>
-            <CampaignCard
-              loading={loading}
-              title={campaign.title}
-              category={campaign.category}
-              orgName={campaign?.organization?.organization_name}
-              startingDate={campaign.starting_date}
-              content={campaign.description}
-              orgProfile={campaign?.organization?.profile}
-              images={campaign.images}
-              isVisit={true}
-              enableVisit={false}
-              enablePost={false}
-            />
-          </div>{" "}
-        </Col>
-      </Row>
+      {Object.keys(campaign).length > 0 &&
+        <Row gutter={16} justify="center">
+          <Col xs={24} sm={21} md={22} lg={12} xl={12} xxl={12}>
+            <div>
+              <CampaignCard
+                loading={loading}
+                title={campaign.title}
+                category={campaign.category}
+                orgName={campaign?.organization?.organization_name}
+                startingDate={campaign.starting_date}
+                content={campaign.description}
+                orgProfile={campaign?.organization?.profile}
+                images={campaign.images}
+                campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
+                // isVisit={false}
+                campaignId={campaign._id}
+                enableVisit={false}
+                enablePost={false}
+              />
+
+            </div>{" "}
+          </Col>
+        </Row>
+      }
     </>
   );
 };
