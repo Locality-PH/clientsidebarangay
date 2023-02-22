@@ -73,20 +73,21 @@ const Index = ({ match }) => {
   };
 
   const getOrganizationClient = async () => {
-    await axios
-      .get(
-        `/api/organization/get-organization-client/${match.params.organization_id}/${currentUser.uid}`,
-        generateToken()[1]
-      )
-      .then((response) => {
-        setAlreadyFollow(response.data)
-        setIsLoading(false);
+    try {
+      await axios
+        .get(
+          `/api/organization/get-organization-client/${match.params.organization_id}/${currentUser.uid}`,
+          generateToken()[1]
+        )
+        .then((response) => {
+          setAlreadyFollow(response.data)
+          setIsLoading(false);
 
-      })
-      .catch((err) => {
-        message.error("Could not fetch the data in the server!");
-        console.log(err);
-      });
+        })
+    } catch (error) {
+      message.error("Could not fetch the data in the server!");
+      console.log(err);
+    }
   };
 
   return (
