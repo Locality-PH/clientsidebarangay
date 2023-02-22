@@ -5,11 +5,17 @@ import { CloudDownloadOutlined, ToolOutlined } from "@ant-design/icons";
 import { AUTH_TOKEN } from "redux/constants/Auth";
 import { useAuth } from "contexts/AuthContext";
 import { useHistory } from "react-router-dom";
+import { PROFILE_URL } from "redux/constants/Auth";
+import utils from "utils";
+import { UserOutlined } from "@ant-design/icons";
 import { saveAs } from "file-saver";
 const Header = () => {
   let history = useHistory();
   const { currentUser } = useAuth();
-  console.log(currentUser);
+
+  const [profile, setProfile] = useState(
+    JSON.parse(localStorage.getItem(PROFILE_URL) || "[]")
+  );
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const updateWindowDimensions = () => {
@@ -43,7 +49,34 @@ const Header = () => {
                   textAlign: "center",
                 }}
               >
-                <Avatar shape="round" size={150} src={currentUser?.photoURL} />
+                {currentUser?.photoURL ? (
+                  <Avatar
+                    shape="round"
+                    size={150}
+                    src={currentUser?.photoURL}
+                  />
+                ) : (
+                  <Avatar
+                    src={currentUser?.photoURL}
+                    size={150}
+                    style={{ backgroundColor: profile?.profile_color }}
+                  >
+                    <b style={{ fontSize: "50px" }}>
+                      {currentUser?.displayName ? (
+                        <>
+                          {utils.getNameInitial(currentUser?.displayName || "")}
+                        </>
+                      ) : (
+                        <>
+                          <UserOutlined
+                            className="home-tag-2"
+                            style={{ fontSize: "60px" }}
+                          />
+                        </>
+                      )}
+                    </b>
+                  </Avatar>
+                )}
               </div>
               <div className="ml-md-4 w-100">
                 <Flex
