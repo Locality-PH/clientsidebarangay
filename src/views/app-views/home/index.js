@@ -27,7 +27,7 @@ export const DefaultDashboard = () => {
   const [hasMore, setHasMore] = useState(true);
   const [pageSetup, setPageSetup] = useState({
     page: 1,
-    pageSize: 2,
+    pageSize: 4,
     landingPage: "homepage",
   });
   const [trendingCampaign, setTrendingCampaign] = useState([]);
@@ -150,7 +150,19 @@ export const DefaultDashboard = () => {
                           {utils.getNameInitial(result.title)}
                         </Avatar>
                       )}
-
+                      {/* <Avatar
+                        className="mb-2 mr-1 rounded"
+                        icon={<UserOutlined />}
+                        size={55}
+                        style={{
+                          backgroundColor: result.publisher.profileLogo,
+                        }}
+                        src={
+                          result && result.images && result.images[0] != null
+                            ? result.images[0].data
+                            : null
+                        }
+                      /> */}
                       <div className="ml-2">
                         <div>
                           <div className="avatar-status-name h4">
