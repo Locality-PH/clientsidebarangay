@@ -6,6 +6,7 @@ import { message } from "antd";
 
 const deletePhoto = async (setLoadingButton, setEditOrganization, oldUrl) => {
   let pictureRef = firebase.storage().refFromURL(oldUrl);
+  console.log("oldUrl", oldUrl)
   await pictureRef
     .delete()
     .then(() => {
@@ -38,6 +39,7 @@ export async function updateAccount(
     const fileRef = storageRef.child(
       `/avatar/${Date.now()}_${profileAvatar?.name}`
     );
+    console.log("oldUrl", oldUrl)
 
     if (profileAvatar.type) {
       // New Image
@@ -72,6 +74,7 @@ export async function updateAccount(
             })
             .then(async (_) => {
               // Old Image delete after success
+              console.log("oldUrl", oldUrl)
               if (oldUrl)
                 await deletePhoto(
                   setLoadingButton,
@@ -81,8 +84,8 @@ export async function updateAccount(
             })
             .catch((error) => {
               // if error occure delete new image uploaded
-              deletePhoto(setLoadingButton, setEditOrganization, url);
               console.log(error.message);
+              deletePhoto(setLoadingButton, setEditOrganization, url);
               return message.error(error.message);
             });
         });

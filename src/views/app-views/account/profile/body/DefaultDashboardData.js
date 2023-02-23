@@ -11,7 +11,7 @@ export const BarangayData = [
     title: "Sumulong St, Morong, Rizal",
     name: "Baras",
   },
-  {
+  { 
     id: 2,
     img: "/img/avatars/thumb-4.jpg",
     title: "Sumulong St, Morong, Rizal",
