@@ -6,7 +6,7 @@ import { CausesData } from "./DefaultDashboardData";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import moment from "moment"
+import moment from "moment";
 import { useAuth } from "contexts/AuthContext";
 import CampaignCard from "components/shared-components/CampaignCard";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -22,67 +22,70 @@ export const DefaultDashboard = () => {
 
   //useState
   const [causesData] = useState(CausesData);
-  const [campaigns, setCampaigns] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
-  const [pageSetup, setPageSetup] = useState({ page: 1, pageSize: 2, landingPage: "homepage" })
-  const [trendingCampaign, setTrendingCampaign] = useState([])
-  const [trendingLoading, setTrendingLoading] = useState(true)
+  const [campaigns, setCampaigns] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [pageSetup, setPageSetup] = useState({
+    page: 1,
+    pageSize: 2,
+    landingPage: "homepage",
+  });
+  const [trendingCampaign, setTrendingCampaign] = useState([]);
+  const [trendingLoading, setTrendingLoading] = useState(true);
 
   //useEffect
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    getLatestCampaign()
-  }, [pageSetup])
+    getLatestCampaign();
+  }, [pageSetup]);
 
   useEffect(() => {
-    getTrendingCampaigns()
-
-  }, [])
+    getTrendingCampaigns();
+  }, []);
 
   //axios
   const getLatestCampaign = async () => {
-    setLoading(true)
-    const { page, pageSize, landingPage } = pageSetup
+    setLoading(true);
+    const { page, pageSize, landingPage } = pageSetup;
 
-    await axios.get(
-      `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}`,
-      generateToken()[1],
-      { cancelToken })
+    await axios
+      .get(
+        `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}`,
+        generateToken()[1],
+        { cancelToken }
+      )
       .then((res) => {
-        var data = res.data
-        console.log("data", data)
-        setCampaigns([...campaigns, ...data])
-        if (data.length == 0) setHasMore(false)
+        var data = res.data;
+        console.log("data", data);
+        setCampaigns([...campaigns, ...data]);
+        if (data.length == 0) setHasMore(false);
       })
       .catch((error) => {
-        message.error("There is a problem with uploading the data!!!")
-        console.log("error", error)
-      })
+        message.error("There is a problem with uploading the data!!!");
+        console.log("error", error);
+      });
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const getTrendingCampaigns = async () => {
     await axios
       .get("/api/campaign/trending?length=5", generateToken()[1])
       .then((response) => {
-        setTrendingCampaign(response.data)
-        console.log("response.data", response.data)
-        setTrendingLoading(false)
+        setTrendingCampaign(response.data);
+        console.log("response.data", response.data);
+        setTrendingLoading(false);
       })
       .catch((err) => {
         message.error("Could not fetch the data in the server!");
         console.log(err);
       });
-
-  }
+  };
 
   const handleLoadMore = () => {
-    setPageSetup({ ...pageSetup, page: pageSetup.page + 1 })
-  }
+    setPageSetup({ ...pageSetup, page: pageSetup.page + 1 });
+  };
 
   return (
     <>
@@ -92,34 +95,34 @@ export const DefaultDashboard = () => {
         hasMore={hasMore}
         loader={
           <Row gutter={16} align="center" className="w-100">
-            <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+            <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
               <Card loading={true} />
             </Col>
           </Row>
-
         }
         endMessage={
-          <p style={{ textAlign: 'center' }}>
+          <p style={{ textAlign: "center" }}>
             <b>Yay! You have seen it all</b>
           </p>
         }
       >
-
         <Row gutter={16} align="center" className="w-100">
           {/* OrganizationList */}
-          <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+          <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
             <OrganizationList />
           </Col>
-
         </Row>
-
 
         <Row gutter={16} align="center" className="w-100">
           {/* Trending Campaign */}
-          <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14}>
+          <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
             <Card
               title="Trending Campaign"
-              extra={<Link to="feeds/list/campaigns" style={{ fontSize: "1rem" }}>More</Link>}
+              extra={
+                <Link to="feeds/list/campaigns" style={{ fontSize: "1rem" }}>
+                  More
+                </Link>
+              }
               loading={trendingLoading}
             >
               <div className="mt-3">
@@ -129,35 +132,40 @@ export const DefaultDashboard = () => {
                     className={`d-flex align-items-center justify-content-between mb-4`}
                   >
                     <div className="avatar-status d-flex align-items-center">
-
-                      {
-                        result && result.images && result.images[0] != null
-                          ?
-                          <Avatar
-                            className="mb-2 mr-1 rounded"
-                            icon={<UserOutlined />}
-                            size={55}
-                            src={result.images[0].data}
-                          />
-                          :
-                          <Avatar
-                            className="font-size-sm"
-                            style={{ backgroundColor: result.publisher.profileLogo }}
-                          >
-                            {utils.getNameInitial(result.title)}
-                          </Avatar>
-                      }
+                      {result && result.images && result.images[0] != null ? (
+                        <Avatar
+                          className="mb-2 mr-1 rounded"
+                          icon={<UserOutlined />}
+                          size={55}
+                          src={result.images[0].data}
+                        />
+                      ) : (
+                        <Avatar
+                          className="font-size-sm"
+                          style={{
+                            backgroundColor: result.publisher.profileLogo,
+                          }}
+                        >
+                          {utils.getNameInitial(result.title)}
+                        </Avatar>
+                      )}
 
                       <div className="ml-2">
                         <div>
-                          <div className="avatar-status-name h4">{result.title}</div>
-                          <span>{ }</span>
+                          <div className="avatar-status-name h4">
+                            {result.title}
+                          </div>
+                          <span>{}</span>
                         </div>
-                        <div className="text-muted avatar-status-subtitle h5">{result.participantCounter} Participants</div>
+                        <div className="text-muted avatar-status-subtitle h5">
+                          {result.participantCounter} Participants
+                        </div>
                       </div>
                     </div>
                     <div>
-                      <Link to={`/home/posts/${result.organization}/${result.campaign_id}/single/data`}>
+                      <Link
+                        to={`/home/posts/${result.organization}/${result.campaign_id}/single/data`}
+                      >
                         <Button type="primary" shape="round">
                           View
                         </Button>
@@ -174,7 +182,16 @@ export const DefaultDashboard = () => {
         <Row gutter={16} align={"center"} className="w-100">
           {campaigns.length > 0 &&
             campaigns.map((campaign, id) => (
-              <Col xs={22} sm={22} md={22} lg={18} xl={18} xxl={14} key={id} className="mb-2">
+              <Col
+                xs={24}
+                sm={24}
+                md={22}
+                lg={18}
+                xl={18}
+                xxl={14}
+                key={id}
+                className="mb-2"
+              >
                 <CampaignCard
                   title={campaign.title}
                   category={campaign.category}
@@ -184,9 +201,18 @@ export const DefaultDashboard = () => {
                   content={campaign.description}
                   orgProfile={campaign?.organization?.profile}
                   images={campaign.images}
-                  campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
+                  campaignStatus={{
+                    likeCounter: campaign.likeCounter,
+                    isLike: campaign.isLike,
+                    participantCounter: campaign.participantCounter,
+                    isParticipant: campaign.isParticipant,
+                  }}
                   // isVisit={false}
-                  suggestorName={campaign?.suggestor?.first_name + " " + campaign?.suggestor?.last_name}
+                  suggestorName={
+                    campaign?.suggestor?.first_name +
+                    " " +
+                    campaign?.suggestor?.last_name
+                  }
                   suggestorEmail={campaign?.suggestor?.email}
                   campaignId={campaign._id}
                   enableVisit={false}
@@ -195,8 +221,6 @@ export const DefaultDashboard = () => {
               </Col>
             ))}
         </Row>
-
-
       </InfiniteScroll>
     </>
   );
