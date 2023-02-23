@@ -95,7 +95,7 @@ export const HeaderNav = (props) => {
       className={`app-header ${navMode}`}
       style={{ backgroundColor: "rgb(54 75 101)", height: "5rem" }}
     >
-      <div className={`app-header-wrapper ${isNavTop ? "layout-top-nav" : ""}`}>
+      <div className={`app-header-wrapper layout-top-nav`}>
         <Logo logoType={navMode} width={width} />
         <div className="nav" style={{ width: `calc(100% - ${getNavWidth()})` }}>
           <div className="nav-left">
