@@ -66,6 +66,8 @@ const CampaignView = ({ organization_id, campaign_id }) => {
                 images={campaign.images}
                 campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
                 // isVisit={false}
+                suggestorName={campaign?.suggestor?.first_name + " " + campaign?.suggestor?.last_name}
+                suggestorEmail={campaign?.suggestor?.email}
                 campaignId={campaign._id}
                 enableVisit={false}
                 enablePost={false}

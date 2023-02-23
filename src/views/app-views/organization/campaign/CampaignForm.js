@@ -6,7 +6,7 @@ import axios from 'axios'
 const { Option } = Select;
 
 const CampaignForm = (props) => {
-    const {organizationId, getLatestCampaign, loading} = props
+    const {organizationId, loading, setCampaigns, campaigns} = props
     //for api
     const source = axios.CancelToken.source();
     const cancelToken = source.token;
@@ -23,8 +23,9 @@ const CampaignForm = (props) => {
             .then(
                 (res) => {
                     var data = res.data
-                    console.log("data", data)
-                    getLatestCampaign()
+                    data._id = data.campaign_id
+                    var newCampaignList = [data, ...campaigns]
+                    setCampaigns(newCampaignList)
                 })
             .catch((error) => {
                 handleError(error)
@@ -37,11 +38,12 @@ const CampaignForm = (props) => {
     }
 
     const onFinish = async (values) => {
+
         values.organization_id = organizationId
         values.status = "Pending"
         console.log('Received values of form: ', values);
         await addSuggestedCampaign(values)
-        message.success("Your campaign suggestion has been recorded!!")
+        message.success("Your campaign suggestion has been recorded!! Reload to see changes.")
     };
 
     return (
@@ -107,7 +109,7 @@ const CampaignForm = (props) => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">Send</Button>
+                        <Button type="primary" htmlType="submit" loading={loading}>Send</Button>
                     </Form.Item>
                 </Form>
             </Card>

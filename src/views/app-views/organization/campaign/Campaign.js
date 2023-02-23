@@ -16,7 +16,7 @@ const Campaign = ({ organizationId }) => {
   const [campaigns, setCampaigns] = useState([])
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(false)
-  const [pageSetup, setPageSetup] = useState({ page: 1, pageSize: 2, landingPage: "suggestion", })
+  const [pageSetup, setPageSetup] = useState({ page: 1, pageSize: 5, landingPage: "suggestion", })
 
   //useEffect
   useEffect(() => {
@@ -41,7 +41,7 @@ const Campaign = ({ organizationId }) => {
         .then(
           (res) => {
             var data = res.data
-            data.map((data) => data.starting_date = moment(new Date(data.starting_date)))
+            // data.map((data) => data.starting_date = moment(new Date(data.starting_date)))
             setCampaigns([...campaigns, ...data])
             console.log("data", data)
             if (data.length == 0) setHasMore(false)
@@ -89,7 +89,7 @@ const Campaign = ({ organizationId }) => {
           xxl={{ span: 10, order: 2 }}
         >
           <CampaignForm
-            getLatestCampaign={getLatestCampaign}
+            setCampaigns={setCampaigns}
             organizationId={organizationId}
             campaigns={campaigns}
             loading={loading}

@@ -28,6 +28,7 @@ const CampaignCard = (props) => {
     content,
     publisherName,
     suggestorName,
+    suggestorEmail,
     userId,
     campaignStatus,
     campaignId,
@@ -141,10 +142,6 @@ const CampaignCard = (props) => {
     }]
   }
 
-
-
-
-
   const getColor = (category) => {
     switch (category) {
       case "Health":
@@ -256,7 +253,7 @@ const CampaignCard = (props) => {
                 {title}
               </ShowMoreText>
             </h2>
-            <h3 className="text-muted" style={{ fontWeight: "bolder" }}>{category}</h3>
+            <h3 className="text-muted mb-0" style={{ fontWeight: "bolder" }}>{category}</h3>
             <h4>
               <ShowMoreText
                 /* Default options */
@@ -271,6 +268,7 @@ const CampaignCard = (props) => {
                 {content}{" "}
               </ShowMoreText>
             </h4>
+            <h4 className="mt-2"><b>Suggested by: <u>{suggestorName != " " ? suggestorName : suggestorEmail}</u></b></h4>
           </div>
         </div>{" "}
         {isVisit ? (
@@ -397,6 +395,8 @@ CampaignCard.propTypes = {
   orgName: PropTypes.string,
   orgId: PropTypes.string,
   publisherName: PropTypes.string,
+  suggestorName: PropTypes.string,
+  suggestorEmail: PropTypes.string,
   orgProfile: PropTypes.object,
   campaignStatus: PropTypes.object,
   likeStatus: PropTypes.object,
@@ -419,11 +419,12 @@ CampaignCard.defaultProps = {
   classData: "",
   href: "",
   publisherName: "",
-  suggestorName: "",
+  suggestorName: "No info",
+  suggestorEmail: "No info",
   orgProfile: {},
-  participantStatus: { participantCounter: 69, isParticipant: false, participants: [] },
+  participantStatus: { participantCounter: 70, isParticipant: false, participants: [] },
   likeStatus: { likeCounter: 420, isLike: false, likes: [] },
-  campaignStatus: { likeCounter: 420, isLike: false, participantCounter: 69, isParticipant: false, participants: [], likes: [] },
+  campaignStatus: { likeCounter: 420, isLike: false, participantCounter: 70, isParticipant: false, participants: [], likes: [] },
   loading: false
 };
 export default CampaignCard;

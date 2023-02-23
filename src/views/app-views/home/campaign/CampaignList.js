@@ -85,7 +85,7 @@ const CampaignList = () => {
                     </div>
                   </div>
                   <div>
-                    <Link to={`/home/organization/${result.campaign_id}`}>
+                    <Link to={`/home/posts/${result.organization}/${result.campaign_id}/single/data`}>
                       <Button type="primary" shape="round">
                         View
                       </Button>
