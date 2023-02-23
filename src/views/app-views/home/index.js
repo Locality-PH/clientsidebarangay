@@ -94,7 +94,7 @@ export const DefaultDashboard = () => {
         next={() => handleLoadMore()}
         hasMore={hasMore}
         loader={
-          <Row gutter={16} align="center" className="w-100">
+          <Row gutter={16} align="center">
             <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
               <Card loading={true} />
             </Col>
@@ -106,14 +106,14 @@ export const DefaultDashboard = () => {
           </p>
         }
       >
-        <Row gutter={16} align="center" className="w-100">
+        <Row gutter={16} align="center">
           {/* OrganizationList */}
           <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
             <OrganizationList />
           </Col>
         </Row>
 
-        <Row gutter={16} align="center" className="w-100">
+        <Row gutter={16} align="center">
           {/* Trending Campaign */}
           <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
             <Card
@@ -179,7 +179,7 @@ export const DefaultDashboard = () => {
         </Row>
 
         {/* Post */}
-        <Row gutter={16} align={"center"} className="w-100">
+        <Row gutter={16} align={"center"}>
           {campaigns.length > 0 &&
             campaigns.map((campaign, id) => (
               <Col
