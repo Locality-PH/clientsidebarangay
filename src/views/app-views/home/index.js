@@ -153,7 +153,7 @@ export const DefaultDashboard = () => {
                           <div className="avatar-status-name h4">{result.title}</div>
                           <span>{ }</span>
                         </div>
-                        <div className="text-muted avatar-status-subtitle h5">{result.participants.length} Participants</div>
+                        <div className="text-muted avatar-status-subtitle h5">{result.participantCounter} Participants</div>
                       </div>
                     </div>
                     <div>

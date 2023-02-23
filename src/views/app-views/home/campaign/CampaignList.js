@@ -51,49 +51,48 @@ const CampaignList = () => {
         <Row justify="center">
           <Col sm={24} md={15}>
             <Card>
-               {barangayList.map((result, i)  => i < listLimit &&(
-            <div
-              key={i}
-              className={`d-flex align-items-center justify-content-between mb-4`}
-            >
-              <div className="avatar-status d-flex align-items-center">
+              {barangayList.map((result, i) => i < listLimit && (
+                <div
+                  key={i}
+                  className={`d-flex align-items-center justify-content-between mb-4`}
+                >
+                  <div className="avatar-status d-flex align-items-center">
 
-                {
-                  result.publisher.profileUrl != null
-                    ?
-                    <Avatar
-                      className="font-size-sm"
-                      icon={<UserOutlined />}
-                      src={result.publisher.profileUrl.data}
-                    >
-                      {utils.getNameInitial(result.publisher.full_name)}
-                    </Avatar>
-                    :
-                    <Avatar
-                      className="font-size-sm"
-                      style={{ backgroundColor: result.publisher.profileLogo }}
-                    >
-                      {utils.getNameInitial(result.publisher.full_name)}
-                    </Avatar>
-                }
+                    {
+                      result && result.images && result.images[0] != null
+                        ?
+                        <Avatar
+                          className="mb-2 mr-1 rounded"
+                          icon={<UserOutlined />}
+                          size={55}
+                          src={result.images[0].data}
+                        />
+                        :
+                        <Avatar
+                          className="font-size-sm"
+                          style={{ backgroundColor: result.publisher.profileLogo }}
+                        >
+                          {utils.getNameInitial(result.title)}
+                        </Avatar>
+                    }
 
-                <div className="ml-2">
-                  <div>
-                    <div className="avatar-status-name h4">{result.title}</div>
-                    <span>{ }</span>
+                    <div className="ml-2">
+                      <div>
+                        <div className="avatar-status-name h4">{result.title}</div>
+                        <span>{ }</span>
+                      </div>
+                      <div className="text-muted avatar-status-subtitle h5">{result.participantCounter} Participants</div>
+                    </div>
                   </div>
-                  <div className="text-muted avatar-status-subtitle h5">{result.participants.length} Participants</div>
+                  <div>
+                    <Link to={`/home/organization/${result.campaign_id}`}>
+                      <Button type="primary" shape="round">
+                        View
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <Link to={`/home/organization/${result.campaign_id}`}>
-                  <Button type="primary" shape="round">
-                    View
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          ))}
+              ))}
 
               <Button
                 style={{ width: "100%", height: "3rem" }}
