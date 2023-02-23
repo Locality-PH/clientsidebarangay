@@ -126,45 +126,45 @@ export const DefaultDashboard = () => {
               loading={trendingLoading}
             >
               <div className="mt-3">
-                {trendingCampaign.map((result, i) => (
+                {trendingCampaign.map((result?, i) => (
                   <div
                     key={i}
                     className={`d-flex align-items-center justify-content-between mb-4`}
                   >
                     <div className="avatar-status d-flex align-items-center">
-                      {result && result.images && result.images[0] != null ? (
+                      {result? && result?.images && result?.images[0] != null ? (
                         <Avatar
                           className="mb-2 mr-1 rounded"
                           icon={<UserOutlined />}
                           size={55}
-                          src={result.images[0].data}
+                          src={result?.images[0].data}
                         />
                       ) : (
                         <Avatar
                           className="font-size-sm"
                           style={{
-                            backgroundColor: result.publisher.profileLogo,
+                            backgroundColor: result?.publisher.profileLogo,
                           }}
                         >
-                          {utils.getNameInitial(result.title)}
+                          {utils.getNameInitial(result?.title)}
                         </Avatar>
                       )}
 
                       <div className="ml-2">
                         <div>
                           <div className="avatar-status-name h4">
-                            {result.title}
+                            {result?.title}
                           </div>
                           <span>{}</span>
                         </div>
                         <div className="text-muted avatar-status-subtitle h5">
-                          {result.participantCounter} Participants
+                          {result?.participantCounter} Participants
                         </div>
                       </div>
                     </div>
                     <div>
                       <Link
-                        to={`/home/posts/${result.organization}/${result.campaign_id}/single/data`}
+                        to={`/home/posts/${result?.organization}/${result?.campaign_id}/single/data`}
                       >
                         <Button type="primary" shape="round">
                           View
@@ -193,19 +193,19 @@ export const DefaultDashboard = () => {
                 className="mb-2"
               >
                 <CampaignCard
-                  title={campaign.title}
-                  category={campaign.category}
+                  title={campaign?.title}
+                  category={campaign?.category}
                   orgName={campaign?.organization?.organization_name}
                   orgId={campaign?.organization?.organization_id}
-                  startingDate={campaign.starting_date}
-                  content={campaign.description}
+                  startingDate={campaign?.starting_date}
+                  content={campaign?.description}
                   orgProfile={campaign?.organization?.profile}
-                  images={campaign.images}
+                  images={campaign?.images}
                   campaignStatus={{
-                    likeCounter: campaign.likeCounter,
-                    isLike: campaign.isLike,
-                    participantCounter: campaign.participantCounter,
-                    isParticipant: campaign.isParticipant,
+                    likeCounter: campaign?.likeCounter,
+                    isLike: campaign?.isLike,
+                    participantCounter: campaign?.participantCounter,
+                    isParticipant: campaign?.isParticipant,
                   }}
                   // isVisit={false}
                   suggestorName={
@@ -214,7 +214,7 @@ export const DefaultDashboard = () => {
                     campaign?.suggestor?.last_name
                   }
                   suggestorEmail={campaign?.suggestor?.email}
-                  campaignId={campaign._id}
+                  campaignId={campaign?._id}
                   enableVisit={false}
                   enablePost={false}
                 />
