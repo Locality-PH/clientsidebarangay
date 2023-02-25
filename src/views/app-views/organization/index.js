@@ -59,7 +59,7 @@ const Index = ({ match }) => {
     try {
       await axios
         .get(
-          "/api/organization/get-organization/" + match.params.organization_id,
+          "/api/organization/get-organization/" + match?.params?.organization_id,
           generateToken()[1]
         )
         .then((response) => {
@@ -76,7 +76,7 @@ const Index = ({ match }) => {
     try {
       await axios
         .get(
-          `/api/organization/get-organization-client/${match.params.organization_id}/${currentUser.uid}`,
+          `/api/organization/get-organization-client/${match?.params?.organization_id}/${currentUser.uid}`,
           generateToken()[1]
         )
         .then((response) => {
@@ -85,7 +85,7 @@ const Index = ({ match }) => {
         });
     } catch (error) {
       message.error("Could not fetch the data in the server!");
-      console.log(err);
+      console.log(error);
     }
   };
 
