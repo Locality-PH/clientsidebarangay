@@ -39,7 +39,7 @@ const Header = () => {
   );
   return (
     <>
-      <Card className="borderless">
+      <Card style={{marginLeft: "-25px", marginRight: "-25px"}} className="borderless">
         <Row justify="center">
           <Col sm={24} md={23}>
             <div className="d-md-flex">
