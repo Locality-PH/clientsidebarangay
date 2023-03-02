@@ -9,6 +9,16 @@ const CertificateRequestForm = (props) => {
   const { setParentData, parentData, organizationId } = props;
   const { currentUser } = useAuth();
 
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const listener = window.addEventListener("resize", updateWindowDimensions);
+    updateWindowDimensions();
+    return () => window.removeEventListener("resize", listener);
+  }, []);
+  const updateWindowDimensions = () => {
+    setWidth(window.innerWidth);
+  };
   const [form] = Form.useForm();
   console.log(organizationId);
 
@@ -33,7 +43,10 @@ const CertificateRequestForm = (props) => {
   }, []);
   return (
     <>
-      <Card title="Certificate Request">
+      <Card
+        className={`${width > 991 ? null : `borderless`}`}
+        title="Certificate Request"
+      >
         <Form name="complex-form" form={form}>
           <Form.Item>
             <h4>Email</h4>

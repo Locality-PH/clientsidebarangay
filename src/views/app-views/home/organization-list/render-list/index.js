@@ -30,10 +30,7 @@ export const RenderList = (props) => {
     <>
       <div className="avatar-status d-flex align-items-center">
         {/*renderAvatar({ icon, src, type, size, shape, gap, text })*/}
-        <Avatar
-          className="font-size-sm"
-          style={{ backgroundColor: "black" }}
-        >
+        <Avatar className="font-size-sm" style={{ backgroundColor: "black" }}>
           {utils.getNameInitial(name)}
         </Avatar>
         <div className="ml-2">

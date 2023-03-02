@@ -1,28 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import { Card, Button } from 'antd';
+import React, { useState, useEffect } from "react";
+import { Card, Button } from "antd";
 import { Link, useLocation } from "react-router-dom";
 
-const About = ({ about }) => {
-    const [isLoading, setIsLoading] = useState(true)
+const About = ({ about, width }) => {
+  const [isLoading, setIsLoading] = useState(true);
 
-    const location = useLocation()
+  const location = useLocation();
 
-    useEffect(() => {
-        setIsLoading(false)
-    }, [about])
+  useEffect(() => {
+    setIsLoading(false);
+  }, [about]);
 
-    return (
-        <>
-            <Card title="About" loading={isLoading}>
-                <h4 className="text-muted">{about}</h4>
-                <div className="mt-3">
-                    <Link to={`${location.pathname}/about`}>
-                        <Button type="primary" shape="round" style={{ width: "100%", height: "3rem" }}>Learn More</Button>
-                    </Link>
-                </div>
-            </Card>
-        </>
-    )
-}
+  return (
+    <>
+      <Card
+        className={`${width > 991 ? null : `borderless`}`}
+        title="About"
+        loading={isLoading}
+      >
+        <h4 className="text-muted">{about}</h4>
+        <div className="mt-3">
+          <Link to={`${location.pathname}/about`}>
+            <Button
+              type="primary"
+              shape="round"
+              style={{ width: "100%", height: "3rem" }}
+            >
+              Learn More
+            </Button>
+          </Link>
+        </div>
+      </Card>
+    </>
+  );
+};
 
-export default About
+export default About;

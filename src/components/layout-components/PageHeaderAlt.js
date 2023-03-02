@@ -35,9 +35,9 @@ export const PageHeaderAlt = ({
   return (
     <div
       ref={ref}
-      className={`page-header-alt ${className ? className : ""} ${
-        overlap && "overlap"
-      }`}
+      className={`page-header-alt borderless-cover ${
+        className ? className : ""
+      } ${overlap && "overlap"}`}
       style={getStyle()}
     >
       {navType === NAV_TYPE_TOP ? (

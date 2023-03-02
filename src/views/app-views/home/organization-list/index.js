@@ -34,7 +34,10 @@ const OrganizationList = () => {
 
   const getLatestOrganizations = async () => {
     await axios
-      .get("/api/organization/get-latest-organizations?length=5", generateToken()[1])
+      .get(
+        "/api/organization/get-latest-organizations?length=5",
+        generateToken()[1]
+      )
       .then((response) => {
         setOrganizationList(response.data);
         setIsLoading(false);
@@ -64,32 +67,33 @@ const OrganizationList = () => {
               className={`d-flex align-items-center justify-content-between mb-4`}
             >
               <div className="avatar-status d-flex align-items-center">
-
-                {
-                  result.profile != null
-                    ?
-                    <Avatar
-                      className="font-size-sm"
-                      icon={<UserOutlined />}
-                      src={result.profile.fileUrl}
-                    >
-                      {utils.getNameInitial(result.organization_name)}
-                    </Avatar>
-                    :
-                    <Avatar
-                      className="font-size-sm"
-                      style={{ backgroundColor: result.profile_color }}
-                    >
-                      {utils.getNameInitial(result.organization_name)}
-                    </Avatar>
-                }
+                {result.profile != null ? (
+                  <Avatar
+                    className="font-size-sm"
+                    icon={<UserOutlined />}
+                    src={result.profile.fileUrl}
+                  >
+                    {utils.getNameInitial(result.organization_name)}
+                  </Avatar>
+                ) : (
+                  <Avatar
+                    className="font-size-sm"
+                    style={{ backgroundColor: result.profile_color }}
+                  >
+                    {utils.getNameInitial(result.organization_name)}
+                  </Avatar>
+                )}
 
                 <div className="ml-2">
                   <div>
-                    <div className="avatar-status-name h4">{result.organization_name}</div>
-                    <span>{ }</span>
+                    <div className="avatar-status-name h4">
+                      {result.organization_name}
+                    </div>
+                    <span>{}</span>
                   </div>
-                  <div className="text-muted avatar-status-subtitle h5">{result.address}</div>
+                  <div className="text-muted avatar-status-subtitle h5">
+                    {result.address}
+                  </div>
                 </div>
               </div>
               <div>

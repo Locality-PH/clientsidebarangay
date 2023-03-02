@@ -8,7 +8,8 @@ import {
   Menu,
   Dropdown,
   Space,
-  Typography, message
+  Typography,
+  message,
 } from "antd";
 const { Paragraph, Text } = Typography;
 import { Icon } from "components/util-components/Icon";
@@ -40,7 +41,6 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
-
   const [isFollow, setIsFollow] = useState(alreadyFollow);
 
   const [followLoading, setFollowLoading] = useState(false);
@@ -54,20 +54,23 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
   }, [organization]);
 
   const follow = () => {
-    setFollowLoading(true)
+    setFollowLoading(true);
 
     setTimeout(() => {
       axios
-        .post("/api/organization/follow", {
-          organization_id: organizationId,
-          uuid: currentUser.uid
-        }, generateToken()[1])
+        .post(
+          "/api/organization/follow",
+          {
+            organization_id: organizationId,
+            uuid: currentUser.uid,
+          },
+          generateToken()[1]
+        )
         .then((response) => {
           message.destroy();
           if (response.data == "Success") {
-            setIsFollow(true)
-            setFollowLoading(false)
-
+            setIsFollow(true);
+            setFollowLoading(false);
           } else {
             message.error("The action can't be completed, please try again.");
           }
@@ -75,26 +78,27 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
         .catch((error) => {
           message.error("The action can't be completed, please try again.");
         });
-
-    }, 1000)
-
-  }
+    }, 1000);
+  };
 
   const unFollow = () => {
-    setUnFollowLoading(true)
+    setUnFollowLoading(true);
 
     setTimeout(() => {
       axios
-        .post("/api/organization/unfollow", {
-          organization_id: organizationId,
-          uuid: currentUser.uid
-        }, generateToken()[1])
+        .post(
+          "/api/organization/unfollow",
+          {
+            organization_id: organizationId,
+            uuid: currentUser.uid,
+          },
+          generateToken()[1]
+        )
         .then((response) => {
           message.destroy();
           if (response.data == "Success") {
-            setIsFollow(false)
-            setUnFollowLoading(false)
-
+            setIsFollow(false);
+            setUnFollowLoading(false);
           } else {
             message.error("The action can't be completed, please try again.");
           }
@@ -102,10 +106,8 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
         .catch((error) => {
           message.error("The action can't be completed, please try again.");
         });
-
-    }, 1000)
-
-  }
+    }, 1000);
+  };
 
   const menu = (
     <Menu>
@@ -148,7 +150,7 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
 
   return (
     <>
-      <Card>
+      <Card style={{ marginLeft: "-22px", marginRight: "-22px" }}>
         <Row justify="center">
           <Col sm={24} md={23}>
             <div className="d-md-flex">
@@ -173,7 +175,7 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                   <Avatar
                     style={{
                       backgroundColor: organization?.profile_color,
-                      fontSize: "3rem"
+                      fontSize: "3rem",
                     }}
                     size={150}
                   >
@@ -201,8 +203,8 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                         </Button>
                       </Link>
 
-                      {
-                        !isFollow ? <Button
+                      {!isFollow ? (
+                        <Button
                           size="small"
                           style={{ backgroundColor: "#fc6c85", color: "white" }}
                           onClick={() => follow()}
@@ -210,19 +212,18 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                         >
                           <HeartFilled style={{ color: "white" }} />
                           Follow
-                        </Button> :
-
-                          <Button
-                            size="small"
-                            style={{ backgroundColor: "#D70040", color: "white" }}
-                            onClick={() => unFollow()}
-                            loading={unFollowLoading}
-                          >
-                            <CloseOutlined style={{ color: "white" }} />
-                            Unfollow
-                          </Button>
-                      }
-
+                        </Button>
+                      ) : (
+                        <Button
+                          size="small"
+                          style={{ backgroundColor: "#D70040", color: "white" }}
+                          onClick={() => unFollow()}
+                          loading={unFollowLoading}
+                        >
+                          <CloseOutlined style={{ color: "white" }} />
+                          Unfollow
+                        </Button>
+                      )}
 
                       {/* <Button size="small" style={{backgroundColor: "	#D70040", color: "white"}}>
                         <CloseOutlined />
@@ -256,20 +257,21 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization?.organization_member[0].email !=
-                                  null
-                                  ? organization?.organization_member[0]
-                                    .email
-                                  : ""
+                                  tooltip: `${
+                                    organization?.organization_member[0]
+                                      .email != null
+                                      ? organization?.organization_member[0]
+                                          .email
+                                      : ""
                                   }`,
-                              }
+                                }
                               : false
                           }
                         >
@@ -292,15 +294,15 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization?.phone_number}`,
-                              }
+                                  tooltip: `${organization?.phone_number}`,
+                                }
                               : false
                           }
                         >
@@ -323,15 +325,15 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${address}`,
-                              }
+                                  tooltip: `${address}`,
+                                }
                               : false
                           }
                         >
@@ -352,15 +354,15 @@ const Header = ({ organizationId, organization, alreadyFollow }) => {
                           style={
                             ellipsis
                               ? {
-                                width: 100,
-                              }
+                                  width: 100,
+                                }
                               : undefined
                           }
                           ellipsis={
                             ellipsis
                               ? {
-                                tooltip: `${organization?.website}`,
-                              }
+                                  tooltip: `${organization?.website}`,
+                                }
                               : false
                           }
                         >

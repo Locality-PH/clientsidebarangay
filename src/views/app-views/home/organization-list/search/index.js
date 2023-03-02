@@ -10,7 +10,7 @@ import {
   Row,
   Col,
   Skeleton,
-  Divider
+  Divider,
 } from "antd";
 import Flex from "components/shared-components/Flex";
 import AvatarStatus from "components/shared-components/AvatarStatus";
@@ -49,59 +49,60 @@ const Organizations = () => {
   return (
     <>
       {!isLoading ? (
-        <Row justify="center">
+        <Row className="borderless" justify="center">
           <Col sm={24} md={15}>
             <Card>
-              {barangayList.map((result, i) => i < listLimit && (
-                <div key={i}>
-                  <div
+              {barangayList.map(
+                (result, i) =>
+                  i < listLimit && (
+                    <div key={i}>
+                      <div
+                        className={`d-flex align-items-center justify-content-between`}
+                      >
+                        <div className="avatar-status d-flex align-items-center">
+                          {result.profile != null ? (
+                            <Avatar
+                              className="font-size-sm"
+                              icon={<UserOutlined />}
+                              src={result.profile.fileUrl}
+                            >
+                              {utils.getNameInitial(result.organization_name)}
+                            </Avatar>
+                          ) : (
+                            <Avatar
+                              className="font-size-sm"
+                              style={{ backgroundColor: result.profile_color }}
+                            >
+                              {utils.getNameInitial(result.organization_name)}
+                            </Avatar>
+                          )}
 
-                    className={`d-flex align-items-center justify-content-between`}
-                  >
-                    <div className="avatar-status d-flex align-items-center">
-                      {
-                        result.profile != null
-                          ?
-                          <Avatar
-                            className="font-size-sm"
-                            icon={<UserOutlined />}
-                            src={result.profile.fileUrl}
-                          >
-                            {utils.getNameInitial(result.organization_name)}
-                          </Avatar>
-                          :
-                          <Avatar
-                            className="font-size-sm"
-                            style={{ backgroundColor: result.profile_color }}
-                          >
-                            {utils.getNameInitial(result.organization_name)}
-                          </Avatar>
-                      }
-
-                      <div className="ml-2">
-                        <div>
-                          <div className="avatar-status-name h4">
-                            {result.organization_name}
+                          <div className="ml-2">
+                            <div>
+                              <div className="avatar-status-name h4">
+                                {result.organization_name}
+                              </div>
+                              <span></span>
+                            </div>
+                            <div className="text-muted avatar-status-subtitle h5">
+                              {result.address}
+                            </div>
                           </div>
-                          <span></span>
                         </div>
-                        <div className="text-muted avatar-status-subtitle h5">
-                          {result.address}
+                        <div>
+                          <Link
+                            to={`/home/organization/${result.organization_id}`}
+                          >
+                            <Button type="primary" shape="round">
+                              View
+                            </Button>
+                          </Link>
                         </div>
                       </div>
+                      <Divider />
                     </div>
-                    <div>
-                      <Link to={`/home/organization/${result.organization_id}`}>
-                        <Button type="primary" shape="round">
-                          View
-                        </Button>
-
-                      </Link>
-                    </div>
-                  </div>
-                  <Divider />
-                </div>
-              ))}
+                  )
+              )}
 
               <Button
                 style={{ width: "100%", height: "3rem" }}
@@ -112,7 +113,6 @@ const Organizations = () => {
               >
                 Load more
               </Button>
-
             </Card>
           </Col>
         </Row>

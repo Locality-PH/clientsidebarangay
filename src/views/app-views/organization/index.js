@@ -59,7 +59,8 @@ const Index = ({ match }) => {
     try {
       await axios
         .get(
-          "/api/organization/get-organization/" + match?.params?.organization_id,
+          "/api/organization/get-organization/" +
+            match?.params?.organization_id,
           generateToken()[1]
         )
         .then((response) => {
@@ -93,8 +94,11 @@ const Index = ({ match }) => {
     <>
       {!isLoading ? (
         <BrowserRouter>
-          <HeaderCover img="/img/others/img-12.jpg" />
-          <div className="container my-4">
+          <HeaderCover
+            style={{ margin: "-22px" }}
+            img="/img/others/img-12.jpg"
+          />
+          <div className="container my-4 ">
             <Header
               organizationId={match.params.organization_id}
               organization={organization}

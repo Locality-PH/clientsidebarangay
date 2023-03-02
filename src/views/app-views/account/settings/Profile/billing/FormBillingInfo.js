@@ -10,7 +10,7 @@ import "firebase/storage";
 import axios from "axios";
 
 const FormBillingInfo = (props) => {
-  const { setParentData, parentData } = props;
+  const { setParentData, parentData, width } = props;
   const data = props;
   let type = props.type;
   const { generateToken } = useAuth();
@@ -171,7 +171,11 @@ const FormBillingInfo = (props) => {
         onFinish={onFinish}
       >
         <Card
-          className={`${type == "request" ? null : `setting-content`}`}
+          className={`${
+            type == "request"
+              ? `${width > 991 ? null : `borderless`}`
+              : `setting-content`
+          }`}
           title={"Billing Information"}
           loading={isLoading}
         >

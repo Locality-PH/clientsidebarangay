@@ -14,7 +14,7 @@ const AboutPage = ({ organization }) => {
   const [ellipsis, setEllipsis] = useState(true);
   return (
     <>
-      <Row gutter="16">
+      <Row gutter={16} className="borderless">
         <Col xs={24} sm={24} md={8}>
           <Card title="Message from us :)">
             <h4 className="text-muted">
@@ -35,9 +35,7 @@ const AboutPage = ({ organization }) => {
 
         <Col xs={24} sm={24} md={8}>
           <Card title="Who we are?">
-            <h4 className="text-muted">
-              {organization.about}
-            </h4>
+            <h4 className="text-muted">{organization.about}</h4>
           </Card>
         </Col>
 
@@ -58,19 +56,25 @@ const AboutPage = ({ organization }) => {
                     style={
                       ellipsis
                         ? {
-                          width: 100,
-                        }
+                            width: 100,
+                          }
                         : undefined
                     }
                     ellipsis={
                       ellipsis
                         ? {
-                          tooltip: `${organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}`,
-                        }
+                            tooltip: `${
+                              organization.organization_member[0].email != null
+                                ? organization.organization_member[0].email
+                                : ""
+                            }`,
+                          }
                         : false
                     }
                   >
-                    {organization.organization_member[0].email != null ? organization.organization_member[0].email : ""}
+                    {organization.organization_member[0].email != null
+                      ? organization.organization_member[0].email
+                      : ""}
                   </Text>
                 </Col>
               </Row>
@@ -88,15 +92,15 @@ const AboutPage = ({ organization }) => {
                     style={
                       ellipsis
                         ? {
-                          width: 100,
-                        }
+                            width: 100,
+                          }
                         : undefined
                     }
                     ellipsis={
                       ellipsis
                         ? {
-                          tooltip: `${organization.phone_number}`,
-                        }
+                            tooltip: `${organization.phone_number}`,
+                          }
                         : false
                     }
                   >
@@ -118,15 +122,15 @@ const AboutPage = ({ organization }) => {
                     style={
                       ellipsis
                         ? {
-                          width: 100,
-                        }
+                            width: 100,
+                          }
                         : undefined
                     }
                     ellipsis={
                       ellipsis
                         ? {
-                          tooltip: `${organization.address}`,
-                        }
+                            tooltip: `${organization.address}`,
+                          }
                         : false
                     }
                   >
@@ -148,15 +152,15 @@ const AboutPage = ({ organization }) => {
                     style={
                       ellipsis
                         ? {
-                          width: 100,
-                        }
+                            width: 100,
+                          }
                         : undefined
                     }
                     ellipsis={
                       ellipsis
                         ? {
-                          tooltip: `${organization.website}`,
-                        }
+                            tooltip: `${organization.website}`,
+                          }
                         : false
                     }
                   >

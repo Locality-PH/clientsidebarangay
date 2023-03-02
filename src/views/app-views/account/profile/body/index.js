@@ -9,7 +9,7 @@ const { TabPane } = Tabs;
 const ContentBody = () => {
   const [active, setActive] = useState(1);
   return (
-    <div className="tabs-cards">
+    <div className="tabs-cards borderless">
       <Tabs
         onChange={(e) => {
           console.log(e);

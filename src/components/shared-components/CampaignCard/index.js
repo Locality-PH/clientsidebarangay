@@ -438,7 +438,7 @@ const CampaignCard = (props) => {
             {enablePost ? (
               <>
                 <hr className="hr-style" />
-                <CommentSection />
+                <CommentSection campaignId={campaignId} orgId={orgId} />
               </>
             ) : null}
           </div>

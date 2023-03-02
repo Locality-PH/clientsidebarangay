@@ -150,6 +150,7 @@ export const DefaultDashboard = () => {
                           {utils.getNameInitial(result.title)}
                         </Avatar>
                       )}
+                      {/* future data */}
                       {/* <Avatar
                         className="mb-2 mr-1 rounded"
                         icon={<UserOutlined />}

@@ -1,10 +1,10 @@
-import { React, useState, useEffect, createRef } from 'react'
-import { Row, Col, Tag, message, Card, Empty } from 'antd';
-import CampaignForm from './CampaignForm';
-import CampaignRequested from './CampaignRequested';
+import { React, useState, useEffect, createRef } from "react";
+import { Row, Col, Tag, message, Card, Empty } from "antd";
+import CampaignForm from "./CampaignForm";
+import CampaignRequested from "./CampaignRequested";
 import { useAuth } from "contexts/AuthContext";
-import axios from 'axios'
-import moment from 'moment'
+import axios from "axios";
+import moment from "moment";
 
 const Campaign = ({ organizationId }) => {
   //for api
@@ -13,54 +13,59 @@ const Campaign = ({ organizationId }) => {
   const { generateToken } = useAuth();
 
   //useState
-  const [campaigns, setCampaigns] = useState([])
-  const [hasMore, setHasMore] = useState(true)
-  const [loading, setLoading] = useState(false)
-  const [pageSetup, setPageSetup] = useState({ page: 1, pageSize: 5, landingPage: "suggestion", })
+  const [campaigns, setCampaigns] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [pageSetup, setPageSetup] = useState({
+    page: 1,
+    pageSize: 5,
+    landingPage: "suggestion",
+  });
 
   //useEffect
   useEffect(() => {
-    getLatestCampaign()
-  }, [])
+    getLatestCampaign();
+  }, []);
 
   useEffect(() => {
-    getLatestCampaign()
-  }, [pageSetup])
+    getLatestCampaign();
+  }, [pageSetup]);
 
   //axios
   const getLatestCampaign = async () => {
-    const { page, pageSize, landingPage } = pageSetup
+    const { page, pageSize, landingPage } = pageSetup;
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      await axios.get(
-        `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&orgId=${organizationId}`,
-        generateToken()[1],
-        { cancelToken })
-        .then(
-          (res) => {
-            var data = res.data
-            // data.map((data) => data.starting_date = moment(new Date(data.starting_date)))
-            setCampaigns([...campaigns, ...data])
-            console.log("data", data)
-            if (data.length == 0) setHasMore(false)
-          })
+      await axios
+        .get(
+          `/api/campaign/latest?page=${page}&pageSize=${pageSize}&landingPage=${landingPage}&orgId=${organizationId}`,
+          generateToken()[1],
+          { cancelToken }
+        )
+        .then((res) => {
+          var data = res.data;
+          // data.map((data) => data.starting_date = moment(new Date(data.starting_date)))
+          setCampaigns([...campaigns, ...data]);
+          console.log("data", data);
+          if (data.length == 0) setHasMore(false);
+        });
     } catch (error) {
-      handleError(error)
+      handleError(error);
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handleError = (error) => {
-    message.error("There is a problem with uploading the data!!!")
-    console.log("error", error)
-  }
+    message.error("There is a problem with uploading the data!!!");
+    console.log("error", error);
+  };
 
   return (
     <>
-      <Row gutter={16} align="center">
+      <Row align="center">
         <Col
           xs={{ span: 24, order: 2 }}
           sm={{ span: 24, order: 2 }}
@@ -97,7 +102,7 @@ const Campaign = ({ organizationId }) => {
         </Col>
       </Row>
     </>
-  )
-}
+  );
+};
 
-export default Campaign
+export default Campaign;

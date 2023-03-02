@@ -21,6 +21,16 @@ const CertificateRequestForm = (props) => {
     name: currentUser?.displayName,
     organizationId: organizationId,
   });
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const listener = window.addEventListener("resize", updateWindowDimensions);
+    updateWindowDimensions();
+    return () => window.removeEventListener("resize", listener);
+  }, []);
+  const updateWindowDimensions = () => {
+    setWidth(window.innerWidth);
+  };
   const [loading, setLoading] = useState(false);
   const handleSendDataCallBack = (res) => {
     console.log(res);
@@ -113,8 +123,8 @@ const CertificateRequestForm = (props) => {
   }, [parentData]);
   return (
     <>
-      <div className="">
-        <Row gutter={14}>
+      <div>
+        <Row className={`${width > 991 ? null : `borderless`}`} gutter={14}>
           <Col xs={24} sm={24} md={24} lg={15} xl={15} xxl={15}>
             <CertForm
               parentData={parentData}
@@ -125,6 +135,7 @@ const CertificateRequestForm = (props) => {
               {...data}
               type="request"
               parentData={parentData}
+              width={width}
               setParentData={setParentData}
             />
           </Col>
@@ -133,6 +144,7 @@ const CertificateRequestForm = (props) => {
               type="request"
               parentData={parentData}
               setParentData={setParentData}
+              width={width}
             />{" "}
             <Button
               icon={<SendOutlined />}

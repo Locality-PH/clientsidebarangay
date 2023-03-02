@@ -21,7 +21,7 @@ import {
 } from "api/AppController/AccountsController/BillingDetailsController";
 import { AUTH_TOKEN } from "redux/constants/Auth";
 const BillingTable = (props) => {
-  const { setParentData, parentData } = props;
+  const { setParentData, parentData, width } = props;
   const data = props;
   let type = data.type;
   const { generateToken } = useAuth();
@@ -341,7 +341,13 @@ const BillingTable = (props) => {
         }}
         generateToken={generateToken()[1]}
       />
-      <Card className={`${type == "request" ? null : `setting-content`}`}>
+      <Card
+        className={`${
+          type == "request"
+            ? `${width > 991 ? null : `borderless`}`
+            : `setting-content`
+        }`}
+      >
         <h2 className="mb-2">Billing</h2>
         <p>
           <i style={{ color: "red" }}>

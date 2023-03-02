@@ -118,7 +118,7 @@ const Organizations = () => {
   console.log(campaignList);
   return (
     <>
-      <Row justify="center">
+      <Row className="borderless" justify="center">
         <Col xs={24} sm={24} md={15} lg={15}>
           <Card loading={landingLoading} title={"Pages"}>
             {barangayList.map((item, i) => {
@@ -191,9 +191,7 @@ const Organizations = () => {
                   {console.log(item)}
                   <Col sm={24} md={24}>
                     <SearchCampaign
-                      startDate={
-                        new Date(item?.starting_date)
-                      }
+                      startDate={new Date(item?.starting_date)}
                       profile={
                         item && item.images && item.images[0]
                           ? item.images[0].data
