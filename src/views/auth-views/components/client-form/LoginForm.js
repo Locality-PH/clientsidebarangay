@@ -24,7 +24,7 @@ export const LoginForm = (props) => {
   let history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState(1);
-
+  const [switchData, setSwitchData] = useState(false);
   const {
     hideAuthMessage,
     showLoading,
@@ -37,8 +37,6 @@ export const LoginForm = (props) => {
     showMessage,
     message,
   } = props;
-
- 
 
   const onLogin = (values) => {
     setCounter(counter + 1);
@@ -129,11 +127,8 @@ export const LoginForm = (props) => {
           >
             <Alert type="error" showIcon message={message}></Alert>
           </motion.div>
-
-          <Form
-            name="login-form"
-            onFinish={onLogin}
-          >
+          {}
+          <Form name="login-form" onFinish={onLogin}>
             <Form.Item
               name="email"
               label="Username: "
@@ -172,7 +167,7 @@ export const LoginForm = (props) => {
                 </Col>
                 <Col>
                   {" "}
-                  <a href="url">Forgot Password?</a>
+                  <a href="/auth/forgot-password">Forgot Password?</a>
                 </Col>
               </Row>
             </Form.Item>

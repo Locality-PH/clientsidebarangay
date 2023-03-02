@@ -230,7 +230,7 @@ export const DefaultDashboard = () => {
                   suggestorEmail={campaign?.suggestor?.email}
                   campaignId={campaign?._id}
                   enableVisit={false}
-                  enablePost={false}
+                  enablePost={true}
                 />
               </Col>
             ))}

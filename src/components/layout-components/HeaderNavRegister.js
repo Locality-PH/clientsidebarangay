@@ -111,7 +111,7 @@ export const HeaderNavRegister = (props) => {
                     className="ant-menu-item ant-menu-item-only-child home-tag "
                   >
                     <span className="home-tag " style={{ color: "white" }}>
-                      Sign up
+                      Login
                     </span>
                   </li>
                 </ul>

@@ -192,11 +192,15 @@ function RegisterForm(props) {
           <Form.Item name="remember" wrapperCol={{ span: 24 }}>
             <Row justify="space-between">
               <Col>
-                <Checkbox>Remember me</Checkbox>{" "}
+                <Checkbox>Remember me</Checkbox>
               </Col>
               <Col>
-                {" "}
-                <a href="url">Forgot Password?</a>
+                <Checkbox>
+                  I agree to the{" "}
+                  <a href={"/support/term-condition"}> terms and conditions</a>{" "}
+                  and
+                  <a href={"/support/privacy-policy"}> privacy policy </a>
+                </Checkbox>
               </Col>
             </Row>
           </Form.Item>

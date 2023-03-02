@@ -14,7 +14,7 @@ import {
   PRE_PREFIX_PATH,
 } from "configs/AppConfig";
 import useBodyClass from "hooks/useBodyClass";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "contexts/AuthContext";
 import {
   AUTH_ORGANIZATION,
   AUTH_ORGANIZATION_LIST,

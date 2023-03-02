@@ -117,7 +117,7 @@ export const NavNotification = () => {
                 setLoading(true);
                 setStart(count + start);
                 getNotificationNext(
-                  start,
+                  start + count,
                   count,
                   generateToken()[1],
                   handleCallBackNext
@@ -141,7 +141,38 @@ export const NavNotification = () => {
         renderItem={(item) => {
           return (
             <>
-              {item.is_read ? null : (
+              {item.is_read ? (
+                <Skeleton avatar title={false} loading={loading} active>
+                  <List.Item
+                    style={{ backgroundColor: "#58555512" }}
+                    className="list-clickable"
+                  >
+                    <Flex alignItems="center">
+                      <div className="pr-3">
+                        {item.organization_id[0].profile.fileUrl ? (
+                          <Avatar
+                            src={item.organization_id[0].profile.fileUrl}
+                          />
+                        ) : (
+                          <Avatar
+                            className={`ant-avatar-${item.type}`}
+                            icon={getIcon(item.icon)}
+                          />
+                        )}
+                      </div>
+                      <div className="mr-3">
+                        <span className="font-weight-bold text-dark">
+                          {item.organization_id[0].organization_name}
+                        </span>
+                        <span className="text-gray-light">{item.message}</span>
+                      </div>
+                      <small className="ml-auto">
+                        {moment(item.updatedAt).format("LT")}
+                      </small>
+                    </Flex>
+                  </List.Item>
+                </Skeleton>
+              ) : (
                 <Skeleton avatar title={false} loading={loading} active>
                   <List.Item className="list-clickable">
                     <Flex alignItems="center">
@@ -159,7 +190,7 @@ export const NavNotification = () => {
                       </div>
                       <div className="mr-3">
                         <span className="font-weight-bold text-dark">
-                          {item.organization_id[0].organization_name}{" "}
+                          {item.organization_id[0].organization_name}
                         </span>
                         <span className="text-gray-light">{item.message}</span>
                       </div>
@@ -167,7 +198,7 @@ export const NavNotification = () => {
                         {moment(item.updatedAt).format("LT")}
                       </small>
                     </Flex>
-                  </List.Item>{" "}
+                  </List.Item>
                 </Skeleton>
               )}
             </>
@@ -192,7 +223,7 @@ export const NavNotification = () => {
       if (isMounted) {
         setNotification(response.data);
         setlandingLoading(false);
-
+        console.log(response);
         setNotificationCount(response.headers["x-total-count"]);
       }
     });
