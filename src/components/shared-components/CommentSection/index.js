@@ -21,7 +21,7 @@ const CommentComponent = (props) => {
   const [hasMore, setHasMore] = useState(true);
   // Page State
   const count = 5;
-  const [start, setStart] = useState(3);
+  const [start, setStart] = useState(4);
 
   const handleNextComment = (response) => {
     try {
