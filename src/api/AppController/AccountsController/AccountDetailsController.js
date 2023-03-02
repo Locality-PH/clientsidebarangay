@@ -3,6 +3,7 @@ import { PROFILE_URL } from "redux/constants/Auth";
 import firebase from "firebase/app";
 import "firebase/storage";
 import { message } from "antd";
+import { isBase64Url } from "helper/Formula";
 
 const deletePhoto = async (setLoadingButton, setEditOrganization, oldUrl) => {
   let pictureRef = firebase.storage().refFromURL(oldUrl);
@@ -45,7 +46,8 @@ export async function updateAccount(
       // New Image
       await fileRef.put(profileAvatar).then(function (_) {
         console.log("File uploaded!");
-        // initialized file upload
+
+        //  initialized file upload
         fileRef.getDownloadURL().then(async function (url) {
           console.log(url);
           const dataForm = {
@@ -74,8 +76,9 @@ export async function updateAccount(
             })
             .then(async (_) => {
               // Old Image delete after success
+
               console.log("oldUrl", oldUrl);
-              if (oldUrl)
+              if (!(oldUrl && useRegex(oldUrl)))
                 await deletePhoto(
                   setLoadingButton,
                   setEditOrganization,
@@ -151,4 +154,8 @@ export async function deleteSession(session_id, generateToken, setShowMessage) {
         type: "error",
       });
     });
+}
+function useRegex(input) {
+  let regex = /https:\/\/lh3\.googleusercontent\.com\//i;
+  return regex.test(input);
 }

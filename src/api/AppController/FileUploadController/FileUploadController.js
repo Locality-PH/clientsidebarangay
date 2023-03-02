@@ -36,6 +36,7 @@ export async function FileUploadApi(path, data, fileUrl, token, fileOldUrl) {
             })
             .then(async (_) => {
               // Old Image delete after success
+              console.log(fileOldUrl);
               if (fileOldUrl) await deletePhoto(fileOldUrl);
             })
             .catch((error) => {

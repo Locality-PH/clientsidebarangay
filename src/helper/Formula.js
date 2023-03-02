@@ -109,3 +109,13 @@ export const toCapitalized = (str) => {
   }
   return arr.join(" ");
 };
+export function isBase64Url(str) {
+  // First, remove any data URI scheme prefix, if present
+  if (str.indexOf("data:") === 0) {
+    str = str.slice(str.indexOf(",") + 1);
+  }
+  // Then, remove any leading/trailing whitespace
+  str = str.trim();
+  // Check if the string matches the pattern of a base64-encoded URL
+  return /^data:[^;]+;base64,/.test(str);
+}

@@ -6,10 +6,12 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { CommentData } from "./commentData";
 import { useAuth } from "contexts/AuthContext";
+import { PROFILE_URL } from "redux/constants/Auth";
+
 const CommentComponent = (props) => {
   const { generateToken, currentUser } = useAuth();
   const { orgId, campaignId } = props;
-
+  const profile = JSON.parse(localStorage.getItem(PROFILE_URL) || "[]");
   const [isLoading, setIsLoading] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [deleteAction, setDeleteAction] = useState(false);
@@ -25,9 +27,15 @@ const CommentComponent = (props) => {
       console.log(response.data);
       const modifiedArray = resData.map((obj) => {
         return {
-          fullName: obj?.account?.full_name,
+          fullName: obj?.account?.full_name || "Deleted User",
           userId: obj?.account?.uuid,
-          avatarUrl: obj?.account?.profileUrl?.data,
+          avatarUrl:
+            obj?.account?.profileUrl?.data ||
+            `https://ui-avatars.com/api/name=${
+              obj?.account?.full_name || "U"
+            }&background=${
+              obj?.account?.profileLogo.replace("#", "") || "a0a0a0"
+            }&color=fffff&bold=true`,
           text: obj?.text,
           userProfile: "#",
           comId: obj?.comId,
@@ -52,10 +60,17 @@ const CommentComponent = (props) => {
     try {
       let resData = response.data;
       const modifiedArray = resData.map((obj) => {
+        console.log(obj?.account);
         return {
-          fullName: obj?.account?.full_name,
+          fullName: obj?.account?.full_name || "Deleted User",
           userId: obj?.account?.uuid,
-          avatarUrl: obj?.account?.profileUrl?.data,
+          avatarUrl:
+            obj?.account?.profileUrl?.data ||
+            `https://ui-avatars.com/api/name=${
+              obj?.account?.full_name || "U"
+            }&background=${
+              obj?.account?.profileLogo.replace("#", "") || "a0a0a0"
+            }&color=fffff&bold=true`,
           text: obj?.text,
           userProfile: "#",
           comId: obj?.comId,
@@ -125,14 +140,22 @@ const CommentComponent = (props) => {
       setIsLoading(false);
     });
   }, []);
+  //https://ui-avatars.com/api/name=Riya&background=random
   return (
     <>
       <CommentSection
         currentUser={{
-          currentUserId: currentUser.uid,
-          currentUserImg: currentUser.photoURL,
+          currentUserId: currentUser?.uid,
+          currentUserImg:
+            currentUser?.photoURL ||
+            `https://ui-avatars.com/api/name=${
+              currentUser?.displayName
+            }&background=${profile?.profile_color.replace(
+              "#",
+              ""
+            )}&color=fffff&bold=true`,
           currentUserProfile: "#",
-          currentUserFullName: currentUser.displayName,
+          currentUserFullName: currentUser?.displayName,
         }}
         logIn={{
           loginLink: "#",

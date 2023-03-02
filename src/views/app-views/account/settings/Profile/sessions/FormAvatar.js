@@ -23,7 +23,7 @@ const FormAvatar = (props) => {
   const [profileAvatar, setProfileAvatar] = useState(false);
   const [url, setUrl] = useState(null);
   const [file, setFile] = useState(null);
-
+  const photoData = JSON.parse(localStorage.getItem(PROFILE_URL));
   // Loading State
   const [editOrganization, setEditOrganization] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -176,12 +176,23 @@ const FormAvatar = (props) => {
           >
             <div className="mt-3 ml-3 mt-md-0">
               <Form.Item>
-                <Avatar
-                  size={90}
-                  className="mt-2 mr-2 "
-                  src={file}
-                  icon={<UserOutlined />}
-                />
+                {photoData?.profile_data ? (
+                  <Avatar
+                    size={90}
+                    className="mt-2 mr-2 "
+                    src={file}
+                    icon={<UserOutlined />}
+                  />
+                ) : (
+                  <Avatar
+                    size={90}
+                    className="mt-2 mr-2 "
+                    src={file}
+                    icon={<UserOutlined />}
+                    style={{ backgroundColor: photoData?.profile_color }}
+                  />
+                )}
+
                 <>
                   {editOrganization ? (
                     <>

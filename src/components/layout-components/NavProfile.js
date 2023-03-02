@@ -146,7 +146,11 @@ export const NavProfile = ({ signOut }) => {
           >
             <Menu.Item key="profile">
               {profile?.profile_data ? (
-                <Avatar src={profile?.profile_data} size={45}>
+                <Avatar
+                  src={profile?.profile_data}
+                  //   style={{ backgroundColor: profile?.profile_color }}
+                  size={45}
+                >
                   <b> {utils.getNameInitial(user)} </b>
                 </Avatar>
               ) : (

@@ -52,9 +52,25 @@ const Header = () => {
                 {currentUser?.photoURL ? (
                   <Avatar
                     shape="round"
+                    // style={{ backgroundColor: profile?.profile_color }}
                     size={150}
                     src={currentUser?.photoURL}
-                  />
+                  >
+                    <b style={{ fontSize: "50px" }}>
+                      {currentUser?.displayName ? (
+                        <>
+                          {utils.getNameInitial(currentUser?.displayName || "")}
+                        </>
+                      ) : (
+                        <>
+                          <UserOutlined
+                            className="home-tag-2"
+                            style={{ fontSize: "60px" }}
+                          />
+                        </>
+                      )}
+                    </b>
+                  </Avatar>
                 ) : (
                   <Avatar
                     src={currentUser?.photoURL}
