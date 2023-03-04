@@ -12,6 +12,9 @@ import axios from "axios";
 import InfinitScroll from "react-infinite-scroll-component";
 import { useAuth } from "contexts/AuthContext";
 import moment from "moment";
+import utils from "utils";
+import { useHistory } from "react-router-dom";
+
 const getIcon = (icon) => {
   switch (icon) {
     case "mail":
@@ -27,7 +30,7 @@ const getIcon = (icon) => {
 
 export const NavNotification = () => {
   const { generateToken } = useAuth();
-
+  let history = useHistory();
   // notification State
   const [notification, setNotification] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
@@ -44,6 +47,10 @@ export const NavNotification = () => {
   const [loading, setLoading] = useState(false);
   const [landingLoading, setlandingLoading] = useState(true);
 
+  const redirectLink = (data) => {
+    handleVisibleChange(false);
+    history.push(data);
+  };
   const handleVisibleChange = (flag) => {
     setVisible(flag);
     let readData = [];
@@ -57,6 +64,7 @@ export const NavNotification = () => {
       updateNotification(data, generateToken()[1]);
     }
   };
+
   const handleCallBackNext = (res) => {
     setNotification((oldArray) => [...oldArray, ...res.data]);
     setLoading(false);
@@ -141,28 +149,42 @@ export const NavNotification = () => {
         renderItem={(item) => {
           return (
             <>
-              {item.is_read ? (
+              {console.log(item?.link)}
+              {item?.type === "organization" ? (
                 <Skeleton avatar title={false} loading={loading} active>
                   <List.Item
-                    style={{ backgroundColor: "#58555512" }}
+                    onClick={() => redirectLink(item?.link || "")}
+                    style={{
+                      backgroundColor: item.is_read ? "#58555512" : "",
+                    }}
                     className="list-clickable"
                   >
                     <Flex alignItems="center">
                       <div className="pr-3">
-                        {item.organization_id[0].profile.fileUrl ? (
+                        {item.organization_id[0].profile?.fileUrl ? (
                           <Avatar
-                            src={item.organization_id[0].profile.fileUrl}
+                            src={item.organization_id[0]?.profile?.fileUrl}
                           />
                         ) : (
                           <Avatar
                             className={`ant-avatar-${item.type}`}
-                            icon={getIcon(item.icon)}
-                          />
+                            style={{
+                              backgroundColor:
+                                item.organization_id[0]?.profile_color,
+                            }}
+                          >
+                            <b>
+                              {utils.getNameInitial(
+                                item.organization_id[0].organization_name ||
+                                  "N/A"
+                              )}
+                            </b>
+                          </Avatar>
                         )}
                       </div>
                       <div className="mr-3">
                         <span className="font-weight-bold text-dark">
-                          {item.organization_id[0].organization_name}
+                          {item.organization_id[0].organization_name}{" "}
                         </span>
                         <span className="text-gray-light">{item.message}</span>
                       </div>
@@ -174,23 +196,33 @@ export const NavNotification = () => {
                 </Skeleton>
               ) : (
                 <Skeleton avatar title={false} loading={loading} active>
-                  <List.Item className="list-clickable">
+                  <List.Item
+                    style={{ backgroundColor: item.is_read ? "#58555512" : "" }}
+                    className="list-clickable"
+                    onClick={() => redirectLink(item?.link || "")}
+                  >
                     <Flex alignItems="center">
                       <div className="pr-3">
-                        {item.organization_id[0].profile.fileUrl ? (
-                          <Avatar
-                            src={item.organization_id[0].profile.fileUrl}
-                          />
+                        {item.user_id.profileUrl?.data ? (
+                          <Avatar src={item.user_id.profileUrl?.data} />
                         ) : (
                           <Avatar
-                            className={`ant-avatar-${item.type}`}
-                            icon={getIcon(item.icon)}
-                          />
+                            className={`ant-avatar-${item?.type}`}
+                            style={{
+                              backgroundColor: item?.user_id?.profileLogo,
+                            }}
+                          >
+                            <b>
+                              {utils.getNameInitial(
+                                item?.user_id?.full_name || "N/A"
+                              )}
+                            </b>
+                          </Avatar>
                         )}
                       </div>
                       <div className="mr-3">
                         <span className="font-weight-bold text-dark">
-                          {item.organization_id[0].organization_name}
+                          {item?.user_id?.full_name}{" "}
                         </span>
                         <span className="text-gray-light">{item.message}</span>
                       </div>

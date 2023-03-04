@@ -84,14 +84,14 @@ const Organization = ({ organizationId, organization, match }) => {
             width={width}
             organizationMembers={organization?.organization_member}
           />
-          <About width={width} about={organization.about} />
+          <About width={width} about={organization?.about} />
         </Col>
 
         <Col xs={24} sm={24} md={16}>
           <MissionAndVision
             width={width}
-            mission={organization.mission}
-            vision={organization.vision}
+            mission={organization?.mission}
+            vision={organization?.vision}
           />
 
           <Card
