@@ -66,9 +66,6 @@ const SearchInput = (props) => {
   const onSearch = (searchText) => {
     setValue(searchText);
     setOptions(!searchText ? [] : searchResult(searchText));
-    if (close) {
-      close();
-    }
   };
 
   const autofocus = () => {
