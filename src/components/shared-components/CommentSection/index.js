@@ -37,7 +37,7 @@ const CommentComponent = (props) => {
               obj?.account?.full_name || "U"
             }&background=${
               obj?.account?.profileLogo.replace("#", "") || "a0a0a0"
-            }&color=fffff&bold=true`,
+            }&color=FFFFFF&bold=true`,
           text: obj?.text,
           userProfile: "#",
           comId: obj?.comId,
@@ -51,7 +51,7 @@ const CommentComponent = (props) => {
                   obj?.account?.full_name || "U"
                 }&background=${
                   obj?.account?.profileLogo.replace("#", "") || "a0a0a0"
-                }&color=fffff&bold=true`,
+                }&color=FFFFFF&bold=true`,
               text: obj?.text,
               userProfile: "#",
               comId: obj?.comId,
