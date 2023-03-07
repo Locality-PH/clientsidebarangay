@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, message, Divider, Skeleton, Button } from "antd";
+import { Row, Col, Card, message, Divider, Skeleton, Button, Empty } from "antd";
 import SearchCampaign from "components/shared-components/SearchCampaign";
 import Officials from "./officials/Officials";
 import Events from "./events/Events";
@@ -98,62 +98,69 @@ const Organization = ({ organizationId, organization, match }) => {
             className={`${width > 991 ? null : `borderless`}`}
             title={"Organization Events"}
           >
-            {campaignList.map((item, i) => {
-              return (
-                <div key={i}>
-                  <Divider
-                    className="divider-margin"
-                    style={{ margin: "0px !important" }}
-                  />
-                  <Col sm={24} md={24}>
-                    <SearchCampaign
-                      startDate={new Date(item?.starting_date)}
-                      profile={
-                        item && item.images && item.images[0]
-                          ? item.images[0].data
-                          : undefined
-                      }
-                      title={item?.title}
-                      address={item?.organization?.address}
-                      name={item?.organization?.organization_name}
-                      id={item?.organization?.organization_id}
-                      campaign_id={item?._id}
-                      link={`${match.url}/campaign/${item?._id}`}
-                    />
-                  </Col>
-                </div>
-              );
-            })}
-            {loading && (
+            {campaignList.length > 0 ?
               <>
-                <Col sm={24} md={24}>
-                  <Card>
-                    <Skeleton loading={loading} avatar active></Skeleton>
-                  </Card>
-                </Col>
-                <Col sm={24} md={24}>
-                  <Card>
-                    <Skeleton loading={loading} avatar active></Skeleton>
-                  </Card>
-                </Col>
-                <Col sm={24} md={24}>
-                  <Card>
-                    <Skeleton loading={loading} avatar active></Skeleton>
-                  </Card>
+                {campaignList.map((item, i) => {
+                  return (
+                    <div key={i}>
+                      <Divider
+                        className="divider-margin"
+                        style={{ margin: "0px !important" }}
+                      />
+                      <Col sm={24} md={24}>
+                        <SearchCampaign
+                          startDate={new Date(item?.starting_date)}
+                          profile={
+                            item && item.images && item.images[0]
+                              ? item.images[0].data
+                              : undefined
+                          }
+                          title={item?.title}
+                          address={item?.organization?.address}
+                          name={item?.organization?.organization_name}
+                          orgId={item?.organization?.organization_id}
+                          id={item?.organization?.organization_id}
+                          campaign_id={item?._id}
+                          link={`${match.url}/campaign/${item?._id}`}
+                        />
+                      </Col>
+                    </div>
+                  );
+                })}
+                {loading && (
+                  <>
+                    <Col sm={24} md={24}>
+                      <Card>
+                        <Skeleton loading={loading} avatar active></Skeleton>
+                      </Card>
+                    </Col>
+                    <Col sm={24} md={24}>
+                      <Card>
+                        <Skeleton loading={loading} avatar active></Skeleton>
+                      </Card>
+                    </Col>
+                    <Col sm={24} md={24}>
+                      <Card>
+                        <Skeleton loading={loading} avatar active></Skeleton>
+                      </Card>
+                    </Col>
+                  </>
+                )}
+                <Col justify="center" className="text-center" sm={24} md={24}>
+                  {!loading && hasMore && (
+                    <Button
+                      onClick={() =>
+                        setPageSetup({ ...pageSetup, page: pageSetup.page + 1 })
+                      }
+                    >
+                      Load More
+                    </Button>
+                  )}
                 </Col>
               </>
-            )}
-            <Col justify="center" className="text-center" sm={24} md={24}>
-              {!loading && hasMore && (
-                <Button
-                  onClick={() =>
-                    setPageSetup({ ...pageSetup, page: pageSetup.page + 1 })
-                  }
-                >
-                  Load More
-                </Button>
-              )}
-            </Col>
+
+              : <Empty description="No current campaigns are listed right now." />
+            }
           </Card>
         </Col>
       </Row>

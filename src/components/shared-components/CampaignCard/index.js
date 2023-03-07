@@ -8,6 +8,7 @@ import {
   Space,
   Carousel,
   Image,
+  Tooltip,
 } from "antd";
 import {
   HeartOutlined,
@@ -16,6 +17,7 @@ import {
   HeartFilled,
   HeartTwoTone,
   TeamOutlined,
+  FundViewOutlined
 } from "@ant-design/icons";
 import { BsPeopleFill, BsPeople } from "react-icons/bs";
 import { Link, useHistory } from "react-router-dom";
@@ -71,22 +73,16 @@ const CampaignCard = (props) => {
   const [likeStatus, setLikeStatus] = useState({
     likeCounter: campaignStatus.likeCounter,
     isLike: campaignStatus.isLike,
-    // likes: campaignStatus.likes
   });
 
   const [participantStatus, setParticipantStatus] = useState({
     participantCounter: campaignStatus.participantCounter,
     isParticipant: campaignStatus.isParticipant,
-    // participants: campaignStatus.participants
   });
-
-  //useEffect
-  // useEffect(() => {
-  //   // console.log("campaignStatusState", campaignStatusState)
-  // }, [campaignStatusState])
 
   //axios
   const updateCampaignStatus = async (values, type, operation) => {
+    console.log("values", values)
     if (type == "participant") {
       var newCampaignData = {
         participantCounter: values.participantCounter,
@@ -102,7 +98,7 @@ const CampaignCard = (props) => {
     await axios
       .post(
         `/api/campaign/update-status`,
-        { values: newCampaignData, operation, type, userId, campaignId },
+        { values: newCampaignData, operation, type, campaignId },
         generateToken()[1],
         { cancelToken }
       )
@@ -135,7 +131,7 @@ const CampaignCard = (props) => {
     var newStatus = {
       ...participantStatus,
       isParticipant: false,
-      participantStatus: participantStatus.participantCounter - 1,
+      participantCounter: participantStatus.participantCounter - 1,
     };
     await updateCampaignStatus(newStatus, "participant", "decrement");
     setParticipantStatus(newStatus);
@@ -151,28 +147,31 @@ const CampaignCard = (props) => {
     setParticipantStatus(newStatus);
   };
 
-  if (orgId != "") {
-    var menuItems = [
-      {
-        text: "View all images",
-        icon: <EyeOutlined />,
-        onClick: () => setVisible(true),
-      },
-      {
-        text: "Visit Organization",
-        icon: <EyeOutlined />,
-        onClick: () => history.replace(`/home/organization/${orgId}`),
-      },
-    ];
-  } else {
-    var menuItems = [
-      {
-        text: "View all images",
-        icon: <EyeOutlined />,
-        onClick: () => setVisible(true),
-      },
-    ];
+  const redirectToBarangay = () => {
+    return history.push(`/home/organization/${orgId}`)
   }
+
+  const redirectToCampaign = () => {
+    if (href != "") {
+      return history.push(href)
+    }
+    else {
+      return history.push(`/home/posts/${orgId}/${campaignId}/single/data`)
+    }
+  }
+
+  var menuItems = [
+    {
+      text: "View all images",
+      icon: <EyeOutlined />,
+      onClick: () => setVisible(true),
+    },
+    {
+      text: "View Campaign Post",
+      icon: <FundViewOutlined />,
+      onClick: () => redirectToCampaign(),
+    }
+  ]
 
   const getColor = (category) => {
     switch (category) {
@@ -213,11 +212,16 @@ const CampaignCard = (props) => {
               color="#003151"
               size={60}
               style={{ fontSize: 20 }}
+              onClick={() => redirectToBarangay()}
             />
 
             <div>
               <div className="mt-2 ml-2">
-                <Text type="Primary">{orgName} </Text>
+                <Tooltip title="Go to organization">
+                  <Text type="Primary" onClick={() => { redirectToBarangay() }}>
+                    {orgName}
+                  </Text>
+                </Tooltip>
               </div>
               <div className="ml-1" type="Primary">
                 <Text>
@@ -326,14 +330,16 @@ const CampaignCard = (props) => {
               <div className="d-flex align-items-center">
                 {likeStatus.isLike != true ? (
                   <>
-                    <HeartOutlined
-                      style={{
-                        fontSize: "1.8rem",
-                        color: "rgb(0, 49, 81)",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => likeIncrement()}
-                    />
+                    <Tooltip title="Like post">
+                      <HeartOutlined
+                        style={{
+                          fontSize: "1.8rem",
+                          color: "rgb(0, 49, 81)",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => likeIncrement()}
+                      />
+                    </Tooltip>
                     <p
                       style={{
                         color: "rgb(0, 49, 81)",
@@ -346,14 +352,16 @@ const CampaignCard = (props) => {
                   </>
                 ) : (
                   <>
-                    <HeartFilled
-                      style={{
-                        fontSize: "1.8rem",
-                        color: "rgb(252, 108, 133)",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => likeDecrement()}
-                    />
+                    <Tooltip title="Unlike post">
+                      <HeartFilled
+                        style={{
+                          fontSize: "1.8rem",
+                          color: "rgb(252, 108, 133)",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => likeDecrement()}
+                      />
+                    </Tooltip>
                     <p
                       style={{
                         color: "rgb(252, 108, 133)",
@@ -368,28 +376,32 @@ const CampaignCard = (props) => {
 
                 {participantStatus.isParticipant != true ? (
                   <>
-                    <BsPeopleFill
-                      style={{
-                        fontSize: "2rem",
-                        color: "rgb(0, 49, 81)",
-                        marginLeft: 5,
-                      }}
-                    />
-
+                    <Tooltip title="Participate to campaign">
+                      <BsPeopleFill
+                        style={{
+                          fontSize: "2rem",
+                          color: "rgb(0, 49, 81)",
+                          marginLeft: 5,
+                        }}
+                        onClick={() => participantIncrement()}
+                      />
+                    </Tooltip>
                     <p style={{ color: "rgb(0, 49, 81)", marginTop: 10 }}>
                       {participantStatus.participantCounter}
                     </p>
                   </>
                 ) : (
                   <>
-                    <BsPeopleFill
-                      style={{
-                        fontSize: "2rem",
-                        marginLeft: 5,
-                        color: "	#0080FE",
-                      }}
-                    />
-
+                    <Tooltip title="Don't participate to campaign">
+                      <BsPeopleFill
+                        style={{
+                          fontSize: "2rem",
+                          marginLeft: 5,
+                          color: "	#0080FE",
+                        }}
+                        onClick={() => participantDecrement()}
+                      />
+                    </Tooltip>
                     <p style={{ color: "#0080FE", marginTop: 10 }}>
                       {participantStatus.participantCounter}
                     </p>
@@ -397,24 +409,22 @@ const CampaignCard = (props) => {
                 )}
               </div>
               <div className="d-flex align-items-center">
-                {participantStatus.isParticipant != true ? (
+                {1 + 1 != 3 ? (
                   <Button
                     style={{
                       color: "rgb(0, 49, 81)",
                     }}
                     type="default"
                     shape="round"
-                    onClick={() => participantIncrement()}
                   >
-                    Participate
+                    View Participants
                   </Button>
                 ) : (
                   <Button
                     type="primary"
                     shape="round"
-                    onClick={() => participantDecrement()}
                   >
-                    Don't participate
+                    Hide Participants
                   </Button>
                 )}
 

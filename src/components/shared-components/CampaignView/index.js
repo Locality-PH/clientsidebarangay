@@ -62,6 +62,7 @@ const CampaignView = ({ organization_id, campaign_id }) => {
                 orgName={campaign?.organization?.organization_name}
                 startingDate={campaign.starting_date}
                 content={campaign.description}
+                orgId={campaign?.organization?.organization_id}
                 orgProfile={campaign?.organization?.profile}
                 images={campaign.images}
                 campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
@@ -71,6 +72,7 @@ const CampaignView = ({ organization_id, campaign_id }) => {
                 campaignId={campaign._id}
                 enableVisit={false}
                 enablePost={false}
+                href={`/home/organization/${campaign?.organization?.organization_id}/campaign/${campaign?._id}`}
               />
             </div>
           </Col>
