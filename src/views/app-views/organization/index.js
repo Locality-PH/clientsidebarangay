@@ -30,7 +30,6 @@ const Index = ({ match }) => {
 
   useEffect(() => {
     getOrganization();
-    getOrganizationClient();
   }, []);
 
   useEffect(() => {
@@ -60,12 +59,13 @@ const Index = ({ match }) => {
       await axios
         .get(
           "/api/organization/get-organization/" +
-            match?.params?.organization_id,
+          match?.params?.organization_id,
           generateToken()[1]
         )
         .then((response) => {
           setOrganization(response.data);
-          console.log(response.data);
+          getOrganizationClient();
+          // console.log(response.data);
         });
     } catch (error) {
       message.error("Could not fetch the data in the server!");
