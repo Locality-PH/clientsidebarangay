@@ -181,7 +181,7 @@ export const LoginForm = (props) => {
                   </Button>
                 </Col>
                 <Col>
-                  <Button>
+                  <Button onClick={onFacebookLogin}>
                     <FaFacebook style={{ marginRight: "10px" }} />
                     Sign in with Facebook
                   </Button>
