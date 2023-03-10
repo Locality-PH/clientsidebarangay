@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, message, Avatar, Button } from "antd";
 import { RenderList } from "views/app-views/home/organization-list/render-list";
 import { BarangayData } from "../DefaultDashboardData";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, useHistory } from "react-router-dom";
 import { COLORS } from "constants/ChartConstant";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
@@ -11,6 +11,7 @@ import utils from "utils";
 
 const OrganizationList = () => {
   const { currentOrganization, generateToken } = useAuth();
+  const history = useHistory();
 
   const [organizationList, setOrganizationList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -69,9 +70,10 @@ const OrganizationList = () => {
               <div className="avatar-status d-flex align-items-center">
                 {result.profile != null ? (
                   <Avatar
-                    className="font-size-sm"
+                    className="font-size-sm custom-hover-pointer"
                     icon={<UserOutlined />}
                     src={result.profile.fileUrl}
+                    onClick={() => history.push(`/home/organization/${result.organization_id}`)}
                   >
                     {utils.getNameInitial(result.organization_name)}
                   </Avatar>
@@ -79,6 +81,7 @@ const OrganizationList = () => {
                   <Avatar
                     className="font-size-sm"
                     style={{ backgroundColor: result.profile_color }}
+                    onClick={() => history.push(`/home/organization/${result.organization_id}`)}
                   >
                     {utils.getNameInitial(result.organization_name)}
                   </Avatar>
@@ -86,10 +89,15 @@ const OrganizationList = () => {
 
                 <div className="ml-2">
                   <div>
-                    <div className="avatar-status-name h4">
-                      {result.organization_name}
+                    <div className="avatar-status-name">
+                      <h4
+                        className="custom-text-hover-pointer"
+                        onClick={() => history.push(`/home/organization/${result.organization_id}`)}
+                      >
+                        {result.organization_name}
+                      </h4>
                     </div>
-                    <span>{}</span>
+                    <span>{ }</span>
                   </div>
                   <div className="text-muted avatar-status-subtitle h5">
                     {result.address}

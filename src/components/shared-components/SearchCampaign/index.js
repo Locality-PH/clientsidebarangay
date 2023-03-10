@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Tag, Avatar } from "antd";
 import utils from "utils";
 import { COLORS } from "constants/ChartConstant";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { UserOutlined } from "@ant-design/icons";
 import moment from "moment";
 const SearchCampaign = (props) => {
   const { id, campaign_id, profile, name, address, startDate, title, link } = props;
-
+  const history = useHistory()
   if (link != "") {
     var redirectLink = link
   } else {
@@ -22,21 +22,23 @@ const SearchCampaign = (props) => {
           <div className="avatar-status d-flex align-items-center">
             {profile != null ? (
               <Avatar
-                className="mt-2 mr-2 rounded"
+                className="mt-2 mr-2 rounded custom-hover-pointer"
                 icon={<UserOutlined />}
                 src={profile}
                 size={70}
+                onClick={() => history.push(redirectLink)}
               >
                 {utils.getNameInitial(name)}
               </Avatar>
             ) : (
               <Avatar
                 size={70}
-                className="mt-2 mr-2 rounded"
+                className="mt-2 mr-2 rounded custom-hover-pointer"
                 style={{
                   backgroundColor:
                     COLORS[Math.floor(Math.random() * COLORS.length)],
                 }}
+                onClick={() => history.push(redirectLink)}
               >
                 {utils.getNameInitial(name)}
               </Avatar>
@@ -44,13 +46,22 @@ const SearchCampaign = (props) => {
 
             <div className="ml-2">
               <div>
-                <div className="avatar-status-name ">
-                  {moment(startDate).calendar()}
+                <div className="avatar-status-name">
+                  <span
+                    className="custom-text-hover-pointer"
+                    onClick={() => history.push(redirectLink)}
+                  >
+                    {moment(startDate).calendar()}
+                  </span>
                 </div>
-                <span></span>
               </div>
               <div className=" avatar-status-subtitle" style={{ fontSize: 15 }}>
-                <b>{title}</b>
+                <b
+                  className="custom-text-hover-pointer"
+                  onClick={() => history.push(redirectLink)}
+                >
+                  {title}
+                </b>
               </div>
               <div className="text-muted avatar-status-subtitle ">
                 {address}
