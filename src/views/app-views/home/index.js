@@ -96,7 +96,7 @@ export const DefaultDashboard = () => {
         style={{ margin: "-22px" }}
         loader={
           <Row align="center">
-            <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
+            <Col xs={24} sm={24} md={22} lg={15} xl={15} xxl={14}>
               <Card loading={true} />
             </Col>
           </Row>
@@ -109,14 +109,14 @@ export const DefaultDashboard = () => {
       >
         <Row align="center">
           {/* OrganizationList */}
-          <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
+          <Col xs={24} sm={24} md={22} lg={15} xl={15} xxl={14}>
             <OrganizationList />
           </Col>
         </Row>
 
         <Row align="center">
           {/* Trending Campaign */}
-          <Col xs={24} sm={24} md={22} lg={18} xl={18} xxl={14}>
+          <Col xs={24} sm={24} md={22} lg={15} xl={15} xxl={14}>
             <Card
               title="Trending Campaign"
               extra={
@@ -200,8 +200,8 @@ export const DefaultDashboard = () => {
                 xs={24}
                 sm={24}
                 md={22}
-                lg={18}
-                xl={18}
+                lg={15}
+                xl={15}
                 xxl={14}
                 key={id}
                 className="mb-2"
