@@ -328,6 +328,7 @@ const CampaignCard = (props) => {
             </h4>
           </div>
         </div>{" "}
+        {(status == "Pending" || status =="Rejected") && <h5 style={{color:"grey", marginTop: 8}}>Note: You cannot interact or comment with campaigns that are not approved or rejected.</h5>}
         {isVisit && (status != "Pending" && status != "Rejected") ? (
           <div className="mt-3">
             <div className="mb-0 d-flex align-items-center justify-content-between">
