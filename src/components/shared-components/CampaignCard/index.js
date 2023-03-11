@@ -45,6 +45,7 @@ const CampaignCard = (props) => {
     startingDate,
     images,
     content,
+    status,
     publisherName,
     suggestorName,
     suggestorEmail,
@@ -327,7 +328,7 @@ const CampaignCard = (props) => {
             </h4>
           </div>
         </div>{" "}
-        {isVisit ? (
+        {isVisit && (status != "Pending" && status != "Rejected") ? (
           <div className="mt-3">
             <div className="mb-0 d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center">

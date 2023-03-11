@@ -16,13 +16,14 @@ import Flex from "components/shared-components/Flex";
 import AvatarStatus from "components/shared-components/AvatarStatus";
 import utils from "utils";
 import { COLORS } from "constants/ChartConstant";
-import { Link } from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
 const CampaignList = () => {
   const { currentOrganization, generateToken } = useAuth();
+  const history = useHistory();
 
   const [barangayList, setBarangayList] = useState([]);
   const [listLimit, setListLimit] = useState(5);
@@ -61,17 +62,19 @@ const CampaignList = () => {
                       <div className="avatar-status d-flex align-items-center">
                         {result && result.images && result.images[0] != null ? (
                           <Avatar
-                            className="mb-2 mr-1 rounded"
+                            className="mb-2 mr-1 rounded custom-hover-pointer"
                             icon={<UserOutlined />}
                             size={55}
                             src={result.images[0].data}
+                            onClick={() => history.push(`/home/posts/${result.organization}/${result.campaign_id}/single/data`)}
                           />
                         ) : (
                           <Avatar
-                            className="font-size-sm"
+                            className="font-size-sm custom-hover-pointer"
                             style={{
                               backgroundColor: result.publisher.profileLogo,
                             }}
+                            onClick={() => history.push(`/home/posts/${result.organization}/${result.campaign_id}/single/data`)}
                           >
                             {utils.getNameInitial(result.title)}
                           </Avatar>
@@ -79,13 +82,22 @@ const CampaignList = () => {
 
                         <div className="ml-2">
                           <div>
-                            <div className="avatar-status-name h4">
-                              {result.title}
+                            <div className="avatar-status-name">
+                              <h4
+                                className="custom-text-hover-pointer"
+                                onClick={() => history.push(`/home/posts/${result.organization}/${result.campaign_id}/single/data`)}
+                              >
+                                {result.title}
+                              </h4>
                             </div>
-                            <span>{}</span>
                           </div>
-                          <div className="text-muted avatar-status-subtitle h5">
-                            {result.participantCounter} Participants
+                          <div className="text-muted avatar-status-subtitle">
+                            <h5
+                              className="custom-text-hover-pointer"
+                              onClick={() => history.push(`/home/posts/${result.organization}/${result.campaign_id}/single/data`)}
+                            >
+                              {result.participantCounter} Participants
+                            </h5>
                           </div>
                         </div>
                       </div>

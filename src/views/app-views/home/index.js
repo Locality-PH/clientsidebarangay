@@ -226,6 +226,7 @@ export const DefaultDashboard = () => {
                   content={campaign?.description}
                   orgProfile={campaign?.organization?.profile}
                   images={campaign?.images}
+                  status={campaign?.status}
                   campaignStatus={{
                     likeCounter: campaign?.likeCounter,
                     isLike: campaign?.isLike,

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Card, message, Avatar, Button } from "antd";
-import { RenderList } from "views/app-views/home/organization-list/render-list";
 import { BarangayData } from "../DefaultDashboardData";
 import { withRouter, Link, useHistory } from "react-router-dom";
 import { COLORS } from "constants/ChartConstant";
-import axios from "axios";
+import axios from "axios"; 
 import { useAuth } from "contexts/AuthContext";
 import { UserAddOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import utils from "utils";

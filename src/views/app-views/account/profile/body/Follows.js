@@ -82,7 +82,7 @@ const Follows = () => {
 
       {!isLoading && barangayList.length != 0 ? (
         <Row justify="center">
-          <Col sm={24} md={15}>
+          <Col sm={24} md={18}>
             <Card>
               {barangayList.map((result, i) => i < listLimit && (
                 <div key={i}>
