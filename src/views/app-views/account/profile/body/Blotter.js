@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
+import CommentSection from "components/shared-components/CommentSection";
 import { Col, Row, Skeleton, Card, Modal, Button, message, Dropdown, Menu, Typography, Avatar, Space } from "antd";
 const { Meta } = Card;
 const { Text, Title } = Typography;
@@ -225,7 +226,10 @@ const Blotter = () => {
 										</h4>
 									</div>
 								</div>
-
+								<>
+									<hr className="hr-style" />
+									<CommentSection orgId={val?.organization_id?.organization_id} generalId={val?._id} />
+								</>
 							</Card>
 						</Col>
 
