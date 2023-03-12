@@ -4,6 +4,7 @@ import { Col, Row, Skeleton, Card, Modal, Button } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 // Shared Component
 import DocumentStatus from "components/shared-components/DocumentStatus";
+import CommentSection from "components/shared-components/CommentSection";
 import Spin from "components/shared-components/Loading";
 // API Component
 

@@ -27,6 +27,7 @@ import { convertFromRaw, EditorState, convertToRaw } from "draft-js";
 import { toCapitalized } from "helper/Formula";
 import utils from "utils";
 import { saveAs } from "file-saver";
+import CommentSection from "components/shared-components/CommentSection";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -311,6 +312,15 @@ const DocumentStatus = (props) => {
               </div>
             </h4>
           </div>
+        </div>{" "}
+        <div className="mt-3">
+          <>
+            <hr className="hr-style" />
+            <CommentSection
+              generalId={certificate_requests_id}
+              orgId={organization_id}
+            />
+          </>
         </div>
       </Card>
     </>
