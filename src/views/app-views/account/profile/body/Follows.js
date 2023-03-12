@@ -16,13 +16,14 @@ import Flex from "components/shared-components/Flex";
 import AvatarStatus from "components/shared-components/AvatarStatus";
 import utils from "utils";
 import { COLORS } from "constants/ChartConstant";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
 const Follows = () => {
   const { currentUser, currentOrganization, generateToken } = useAuth();
+  const history = useHistory()
 
   const [barangayList, setBarangayList] = useState([]);
   const [listLimit, setListLimit] = useState(5);
@@ -81,7 +82,7 @@ const Follows = () => {
 
       {!isLoading && barangayList.length != 0 ? (
         <Row justify="center">
-          <Col sm={24} md={15}>
+          <Col sm={24} md={18}>
             <Card>
               {barangayList.map((result, i) => i < listLimit && (
                 <div key={i}>
@@ -94,16 +95,18 @@ const Follows = () => {
                         result.profile != null
                           ?
                           <Avatar
-                            className="font-size-sm"
+                            className="font-size-sm custom-hover-pointer"
                             icon={<UserOutlined />}
                             src={result.profile.fileUrl}
+                            onClick={() => history.push(`/home/organization/${result._id}`)}
                           >
                             {utils.getNameInitial(result.organization_name)}
                           </Avatar>
                           :
                           <Avatar
-                            className="font-size-sm"
+                            className="font-size-sm custom-hover-pointer"
                             style={{ backgroundColor: result.profile_color }}
+                            onClick={() => history.push(`/home/organization/${result._id}`)}
                           >
                             {utils.getNameInitial(result.organization_name)}
                           </Avatar>
@@ -111,8 +114,13 @@ const Follows = () => {
 
                       <div className="ml-2">
                         <div>
-                          <div className="avatar-status-name h4">
-                            {result.organization_name}
+                          <div className="avatar-status-name">
+                            <h4
+                              className="custom-text-hover-pointer"
+                              onClick={() => history.push(`/home/organization/${result._id}`)}
+                            >
+                              {result.organization_name}
+                            </h4>
                           </div>
                           <span></span>
                         </div>

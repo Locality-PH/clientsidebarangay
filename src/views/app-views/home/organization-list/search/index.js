@@ -17,13 +17,14 @@ import AvatarStatus from "components/shared-components/AvatarStatus";
 import { BarangayData } from "../../DefaultDashboardData";
 import utils from "utils";
 import { COLORS } from "constants/ChartConstant";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useAuth } from "contexts/AuthContext";
 
 const Organizations = () => {
   const { currentOrganization, generateToken } = useAuth();
+  const history = useHistory();
 
   const [barangayList, setBarangayList] = useState([]);
   const [listLimit, setListLimit] = useState(5);
@@ -62,16 +63,18 @@ const Organizations = () => {
                         <div className="avatar-status d-flex align-items-center">
                           {result.profile != null ? (
                             <Avatar
-                              className="font-size-sm"
+                              className="font-size-sm custom-hover-pointer"
                               icon={<UserOutlined />}
                               src={result.profile.fileUrl}
+                              onClick={() => history.push(`/home/organization/${result.organization_id}`)}
                             >
                               {utils.getNameInitial(result.organization_name)}
                             </Avatar>
                           ) : (
                             <Avatar
-                              className="font-size-sm"
+                              className="font-size-sm custom-hover-pointer"
                               style={{ backgroundColor: result.profile_color }}
+                              onClick={() => history.push(`/home/organization/${result.organization_id}`)}
                             >
                               {utils.getNameInitial(result.organization_name)}
                             </Avatar>
@@ -79,13 +82,23 @@ const Organizations = () => {
 
                           <div className="ml-2">
                             <div>
-                              <div className="avatar-status-name h4">
-                                {result.organization_name}
+                              <div className="avatar-status-name">
+                                <h4
+                                  className="custom-text-hover-pointer"
+                                  onClick={() => history.push(`/home/organization/${result.organization_id}`)}
+                                >
+                                  {result.organization_name}
+                                </h4>
                               </div>
-                              <span></span>
                             </div>
-                            <div className="text-muted avatar-status-subtitle h5">
-                              {result.address}
+                            <div className="text-muted avatar-status-subtitle">
+                              <h5
+                                className="custom-text-hover-pointer"
+                                onClick={() => history.push(`/home/organization/${result.organization_id}`)}
+                              >
+                                {result.address}
+                              </h5>
+
                             </div>
                           </div>
                         </div>

@@ -24,6 +24,7 @@ import Rejected from "assets/file/rejected.pdf";
 import Pending from "assets/file/pending.pdf";
 import draftToHtmlPuri from "draftjs-to-html";
 import { convertFromRaw, EditorState, convertToRaw } from "draft-js";
+import { useHistory } from "react-router-dom";
 import { toCapitalized } from "helper/Formula";
 import utils from "utils";
 import { saveAs } from "file-saver";
@@ -48,6 +49,8 @@ const DocumentStatus = (props) => {
     organization_id,
     deleteDocumetRequest,
   } = props;
+  const history = useHistory()
+
   const contentData = {
     entityMap: {},
     blocks: content != null ? content.blocks : [],
@@ -152,18 +155,20 @@ const DocumentStatus = (props) => {
             <div className="d-flex">
               {img != null ? (
                 <Avatar
-                  className="font-size-sm"
+                  className="font-size-sm custom-hover-pointer"
                   src={img}
                   shape="circle"
                   style={{ backgroundColor: colorTag[randomColorTag] }}
+                  onClick={() => history.push(`/home/organization/${organization_id}`)}
                 >
                   {utils.getNameInitial(orgName)}
                 </Avatar>
               ) : (
                 <Avatar
-                  className="font-size-sm"
+                  className="font-size-sm custom-hover-pointer"
                   style={{ backgroundColor: colorTag[randomColorTag] }}
                   shape="circle"
+                  onClick={() => history.push(`/home/organization/${organization_id}`)}
                 >
                   {utils.getNameInitial(orgName)}
                 </Avatar>
@@ -178,18 +183,25 @@ const DocumentStatus = (props) => {
               <div>
                 <div className="ml-1">
                   {/* <Text type="Primary">{moment(createdAt).format("LL")} </Text> */}
-                  <Text type="Primary">{orgName} </Text>
+                  <Text
+                    type="Primary"
+                    className="custom-text-hover-pointer"
+                    onClick={() => history.push(`/home/organization/${organization_id}`)}
+                  >
+                    {orgName}
+                  </Text>
                 </div>
                 <div className="ml-1" type="Primary">
-                  <Title level={5}>
-                    <div
-                      style={{
-                        color: "rgb(69, 85, 96) !important",
-                        marginTop: -5,
-                      }}
-                    >
-                      {moment(createdAt).format("LL")}
-                    </div>
+                  <Title
+                    level={5}
+                    style={{
+                      color: "rgb(69, 85, 96) !important",
+                      marginTop: -5,
+                    }}
+                    className="custom-text-hover-pointer"
+                    onClick={() => history.push(`/home/organization/${organization_id}`)}
+                  >
+                    {moment(createdAt).format("LL")}
                   </Title>
                 </div>
               </div>

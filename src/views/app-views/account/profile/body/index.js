@@ -4,6 +4,7 @@ import Likes from "./Likes";
 import Document from "./Document";
 import Blotter from "./Blotter";
 import Follows from "./Follows";
+import Campaign from "./Campaign";
 const { TabPane } = Tabs;
 
 const ContentBody = () => {
@@ -20,6 +21,9 @@ const ContentBody = () => {
       >
         <TabPane tab="Likes" key="1">
           <Likes />
+        </TabPane>
+        <TabPane tab="Campaigns" key="2">
+          <Campaign />
         </TabPane>
         <TabPane tab="Follows" key="3">
           <Follows />

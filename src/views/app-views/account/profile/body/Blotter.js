@@ -6,16 +6,14 @@ import { Col, Row, Skeleton, Card, Modal, Button, message, Dropdown, Menu, Typog
 const { Meta } = Card;
 const { Text, Title } = Typography;
 import { COLORS } from "constants/ChartConstant";
+import { useHistory } from "react-router-dom";
 const color = ["#E1F8DC", "#FEF8DD", "#FFE7C7", "#B7E9F7", "#ADF7B6"];
 import ShowMoreText from "react-show-more-text";
 
 import {
 	EllipsisOutlined,
 	DeleteOutlined,
-	CloudDownloadOutlined,
-	QuestionCircleOutlined,
-	ExclamationCircleOutlined,
-	HeartOutlined, MessageOutlined, UserOutlined
+	UserOutlined
 } from "@ant-design/icons";
 import utils from "utils";
 
@@ -23,6 +21,7 @@ const Blotter = () => {
 	const [blotterRequest, setBlotterRequest] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 	const { currentUser, generateToken } = useAuth();
+	const history = useHistory()
 
 	useEffect(() => {
 		getBlotterRequestsClient()
@@ -33,6 +32,7 @@ const Blotter = () => {
 		await axios
 			.get("/api/blotter_request/get-blotter-request-client/" + currentUser.uid, generateToken()[1])
 			.then((response) => {
+				console.log("response.data", response.data)
 				setBlotterRequest(response.data)
 				setIsLoading(false);
 			})
@@ -65,17 +65,13 @@ const Blotter = () => {
 	const DropdownMenu = ({ _id }) => (
 		<Dropdown key="more" overlay={
 			<Menu>
-
 				<Menu.Item key="1" onClick={() => onDelete(_id)}>
 					<a to={`#`}>
 						{" "}
 						<DeleteOutlined /> <span className="ml-2">Delete</span>{" "}
 					</a>
 				</Menu.Item>
-
-
 			</Menu>
-
 
 		} trigger={["click"]} autoFocus={true}>
 			<Button
@@ -139,16 +135,18 @@ const Blotter = () => {
 												val.organization_id.profile != null
 													?
 													<Avatar
-														className="font-size-sm"
+														className="font-size-sm custom-hover-pointer"
 														icon={<UserOutlined />}
 														src={val.organization_id.profile.fileUrl}
+														onClick={() => history.push(`/home/organization/${val.organization_id.organization_id}`)}
 													>
 														{utils.getNameInitial(val.organization_id.organization_name)}
 													</Avatar>
 													:
 													<Avatar
-														className="font-size-sm"
+														className="font-size-sm custom-hover-pointer"
 														style={{ backgroundColor: val.profile_color }}
+														onClick={() => history.push(`/home/organization/${val.organization_id.organization_id}`)}
 													>
 														{utils.getNameInitial(val.organization_id.organization_name)}
 													</Avatar>
@@ -157,18 +155,25 @@ const Blotter = () => {
 											<div>
 												<div className="ml-1">
 													{/* <Text type="Primary">{moment(createdAt).format("LL")} </Text> */}
-													<Text type="Primary">{val.incident_type} </Text>
+													<Text
+														type="Primary"
+														className="custom-text-hover-pointer"
+														onClick={() => history.push(`/home/organization/${val.organization_id.organization_id}`)}
+													>
+														{val.incident_type}
+													</Text>
 												</div>
 												<div className="ml-1" type="Primary">
-													<Title level={5}>
-														<div
-															style={{
-																color: "rgb(69, 85, 96) !important",
-																marginTop: -5,
-															}}
-														>
-															{val.status}
-														</div>
+													<Title
+														level={5}
+														style={{
+															color: "rgb(69, 85, 96) !important",
+															marginTop: -5,
+														}}
+														className="custom-text-hover-pointer"
+														onClick={() => history.push(`/home/organization/${val.organization_id.organization_id}`)}
+													>
+														{val.status}
 													</Title>
 												</div>
 											</div>

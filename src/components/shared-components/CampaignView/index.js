@@ -65,13 +65,14 @@ const CampaignView = ({ organization_id, campaign_id }) => {
                 orgId={campaign?.organization?.organization_id}
                 orgProfile={campaign?.organization?.profile}
                 images={campaign.images}
+                status={campaign?.status}
                 campaignStatus={{ likeCounter: campaign.likeCounter, isLike: campaign.isLike, participantCounter: campaign.participantCounter, isParticipant: campaign.isParticipant }}
                 // isVisit={false}
                 suggestorName={campaign?.suggestor?.first_name + " " + campaign?.suggestor?.last_name}
                 suggestorEmail={campaign?.suggestor?.email}
                 campaignId={campaign._id}
                 enableVisit={false}
-                enablePost={false}
+                enablePost={true}
                 href={`/home/organization/${campaign?.organization?.organization_id}/campaign/${campaign?._id}`}
               />
             </div>

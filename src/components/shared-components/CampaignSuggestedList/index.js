@@ -6,15 +6,21 @@ import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { UserOutlined } from "@ant-design/icons";
 import moment from "moment";
-const SearchCampaign = (props) => {
-  const { id, campaign_id, profile, name, address, startDate, title, link } = props;
+const SuggestedCampaignList = (props) => {
+  const { id, campaign_id, profile, name, address, startDate, title, link, status } = props;
   const history = useHistory()
+
   if (link != "") {
     var redirectLink = link
   } else {
     var redirectLink = `/home/posts/${id}/${campaign_id}/single/data`
   }
 
+  const tagColorPicker = () => {
+    if (status == "Pending") return "blue"
+    if (status == "Approved") return "green"
+    if (status == "Rejected") return "red"
+  }
   return (
     <>
       <Card className="no-border">
@@ -51,7 +57,7 @@ const SearchCampaign = (props) => {
                     className="custom-text-hover-pointer"
                     onClick={() => history.push(redirectLink)}
                   >
-                    {moment(startDate).calendar()}
+                    Starting Date: {moment(startDate).calendar()}
                   </span>
                 </div>
               </div>
@@ -64,23 +70,21 @@ const SearchCampaign = (props) => {
                 </b>
               </div>
               <div className="text-muted avatar-status-subtitle ">
-                {address}
+                <Tag color={tagColorPicker()}>{status}</Tag>
               </div>
             </div>
           </div>
           <div>
-            <Link to={redirectLink}>
-              <Button type="primary" shape="round">
-                View
-              </Button>
-            </Link>
+            <Button type="primary" shape="round" onClick={() => history.push(redirectLink)}>
+              View
+            </Button>
           </div>
         </div>
       </Card>
     </>
   );
 };
-SearchCampaign.propTypes = {
+SuggestedCampaignList.propTypes = {
   id: PropTypes.string,
   campaign_id: PropTypes.string,
   profile: PropTypes.string,
@@ -91,7 +95,7 @@ SearchCampaign.propTypes = {
   startDate: PropTypes.instanceOf(Date),
 };
 
-SearchCampaign.defaultProps = {
+SuggestedCampaignList.defaultProps = {
   id: "",
   campaign_id: "",
   profile: null,
@@ -101,4 +105,4 @@ SearchCampaign.defaultProps = {
   link: "",
   createdAt: moment().format(`LL`),
 };
-export default SearchCampaign;
+export default SuggestedCampaignList;
