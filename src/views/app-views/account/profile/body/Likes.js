@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, message, Divider, Skeleton, Button } from "antd";
+import { Row, Col, Card, message, Divider, Skeleton, Button, message} from "antd";
 import { useAuth } from "contexts/AuthContext";
 import axios from 'axios'
 import moment from 'moment'
@@ -45,7 +45,8 @@ const Likes = () => {
             if (data.length == 0) setHasMore(false)
           })
     } catch (error) {
-      handleError(error)
+      console.log("error", error)
+      message.error("The action can't be completed, please try again.");
     }
 
     setLoading(false)
