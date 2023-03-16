@@ -3,7 +3,7 @@ import { Row, Col, Card, message, Button, Avatar } from "antd";
 import OrganizationList from "./organization-list";
 import Campaign from "components/shared-components/Campaign";
 import { CausesData } from "./DefaultDashboardData";
-import { withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
@@ -15,6 +15,9 @@ import { UserAddOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 
 export const DefaultDashboard = () => {
   const { currentOrganization, generateToken } = useAuth();
+
+  //initialize
+  const history = useHistory();
 
   //for api
   const source = axios.CancelToken.source();
@@ -34,7 +37,7 @@ export const DefaultDashboard = () => {
   const [trendingLoading, setTrendingLoading] = useState(true);
 
   //useEffect
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   useEffect(() => {
     getLatestCampaign();
@@ -74,7 +77,7 @@ export const DefaultDashboard = () => {
       .get("/api/campaign/trending?length=5", generateToken()[1])
       .then((response) => {
         setTrendingCampaign(response.data);
-        console.log("response.data", response.data);
+        // console.log("response.data", response.data);
         setTrendingLoading(false);
       })
       .catch((err) => {
@@ -135,17 +138,19 @@ export const DefaultDashboard = () => {
                     <div className="avatar-status d-flex align-items-center">
                       {result && result.images && result.images[0] != null ? (
                         <Avatar
-                          className="mb-2 mr-1 rounded"
+                          className="mb-2 mr-1 rounded custom-hover-pointer"
                           icon={<UserOutlined />}
                           size={55}
                           src={result.images[0].data}
+                          onClick={() => history.push(`/home/posts/${result.organization}/${result.campaign_id}/single/data`)}
                         />
                       ) : (
                         <Avatar
-                          className="font-size-sm"
+                          className="font-size-sm custom-hover-pointer"
                           style={{
                             backgroundColor: result.publisher.profileLogo,
                           }}
+                          onClick={() => history.push(`/home/posts/${result.organization}/${result.campaign_id}/single/data`)}
                         >
                           {utils.getNameInitial(result.title)}
                         </Avatar>
@@ -166,10 +171,16 @@ export const DefaultDashboard = () => {
                       /> */}
                       <div className="ml-2">
                         <div>
-                          <div className="avatar-status-name h4">
-                            {result.title}
+                          <div className="avatar-status-name">
+                            <h4
+                            className="custom-text-hover-pointer"
+                              onClick={() => history.push(`/home/posts/${result.organization}/${result.campaign_id}/single/data`)}
+                            >
+                              {result.title}
+                            </h4>
+
                           </div>
-                          <span>{}</span>
+                          <span>{ }</span>
                         </div>
                         <div className="text-muted avatar-status-subtitle h5">
                           {result.participantCounter} Participants
@@ -215,6 +226,7 @@ export const DefaultDashboard = () => {
                   content={campaign?.description}
                   orgProfile={campaign?.organization?.profile}
                   images={campaign?.images}
+                  status={campaign?.status}
                   campaignStatus={{
                     likeCounter: campaign?.likeCounter,
                     isLike: campaign?.isLike,

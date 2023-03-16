@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Card, message, Button } from "antd";
 import OrganizationList from "./organization-list";
-import GroupLink from "views/app-views/home/organization-list/render-list";
+
 import TrendingNews from "components/shared-components/TrendingNews";
 import Campaign from "components/shared-components/Campaign";
 import Announcement from "views/app-views/home/announcement";

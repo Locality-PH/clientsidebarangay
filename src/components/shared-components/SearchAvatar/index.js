@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Card, Button, Tag, Avatar } from "antd";
 import utils from "utils";
 import { COLORS } from "constants/ChartConstant";
-import { Link } from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import { UserOutlined } from "@ant-design/icons";
 
 const SearchAvatar = (props) => {
   const { id, profile, name, address } = props;
+  const history = useHistory()
   return (
     <>
       <Card className="no-border">
@@ -15,19 +16,21 @@ const SearchAvatar = (props) => {
           <div className="avatar-status d-flex align-items-center">
             {profile != null ? (
               <Avatar
-                className="font-size-sm"
+                className="font-size-sm custom-hover-pointer"
                 icon={<UserOutlined />}
                 src={profile}
+                onClick={() => history.push(`/home/organization/${id}`)}
               >
                 {utils.getNameInitial(name)}
               </Avatar>
             ) : (
               <Avatar
-                className="font-size-sm"
+                className="font-size-sm custom-hover-pointer"
                 style={{
                   backgroundColor:
                     COLORS[Math.floor(Math.random() * COLORS.length)],
                 }}
+                onClick={() => history.push(`/home/organization/${id}`)}
               >
                 {utils.getNameInitial(name)}
               </Avatar>
@@ -35,8 +38,12 @@ const SearchAvatar = (props) => {
 
             <div className="ml-2">
               <div>
-                <div className="avatar-status-name ">{name}</div>
-                <span></span>
+                <span
+                  className="custom-text-hover-pointer"
+                  onClick={() => history.push(`/home/organization/${id}`)}
+                >
+                  {name}
+                </span>
               </div>
               <div className="text-muted avatar-status-subtitle h5">
                 {address}

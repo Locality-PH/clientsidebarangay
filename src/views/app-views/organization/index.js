@@ -8,7 +8,7 @@ import Message from "./message/Message";
 
 import Campaign from "./campaign/Campaign";
 import CampaignPage from "./campaign/CampaignPage";
-import CampaignAnalytics from "./campaign/CampaignAnalytics";
+import CampaignAnalytics from "./campaign/data/CampaignAnalytics";
 import EditCampaign from "./campaign/EditCampaign";
 
 import CertificateRequestForm from "./certificate/CertificateRequestForm";

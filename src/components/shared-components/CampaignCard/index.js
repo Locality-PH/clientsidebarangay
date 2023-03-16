@@ -30,6 +30,7 @@ import moment from "moment";
 import axios from "axios";
 import utils from "utils";
 import CustomDropdown from "../CustomDropdown";
+import ModalCampaign from "./modal";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -44,6 +45,7 @@ const CampaignCard = (props) => {
     startingDate,
     images,
     content,
+    status,
     publisherName,
     suggestorName,
     suggestorEmail,
@@ -69,6 +71,7 @@ const CampaignCard = (props) => {
 
   //useState
   const [visible, setVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [likeStatus, setLikeStatus] = useState({
     likeCounter: campaignStatus.likeCounter,
@@ -213,15 +216,14 @@ const CampaignCard = (props) => {
               size={60}
               style={{ fontSize: 20 }}
               onClick={() => redirectToBarangay()}
+              className="custom-hover-pointer"
             />
 
             <div>
               <div className="mt-2 ml-2">
-                <Tooltip title="Go to organization">
-                  <Text type="Primary" onClick={() => { redirectToBarangay() }}>
+                  <Text type="Primary" onClick={() => { redirectToBarangay() }} className="custom-text-hover-pointer">
                     {orgName}
                   </Text>
-                </Tooltip>
               </div>
               <div className="ml-1" type="Primary">
                 <Text>
@@ -230,13 +232,15 @@ const CampaignCard = (props) => {
                       color: "rgb(69, 85, 96) !important",
                       marginTop: -5,
                     }}
+                    onClick={() => { redirectToCampaign() }}
+                    className="custom-text-hover-pointer"
                   >
                     {moment(startingDate).format("LL")}
                   </div>
                 </Text>
               </div>
             </div>
-          </div>
+          </div> 
         }
         extra={<CustomDropdown menuItems={menuItems} />}
         className={`${classData}`}
@@ -324,7 +328,8 @@ const CampaignCard = (props) => {
             </h4>
           </div>
         </div>{" "}
-        {isVisit ? (
+        {(status == "Pending" || status =="Rejected") && <h5 style={{color:"grey", marginTop: 8}}>Note: You cannot interact or comment with campaigns that are not approved or rejected.</h5>}
+        {isVisit && (status != "Pending" && status != "Rejected") ? (
           <div className="mt-3">
             <div className="mb-0 d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center">
@@ -383,6 +388,7 @@ const CampaignCard = (props) => {
                           color: "rgb(0, 49, 81)",
                           marginLeft: 5,
                         }}
+                        className="custom-hover-pointer"
                         onClick={() => participantIncrement()}
                       />
                     </Tooltip>
@@ -399,6 +405,7 @@ const CampaignCard = (props) => {
                           marginLeft: 5,
                           color: "	#0080FE",
                         }}
+                        className="custom-hover-pointer"
                         onClick={() => participantDecrement()}
                       />
                     </Tooltip>
@@ -409,24 +416,17 @@ const CampaignCard = (props) => {
                 )}
               </div>
               <div className="d-flex align-items-center">
-                {1 + 1 != 3 ? (
                   <Button
                     style={{
                       color: "rgb(0, 49, 81)",
                     }}
                     type="default"
                     shape="round"
+
+                    onClick={() => setIsModalOpen(true)}
                   >
                     View Participants
                   </Button>
-                ) : (
-                  <Button
-                    type="primary"
-                    shape="round"
-                  >
-                    Hide Participants
-                  </Button>
-                )}
 
                 {enableVisit ? (
                   <Link to={href}>
@@ -454,6 +454,11 @@ const CampaignCard = (props) => {
           </div>
         ) : null}
       </Card>
+
+      <ModalCampaign
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </>
   );
 };
