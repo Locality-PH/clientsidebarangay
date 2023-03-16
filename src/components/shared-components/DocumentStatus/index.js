@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Typography,
   Col,
@@ -28,6 +29,7 @@ import { toCapitalized } from "helper/Formula";
 import utils from "utils";
 import { saveAs } from "file-saver";
 import CommentSection from "components/shared-components/CommentSection";
+import PaymentSection from "../PaymentSection";
 
 const { Text } = Typography;
 const { Title } = Typography;
@@ -288,6 +290,7 @@ const DocumentStatus = (props) => {
               </ShowMoreText>
             </h2>
             <h4 className="text-muted">{toCapitalized(subTitle)}</h4>
+
             <h4>
               <div>
                 <ShowMoreText
@@ -313,6 +316,11 @@ const DocumentStatus = (props) => {
             </h4>
           </div>
         </div>{" "}
+        <div className="mt-2 text-right align-items-center">
+          {subTitle === "walk in" ? null : (
+            <PaymentSection organization_id={organization_id} />
+          )}
+        </div>
         <div className="mt-3">
           <>
             <hr className="hr-style" />

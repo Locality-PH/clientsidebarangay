@@ -8,7 +8,7 @@ export const getPaymethod = async (generateToken) => {
       generateToken()[1]
     );
 
-    return response.data;
+    return response;
   } catch (error) {
     console.log(error);
     message.error("Could not fetch the data in the server!");

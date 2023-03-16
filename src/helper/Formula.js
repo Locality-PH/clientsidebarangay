@@ -80,7 +80,7 @@ export const ccFormat = (value) => {
   var match = v;
   var parts = [];
 
-  for (var i = 1, len = match.length; i < len; i += 4) {
+  for (var i = 1, len = match?.length; i < len; i += 4) {
     parts.push(match.substring(i, i + 4));
   }
 

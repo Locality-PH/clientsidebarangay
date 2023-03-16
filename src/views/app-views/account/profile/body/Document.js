@@ -146,32 +146,66 @@ const Document = (props) => {
         }}
         style={{ overflow: "hidden" }}
       >
-        <Row>
-          {document ? (
-            <>
-              {document.map((item, i) => {
-                return (
-                  <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8} key={i}>
-                    <DocumentStatus
-                      certificate_requests_id={item?.certificate_requests_id}
-                      organization_id={item?.organization_id?._id}
-                      img={item?.organization_id?.profile?.fileUrl}
-                      profileColor={item?.user_id?.profileLogo}
-                      title={item?.certificate_type}
-                      type={item?.status}
-                      orgName={item?.organization_id?.organization_name}
-                      createdAt={new Date(moment(item?.createdAt).format("LL"))}
-                      attachFile={item?.attach_file}
-                      subTitle={item?.issuer}
-                      content={item?.notes}
-                      deleteDocumetRequest={deleteDocumetRequest}
-                    />
-                  </Col>
-                );
-              })}
-            </>
-          ) : null}
-        </Row>
+        {landingLoading ? (
+          <>
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card loading={true}>
+                  <Meta />
+                </Card>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card loading={true}>
+                  <Meta />
+                </Card>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={8}>
+                <Card loading={true}>
+                  <Meta />
+                </Card>
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <Row>
+            {document ? (
+              <>
+                {document.map((item, i) => {
+                  return (
+                    <Col
+                      xs={24}
+                      sm={24}
+                      md={24}
+                      lg={12}
+                      xl={12}
+                      xxl={8}
+                      key={i}
+                    >
+                      <DocumentStatus
+                        certificate_requests_id={item?.certificate_requests_id}
+                        organization_id={item?.organization_id?._id}
+                        img={item?.organization_id?.profile?.fileUrl}
+                        profileColor={item?.user_id?.profileLogo}
+                        title={item?.certificate_type}
+                        type={item?.status}
+                        orgName={item?.organization_id?.organization_name}
+                        createdAt={
+                          new Date(moment(item?.createdAt).format("LL"))
+                        }
+                        attachFile={item?.attach_file}
+                        subTitle={item?.issuer}
+                        content={item?.notes}
+                        deleteDocumetRequest={deleteDocumetRequest}
+                      />
+                    </Col>
+                  );
+                })}
+              </>
+            ) : (
+              <h2>No Document</h2>
+            )}
+          </Row>
+        )}
       </InfinitScroll>
     </div>
   );

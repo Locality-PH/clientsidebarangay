@@ -22,6 +22,7 @@ const CertificateRequestForm = (props) => {
     organizationId: organizationId,
   });
   const [width, setWidth] = useState(0);
+  const data = { auth_id: localStorage.getItem(AUTH_TOKEN) };
 
   useEffect(() => {
     const listener = window.addEventListener("resize", updateWindowDimensions);
@@ -47,7 +48,6 @@ const CertificateRequestForm = (props) => {
       setLoading(false);
     }, 500);
   };
-  const data = { auth_id: localStorage.getItem(AUTH_TOKEN) };
   console.log(parentData);
   let description = "Please fill up the form: ";
   let show = false;

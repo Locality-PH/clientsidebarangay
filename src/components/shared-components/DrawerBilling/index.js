@@ -25,8 +25,12 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import { formatPhoneNumber } from "helper/Formula";
+import { useAuth } from "contexts/AuthContext";
+
 const BillingDrawer = (props) => {
   let size = 500;
+  const { currentUser } = useAuth();
+
   let data = {
     cardNumber: "",
     cardHolder: "",
@@ -44,12 +48,13 @@ const BillingDrawer = (props) => {
     paymentType,
     setDrawer,
     generateToken,
+    info,
   } = props;
 
   const [form] = Form.useForm();
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   // Card State
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolder, setCardHolder] = useState("");
@@ -120,38 +125,48 @@ const BillingDrawer = (props) => {
     setHeight(window.innerHeight);
   };
   const onFinish = async (values) => {
-    if (issuer == "unknown") {
-      message.warning("Credit Card is Unknown");
-    } else {
-      values.issuer = issuer;
-      const finalData = {
-        card_number: values.cardNumber,
-        card_holder: values.cardHolder,
-        issuer: values.issuer,
-        valid_thru: values.validThru,
-        cvc: values.cvc,
-        active_card: false,
-      };
+    try {
+      setLoading(true);
+      if (issuer == "unknown") {
+        message.warning("Credit Card is Unknown");
+      } else {
+        values.issuer = issuer;
+        const finalData = {
+          card_number: values.cardNumber,
+          card_holder: values.cardHolder,
+          issuer: values.issuer,
+          valid_thru: values.validThru,
+          cvc: values.cvc,
+          active_card: false,
+          info: info,
+          email: currentUser?.email,
+        };
 
-      const billingData = await axios.post(
-        "/api/app/user/billing/create",
-        finalData,
-        generateToken
-      );
-      console.log(billingData);
-      setPaymentMethod(billingData.data);
-      setCardNumber("");
-      setCardHolder("");
-      setValidThru("");
-      setIssuer("");
-      setCvc("");
-      setPaymentMethod({});
-      submitForm();
-      setOnSubmitReset(!onSubmitReset);
-      setDrawer(false);
+        const billingData = await axios.post(
+          "/api/app/user/billing/create",
+          finalData,
+          generateToken
+        );
+        console.log(billingData);
+        setPaymentMethod(billingData.data);
+        setCardNumber("");
+        setCardHolder("");
+        setValidThru("");
+        setIssuer("");
+        setCvc("");
+        setPaymentMethod({});
+        submitForm();
+        setOnSubmitReset(!onSubmitReset);
+        setDrawer(false);
+        setLoading(false);
+      }
+    } catch (error) {
+      message.error(error.message);
+      setLoading(false);
     }
   };
   const onFinishGcash = async (values) => {
+    setLoading(true);
     values.issuer = "GCash";
     values.validThru = "N/A";
     values.cvc = "N/A";
@@ -161,23 +176,29 @@ const BillingDrawer = (props) => {
       issuer: values.issuer,
       valid_thru: values.validThru,
       cvc: values.cvc,
+      info: info,
       active_card: false,
     };
-    const billingData = await axios.post(
-      "/api/app/user/billing/create",
-      finalData,
-      generateToken
-    );
-    setPaymentMethod(billingData.data);
-    setCardNumber("");
-    setCardHolder("");
-    setValidThru("");
-    setIssuer("");
-    setCvc("");
-    setPaymentMethod({});
-    submitForm();
-    setDrawer(false);
+    await axios
+      .post("/api/app/user/billing/create", finalData, generateToken)
+      .then((response) => {
+        setPaymentMethod(response);
+        setCardNumber("");
+        setCardHolder("");
+        setValidThru("");
+        setIssuer("");
+        setCvc("");
+        setPaymentMethod({});
+        submitForm();
+        setDrawer(false);
+        setLoading(false);
+      })
+      .catch((error) => {
+        message.error(error.message);
+        setLoading(false);
+      });
   };
+
   const submitForm = () => {
     form.resetFields();
   };
@@ -326,7 +347,7 @@ const BillingDrawer = (props) => {
                     justify={"center"}
                     className="text-center "
                   >
-                    <Button htmlType="submit" type="primary">
+                    <Button loading={loading} htmlType="submit" type="primary">
                       Add Credit/Debit Card
                     </Button>
                   </Col>
@@ -406,7 +427,11 @@ const BillingDrawer = (props) => {
                       justify={"center"}
                       className="text-center "
                     >
-                      <Button htmlType="submit" type="primary">
+                      <Button
+                        loading={loading}
+                        htmlType="submit"
+                        type="primary"
+                      >
                         Add Phone Number
                       </Button>
                     </Col>

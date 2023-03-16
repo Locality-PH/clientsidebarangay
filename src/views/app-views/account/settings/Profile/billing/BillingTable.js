@@ -20,6 +20,7 @@ import {
   deletePaymethod,
 } from "api/AppController/AccountsController/BillingDetailsController";
 import { AUTH_TOKEN } from "redux/constants/Auth";
+
 const BillingTable = (props) => {
   const { setParentData, parentData, width } = props;
   const data = props;
@@ -39,7 +40,10 @@ const BillingTable = (props) => {
 
   // Credit Card State
   const [creditCards, setCreditCards] = useState([]);
+  const [balance, setBalance] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   const [paymentMethodType, setPaymentMethodType] = useState("");
   const [drawer, setDrawer] = useState(false);
 
@@ -68,35 +72,35 @@ const BillingTable = (props) => {
       key: "issuer",
       render: (_, record) => {
         let image = "";
-        if (record.issuer == "mastercard") image = "/img/others/img-9.png";
+        if (record?.issuer == "mastercard") image = "/img/others/img-9.png";
 
-        if (record.issuer == "visa") image = "/img/others/img-8.png";
-        if (record.issuer == "walk in") image = "/img/others/walkin.png";
-        if (record.issuer == "GCash")
+        if (record?.issuer == "visa") image = "/img/others/img-8.png";
+        if (record?.issuer == "walk in") image = "/img/others/walkin.png";
+        if (record?.issuer == "GCash")
           image = "/img/others/cards/GCash-Logo.png";
         return (
           <>
-            {record.issuer == "GCash" ? (
+            {record?.issuer == "GCash" ? (
               <img
                 style={{ height: "3rem" }}
                 src={image}
-                alt={record.cardType}
+                alt={record?.cardType}
               />
-            ) : record.issuer == "walk in" ? (
+            ) : record?.issuer == "walk in" ? (
               <img
                 style={{ height: "3rem" }}
                 src={image}
-                alt={record.cardType}
+                alt={record?.cardType}
               />
             ) : (
               <img
                 style={{ height: "auto" }}
                 src={image}
-                alt={record.cardType}
+                alt={record?.cardType}
               />
             )}
 
-            <span className="ml-2">{record.issuer}</span>
+            <span className="ml-2">{record?.issuer}</span>
           </>
         );
       },
@@ -108,18 +112,21 @@ const BillingTable = (props) => {
       key: "card_number",
       render: (_, record) => {
         let creditFormat;
-        if (record.card_number) creditFormat = ccFormat(record.card_number);
+        if (record?.card_number) creditFormat = ccFormat(record?.card_number);
         return (
           <>
             <span className="ml-2">
               {ccFormat(
-                record.card_number.replace(
-                  record.card_number.substr(0, record.card_number.length - 4),
-                  record.card_number
-                    .substr(1, record.card_number.length - 3)
+                record?.card_number?.replace(
+                  record?.card_number?.substr(
+                    0,
+                    record?.card_number?.length - 4
+                  ),
+                  record?.card_number
+                    .substr(1, record?.card_number?.length - 3)
                     .replace(/./g, "•")
                 )
-              )}
+              ) || null}
             </span>
           </>
         );
@@ -147,7 +154,7 @@ const BillingTable = (props) => {
             icon={<QuestionCircleOutlined style={{ color: "red" }} />}
           >
             {console.log(record)}
-            {record._id === "none" ? null : (
+            {record?._id === "none" ? null : (
               <Button type="text" shape="circle" icon={<DeleteOutlined />} />
             )}
           </Popconfirm>
@@ -163,35 +170,35 @@ const BillingTable = (props) => {
       key: "issuer",
       render: (_, record) => {
         let image = "";
-        if (record.issuer == "mastercard") image = "/img/others/img-9.png";
+        if (record?.issuer == "mastercard") image = "/img/others/img-9.png";
 
-        if (record.issuer == "visa") image = "/img/others/img-8.png";
-        if (record.issuer == "walk in") image = "/img/others/walkin.png";
-        if (record.issuer == "GCash")
+        if (record?.issuer == "visa") image = "/img/others/img-8.png";
+        if (record?.issuer == "walk in") image = "/img/others/walkin.png";
+        if (record?.issuer == "GCash")
           image = "/img/others/cards/GCash-Logo.png";
         return (
           <>
-            {record.issuer == "GCash" ? (
+            {record?.issuer == "GCash" ? (
               <img
                 style={{ height: "3rem" }}
                 src={image}
-                alt={record.cardType}
+                alt={record?.cardType}
               />
-            ) : record.issuer == "walk in" ? (
+            ) : record?.issuer == "walk in" ? (
               <img
                 style={{ height: "3rem" }}
                 src={image}
-                alt={record.cardType}
+                alt={record?.cardType}
               />
             ) : (
               <img
                 style={{ height: "auto" }}
                 src={image}
-                alt={record.cardType}
+                alt={record?.cardType}
               />
             )}
 
-            <span className="ml-2">{record.issuer}</span>
+            <span className="ml-2">{record?.issuer}</span>
           </>
         );
       },
@@ -234,8 +241,12 @@ const BillingTable = (props) => {
   };
 
   const getBilling = async () => {
+    setIsLoading(true);
     try {
-      const billingData = await getPaymethod(generateToken);
+      const billingResponse = await getPaymethod(generateToken);
+      console.log(billingResponse.headers["customer-balance"]);
+      const billingData = billingResponse.data;
+      setBalance(billingResponse.headers["customer-balance"]);
       const i = [].concat.apply([], billingData[0].billing_method);
       let secondData = i.filter((credit) => credit.active_card === true);
       // if (!(type == "save")) {
@@ -253,7 +264,9 @@ const BillingTable = (props) => {
       //}
       if (secondData.length > 0) {
         setSelectedRowKeys([secondData[0]?._id]);
-
+        childData.token_id = secondData[0]?.token_id;
+        childData.customer_id = secondData[0]?.customer_id;
+        childData.user_id = secondData[0]?.user_id;
         childData.issuer = secondData[0]?.issuer;
         setParentData(childData);
       } else {
@@ -262,6 +275,8 @@ const BillingTable = (props) => {
         setSelectedRowKeys(["none"]);
       }
       console.log(i);
+      setIsLoading(false);
+
       return setCreditCards(i);
     } catch (e) {
       message.error(e.message);
@@ -292,6 +307,10 @@ const BillingTable = (props) => {
       setSelectedRowKeys(key);
       let childData = parentData;
       childData.issuer = rows[0]?.issuer;
+      childData.token_id = rows[0]?.token_id;
+      childData.customer_id = rows[0]?.customer_id;
+      childData.user_id = rows[0]?.user_id;
+      console.log(rows[0]);
       setParentData(childData);
       console.log(childData);
       if (key[0] !== "none")
@@ -324,6 +343,7 @@ const BillingTable = (props) => {
           closeDrawer();
         }}
         generateToken={generateToken()[1]}
+        info={parentData}
       />
     ),
     []
@@ -349,12 +369,18 @@ const BillingTable = (props) => {
         }`}
       >
         <h2 className="mb-2">Billing</h2>
-        <p>
-          <i style={{ color: "red" }}>
-            This Billing is still on testing and you can input any credit card
-            to test
-          </i>
-        </p>
+        <div>
+          <h4>
+            Credit Balance : <b>{balance || 0} $</b>
+          </h4>{" "}
+          <p>
+            <i style={{ color: "red" }}>
+              This Billing is still on testing and you can input any credit card
+              to test a test card is set 4242 4242 4242 4242 and gcash is
+              unavailable
+            </i>
+          </p>
+        </div>
         <Table
           locale={locale}
           dataSource={creditCards}
@@ -364,6 +390,7 @@ const BillingTable = (props) => {
           }
           pagination={false}
           rowKey="_id"
+          loading={isLoading}
           rowSelection={{
             selectedRowKeys: selectedRowKeys,
             type: "radio",
