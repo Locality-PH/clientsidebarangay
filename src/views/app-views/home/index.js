@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { useAuth } from "contexts/AuthContext";
-import CampaignCard from "components/shared-components/CampaignCard";
+import CampaignCard from "components/shared-components/CampaignCard"
 import InfiniteScroll from "react-infinite-scroll-component";
 import utils from "utils";
 import { UserAddOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
@@ -60,7 +60,6 @@ export const DefaultDashboard = () => {
       )
       .then((res) => {
         var data = res.data;
-        console.log("data", data);
         setCampaigns([...campaigns, ...data]);
         if (data.length == 0) setHasMore(false);
       })
@@ -232,6 +231,7 @@ export const DefaultDashboard = () => {
                     isLike: campaign?.isLike,
                     participantCounter: campaign?.participantCounter,
                     isParticipant: campaign?.isParticipant,
+                    participants: campaign?.participants,
                   }}
                   // isVisit={false}
                   suggestorName={

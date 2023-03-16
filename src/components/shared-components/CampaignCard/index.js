@@ -213,8 +213,7 @@ const CampaignCard = (props) => {
               icon={utils.getNameInitial(orgName)}
               image={orgProfile.fileUrl}
               color="#003151"
-              size={60}
-              style={{ fontSize: 20 }}
+              style={{ fontSize: 20, minWidth: 60}}
               onClick={() => redirectToBarangay()}
               className="custom-hover-pointer"
             />
@@ -458,6 +457,7 @@ const CampaignCard = (props) => {
       <ModalCampaign
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        participants={campaignStatus.participants}
       />
     </>
   );

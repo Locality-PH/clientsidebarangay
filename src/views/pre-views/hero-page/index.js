@@ -12,14 +12,14 @@ import redux, { createStore } from "redux";
 const DemoComponent = (props) => {
   const { redirect } = props;
   let history = useHistory();
-  console.log(redirect);
+  // console.log(redirect);
   console.log();
   useEffect(() => {
     if (redirect === "/auth/login") {
       history.push(redirect);
     }
     store.dispatch(signOutSuccess2());
-    console.log(redirect);
+    // console.log(redirect);
   }, []);
   return (
     <>

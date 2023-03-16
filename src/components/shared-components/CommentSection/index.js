@@ -59,7 +59,7 @@ const CommentComponent = (props) => {
           }),
         };
       });
-      console.log(modifiedArray);
+      // console.log(modifiedArray);
       setData((oldArray) => [...oldArray, ...modifiedArray]);
       setHasMore(response.data.length > 0);
       setIsLoading(false);
@@ -118,7 +118,7 @@ const CommentComponent = (props) => {
           }),
         };
       });
-      console.log(modifiedArray);
+      // console.log(modifiedArray);
       setData(modifiedArray);
     } catch (error) {
       console.log(error.message);
@@ -268,7 +268,7 @@ const CommentComponent = (props) => {
           <div className="text-center">
             <Row justify="center">
               <Col>
-                {console.log(data.length)}
+                {/* {console.log(data.length)} */}
                 {data.length && hasMore ? (
                   <>
                     {hasMore ? (
