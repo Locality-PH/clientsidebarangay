@@ -60,6 +60,7 @@ const ModalCampaign = (props) => {
                 visible={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                destroyOnClose
             >
                 {(participantLength > 0) ?
                     <>
@@ -71,8 +72,11 @@ const ModalCampaign = (props) => {
                             {participants.map(
                                 (user, i) => {
                                     if (i < render) {
-                                        let fullname = user.first_name + " " + user.last_name
-                                        if (fullname == " ") fullname = user.email
+                                        let first_name = user?.first_name
+                                        let last_name = user?.last_name 
+                                        let fullname = first_name + " " + last_name
+
+                                        if (fullname == " " || (first_name == null || last_name == null )) fullname = user.email
 
                                         return (
                                             <CustomAvatar
@@ -111,8 +115,10 @@ const ModalCampaign = (props) => {
                             {participants.map(
 
                                 (user, i) => {
-                                    let fullname = user.first_name + " " + user.last_name
-                                    if (fullname == " ") fullname = user.email
+                                    let first_name = user?.first_name
+                                    let last_name = user?.last_name 
+                                    let fullname = first_name + " " + last_name
+                                    if (fullname == " " || (first_name == null || last_name == null ))  fullname = user.email
 
                                     return <h4
                                         style={{
