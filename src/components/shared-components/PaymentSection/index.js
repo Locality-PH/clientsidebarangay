@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, InputNumber, Card, Form, message } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import FormBillingInfo from "views/app-views/account/settings/Profile/billing/FormBillingInfo";
@@ -23,6 +23,17 @@ const PaymentSection = (props) => {
   });
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
+  const [modalWidth, setModalWidth] = useState(1000);
+
+  const handleResize = () => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth < 1000) {
+      setModalWidth(windowWidth);
+    } else {
+      setModalWidth(1000);
+    }
+  };
+
   let description = "Please fill up the form: ";
   let show = false;
   console.log(parentData);
@@ -159,6 +170,10 @@ const PaymentSection = (props) => {
       message.error(error.message);
     }
   };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
   const showModalPayment = () => {
     setOpen(true);
   };
@@ -171,10 +186,15 @@ const PaymentSection = (props) => {
       setConfirmLoading(false);
     }, 2000);
   };
+  useEffect(() => {
+    // Add event listener to resize modal width when window size changes
+    window.addEventListener("resize", handleResize);
 
-  const handleCancel = () => {
-    setOpen(false);
-  };
+    // Remove event listener when component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -190,6 +210,7 @@ const PaymentSection = (props) => {
         okText="Submit"
         cancelText="Cancel"
         confirmLoading={confirmLoading}
+        width={modalWidth}
       >
         <div className="mt-2 mb-2 ml-2 mr-2">
           <BillingContent />
