@@ -139,6 +139,7 @@ const PaymentSection = (props) => {
         });
         show = false;
         description = "Please fill up the form: ";
+         setConfirmLoading(false);
       } else {
         // Billing Information
         await axios
