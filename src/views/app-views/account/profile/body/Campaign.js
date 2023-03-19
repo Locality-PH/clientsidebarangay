@@ -89,12 +89,12 @@ const Campaign = (props) => {
 
     return (
         <Row gutter={16} align="center" className="w-100">
-            <Col sm={24} lg={18}>
+            <Col xs={24} lg={18}>
                 {campaigns.length <= 0 ?
                     <Card loading={loading}>
                         <Empty description="You currenlty don't have any suggestion" />
                     </Card>
-
+                    
                     :
 
                     <Card title="Your suggested Campaigns">

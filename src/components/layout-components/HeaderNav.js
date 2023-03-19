@@ -46,7 +46,7 @@ export const HeaderNav = (props) => {
   const onSearchClose = () => {
     setSearchActive(false);
   };
-  console.log(width);
+
   const onToggle = () => {
     if (!isMobile) {
       toggleCollapsedNav(!navCollapsed);

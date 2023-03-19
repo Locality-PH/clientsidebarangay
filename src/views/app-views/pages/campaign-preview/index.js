@@ -72,10 +72,11 @@ const CampaignView = () => {
                 images={campaign.images}
                 status={campaign?.status}
                 campaignStatus={{
-                  likeCounter: campaign.likeCounter,
-                  isLike: campaign.isLike,
-                  participantCounter: campaign.participantCounter,
-                  isParticipant: campaign.isParticipant,
+                  likeCounter: campaign?.likeCounter,
+                  isLike: campaign?.isLike,
+                  participantCounter: campaign?.participantCounter,
+                  isParticipant: campaign?.isParticipant,
+                  participants: campaign?.participants,
                 }}
                 suggestorName={
                   campaign?.suggestor?.first_name +

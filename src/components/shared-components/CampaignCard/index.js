@@ -68,6 +68,11 @@ const CampaignCard = (props) => {
   const source = axios.CancelToken.source();
   const cancelToken = source.token;
   const { generateToken, currentUser } = useAuth();
+  const userInfo = {
+    email: currentUser.email,
+    profileUrl: { data: currentUser.photoURL },
+    profileLogo: "orange"
+  }
 
   //useState
   const [visible, setVisible] = useState(false);
@@ -82,6 +87,8 @@ const CampaignCard = (props) => {
     participantCounter: campaignStatus.participantCounter,
     isParticipant: campaignStatus.isParticipant,
   });
+
+  const [participantList, setParticipantList] = useState(campaignStatus.participants)
 
   //axios
   const updateCampaignStatus = async (values, type, operation) => {
@@ -137,6 +144,8 @@ const CampaignCard = (props) => {
       participantCounter: participantStatus.participantCounter - 1,
     };
     await updateCampaignStatus(newStatus, "participant", "decrement");
+
+    setParticipantList(prev => prev.filter(participant => participant.email !== userInfo.email ))
     setParticipantStatus(newStatus);
   };
 
@@ -146,7 +155,10 @@ const CampaignCard = (props) => {
       isParticipant: true,
       participantCounter: participantStatus.participantCounter + 1,
     };
+
     await updateCampaignStatus(newStatus, "participant", "increment");
+
+    setParticipantList([...participantList, userInfo])
     setParticipantStatus(newStatus);
   };
 
@@ -213,17 +225,16 @@ const CampaignCard = (props) => {
               icon={utils.getNameInitial(orgName)}
               image={orgProfile.fileUrl}
               color="#003151"
-              size={60}
-              style={{ fontSize: 20 }}
+              style={{ fontSize: 20, minWidth: 60 }}
               onClick={() => redirectToBarangay()}
               className="custom-hover-pointer"
             />
 
             <div>
               <div className="mt-2 ml-2">
-                  <Text type="Primary" onClick={() => { redirectToBarangay() }} className="custom-text-hover-pointer">
-                    {orgName}
-                  </Text>
+                <Text type="Primary" onClick={() => { redirectToBarangay() }} className="custom-text-hover-pointer">
+                  {orgName}
+                </Text>
               </div>
               <div className="ml-1" type="Primary">
                 <Text>
@@ -240,7 +251,7 @@ const CampaignCard = (props) => {
                 </Text>
               </div>
             </div>
-          </div> 
+          </div>
         }
         extra={<CustomDropdown menuItems={menuItems} />}
         className={`${classData}`}
@@ -328,7 +339,7 @@ const CampaignCard = (props) => {
             </h4>
           </div>
         </div>{" "}
-        {(status == "Pending" || status =="Rejected") && <h5 style={{color:"grey", marginTop: 8}}>Note: You cannot interact or comment with campaigns that are not approved or rejected.</h5>}
+        {(status == "Pending" || status == "Rejected") && <h5 style={{ color: "grey", marginTop: 8 }}>Note: You cannot interact or comment with campaigns that are not approved or rejected.</h5>}
         {isVisit && (status != "Pending" && status != "Rejected") ? (
           <div className="mt-3">
             <div className="mb-0 d-flex align-items-center justify-content-between">
@@ -416,17 +427,17 @@ const CampaignCard = (props) => {
                 )}
               </div>
               <div className="d-flex align-items-center">
-                  <Button
-                    style={{
-                      color: "rgb(0, 49, 81)",
-                    }}
-                    type="default"
-                    shape="round"
+                <Button
+                  style={{
+                    color: "rgb(0, 49, 81)",
+                  }}
+                  type="default"
+                  shape="round"
 
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    View Participants
-                  </Button>
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  View Participants
+                </Button>
 
                 {enableVisit ? (
                   <Link to={href}>
@@ -455,10 +466,13 @@ const CampaignCard = (props) => {
         ) : null}
       </Card>
 
-      <ModalCampaign
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
+      {isModalOpen == true &&
+        <ModalCampaign
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          participants={participantList}
+        />
+      }
     </>
   );
 };

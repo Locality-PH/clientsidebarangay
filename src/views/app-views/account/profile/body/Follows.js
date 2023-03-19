@@ -71,97 +71,96 @@ const Follows = () => {
 
 
   return (
-    <>
-      {
-        isLoading ? <Card>
-          <Skeleton loading={isLoading} avatar active></Skeleton>
-          <Skeleton loading={isLoading} avatar active></Skeleton>
-          <Skeleton loading={isLoading} avatar active></Skeleton>
-        </Card> : null
-      }
+    <Row justify="center" className="w-100">
+      <Col xs={24} lg={18}>
+        {
+          isLoading && (
+            <Card >
+              <Skeleton loading={isLoading} avatar active></Skeleton>
+              <Skeleton loading={isLoading} avatar active></Skeleton>
+              <Skeleton loading={isLoading} avatar active></Skeleton>
+            </Card>
+          )
+        }
 
-      {!isLoading && barangayList.length != 0 ? (
-        <Row justify="center">
-          <Col sm={24} md={18}>
-            <Card>
-              {barangayList.map((result, i) => i < listLimit && (
-                <div key={i}>
-                  <div
+        {(!isLoading && barangayList.length != 0) && (
+          <Card>
+            {barangayList.map((result, i) => i < listLimit && (
+              <div key={i}>
+                <div
 
-                    className={`d-flex align-items-center justify-content-between`}
-                  >
-                    <div className="avatar-status d-flex align-items-center">
-                      {
-                        result.profile != null
-                          ?
-                          <Avatar
-                            className="font-size-sm custom-hover-pointer"
-                            icon={<UserOutlined />}
-                            src={result.profile.fileUrl}
+                  className={`d-flex align-items-center justify-content-between`}
+                >
+                  <div className="avatar-status d-flex align-items-center">
+                    {
+                      result.profile != null
+                        ?
+                        <Avatar
+                          className="font-size-sm custom-hover-pointer"
+                          icon={<UserOutlined />}
+                          src={result.profile.fileUrl}
+                          onClick={() => history.push(`/home/organization/${result._id}`)}
+                        >
+                          {utils.getNameInitial(result.organization_name)}
+                        </Avatar>
+                        :
+                        <Avatar
+                          className="font-size-sm custom-hover-pointer"
+                          style={{ backgroundColor: result.profile_color }}
+                          onClick={() => history.push(`/home/organization/${result._id}`)}
+                        >
+                          {utils.getNameInitial(result.organization_name)}
+                        </Avatar>
+                    }
+
+                    <div className="ml-2">
+                      <div>
+                        <div className="avatar-status-name">
+                          <h4
+                            className="custom-text-hover-pointer"
                             onClick={() => history.push(`/home/organization/${result._id}`)}
                           >
-                            {utils.getNameInitial(result.organization_name)}
-                          </Avatar>
-                          :
-                          <Avatar
-                            className="font-size-sm custom-hover-pointer"
-                            style={{ backgroundColor: result.profile_color }}
-                            onClick={() => history.push(`/home/organization/${result._id}`)}
-                          >
-                            {utils.getNameInitial(result.organization_name)}
-                          </Avatar>
-                      }
-
-                      <div className="ml-2">
-                        <div>
-                          <div className="avatar-status-name">
-                            <h4
-                              className="custom-text-hover-pointer"
-                              onClick={() => history.push(`/home/organization/${result._id}`)}
-                            >
-                              {result.organization_name}
-                            </h4>
-                          </div>
-                          <span></span>
+                            {result.organization_name}
+                          </h4>
                         </div>
-                        <div className="text-muted avatar-status-subtitle h5">
-                          {result.address}
-                        </div>
+                        <span></span>
+                      </div>
+                      <div className="text-muted avatar-status-subtitle h5">
+                        {result.address}
                       </div>
                     </div>
-                    <div>
-
-                      <Button type="primary" shape="round" onClick={() => unFollow(result._id)}>
-                        Unfollow
-                      </Button>
-
-
-                    </div>
                   </div>
-                  <Divider />
+                  <div>
+
+                    <Button type="primary" shape="round" onClick={() => unFollow(result._id)}>
+                      Unfollow
+                    </Button>
+
+
+                  </div>
                 </div>
-              ))}
+                <Divider />
+              </div>
+            ))}
 
-              <Button
-                style={{ width: "100%", height: "3rem" }}
-                shape="round"
-                type="primary"
-                onClick={() => setListLimit(listLimit + 5)}
-                hidden={barangayList.length <= listLimit ? true : false}
-              >
-                Load more
-              </Button>
+            <Button
+              style={{ width: "100%", height: "3rem" }}
+              shape="round"
+              type="primary"
+              onClick={() => setListLimit(listLimit + 5)}
+              hidden={barangayList.length <= listLimit ? true : false}
+            >
+              Load more
+            </Button>
 
-            </Card>
-          </Col>
-        </Row>
-      ) : (
-        <h2>No Following</h2>
+          </Card>
+        )}
 
-      )}
-
-
-    </>
+        {(!isLoading && barangayList.length <= 0) && (
+          <h2>No Following</h2>
+        )}
+      </Col>
+    </Row>
   );
 };
 

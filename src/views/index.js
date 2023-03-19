@@ -50,7 +50,7 @@ function RouteInterceptor({
 
 export const Views = (props) => {
   const { locale, token, location, direction, redirect } = props;
-  console.log(redirect);
+  // console.log(redirect);
   const currentAppLocale = AppLocale[locale];
   const {
     setOrganization,
