@@ -95,7 +95,7 @@
   var randomUUID = generateUUID();
   var randomEmail = generateRandomEmail();
   var randomName = generateRandomName();
-
+  console.log(randomUUID,randomEmail,randomName);
 
       
     window.Intercom("boot", {
@@ -103,7 +103,7 @@
       app_id: "x8d0o6xe",
       name: randomName, // Full name
       user_id: randomUUID, // a UUID for your user
-      email: randomEmail, // the email for your user
+      email: randomEmail // the email for your user
     });
     </script>
 
