@@ -61,14 +61,49 @@
 
 
     <script>
-    var APP_ID = "x8d0o6xe";
+    var APP_ID = "kx9ni48t";
     
     (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/' + APP_ID;var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
     </script>
     <script>
+ function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  // Function to generate a random email
+  function generateRandomEmail() {
+    var email = "";
+    var possibleChars = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 10; i++) {
+      email += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+    }
+    email += "@example.com";
+    return email;
+  }
+
+  // Function to generate a random name
+  function generateRandomName() {
+    var names = ["John", "Jane", "Alice", "Bob", "Emma", "Michael", "Emily", "David"];
+    return names[Math.floor(Math.random() * names.length)];
+  }
+
+  // Generating random values
+  var randomUUID = generateUUID();
+  var randomEmail = generateRandomEmail();
+  var randomName = generateRandomName();
+
+
+      
     window.Intercom("boot", {
       api_base: "https://api-iam.intercom.io",
       app_id: "x8d0o6xe",
+      name: randomName, // Full name
+      user_id: randomUUID, // a UUID for your user
+      email: randomEmail, // the email for your user
     });
     </script>
 
